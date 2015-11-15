@@ -115,8 +115,8 @@
 //                            while (sqReader.Read())
 //                            {
 //                                byte[] jsonData = (byte[])sqReader["json"];
-//                                string jsonString = Encoding.ASCII.GetString(jsonData);
-//                                manifestBranch.Json.Add(JObject.Parse(jsonString)); //you don't need to do this unless you want queriable json at this level ;)
+//string jsonString = Encoding.ASCII.GetString(jsonData);
+//manifestBranch.Json.Add(JObject.Parse(jsonString)); //you don't need to do this unless you want queriable json at this level ;)
 //                                manifestBranch.JsonString.Add(jsonString);
 //                            }
 //                        }

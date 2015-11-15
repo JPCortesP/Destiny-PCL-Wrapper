@@ -98,7 +98,7 @@ namespace DestinyAPI
                    newi.damageType = item.damageType;
                    newi.damageTypeHash = item.damageTypeHash;
                    newi.isGridComplete = item.isGridComplete;
-                   newi.itemHash = item.itemHash;
+                   newi.itemHash = item.itemHash.ToString();
                    newi.itemId = item.itemId;
                    newi.quantity = item.quantity;
                    newi.state = item.state;

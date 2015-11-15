@@ -32,7 +32,7 @@ namespace DestinyAPI
 
     public class ItemBase
     {
-        public object itemHash { get; set; }
+        public string itemHash { get; set; }
         public string itemId { get; set; }
         public int quantity { get; set; }
         public int damageType { get; set; }
@@ -45,5 +45,6 @@ namespace DestinyAPI
         public object primaryStats_statHash { get; set; }
         public int primaryStats_value { get; set; }
         public int primaryStats_maximumValue { get; set; }
+        
     }
 }
