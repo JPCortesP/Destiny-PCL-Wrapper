@@ -14,7 +14,7 @@ Planned up next:
 ## Usage
  
 ```c#
-DestinyAPI api = new DestinyAPI();
+DestinyAPI api = new DestinyAPI("YOUR API KEY");
 BungieUser user1 = new BungieUser() { GamerTag = "Your Gamertag", type = MembershipType.Xbox };
 var Player = await api.GetPlayer(user1):
 ```
