@@ -12,7 +12,8 @@ namespace DestinyAPI
         public MembershipType type { get; set; }
         public List<Character> Characters { get; set; }
         public int Grimoire { get; set; }
-        public object MainClan { get; set; }
+        //public string MainClan { get; set; }
+        //public string MainClanTag { get; set; }
         public string MembershipId { get; set; }
     }
     public class Character

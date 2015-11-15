@@ -6,6 +6,28 @@ using System.Threading.Tasks;
 
 namespace DestinyAPI.InternalTypes
 {
+    public class PrimaryStat
+    {
+        public object statHash { get; set; }
+        public int value { get; set; }
+        public int maximumValue { get; set; }
+    }
+
+    public class Item
+    {
+        public object itemHash { get; set; }
+        public string itemId { get; set; }
+        public int quantity { get; set; }
+        public int damageType { get; set; }
+        public object damageTypeHash { get; set; }
+        public bool isGridComplete { get; set; }
+        public int transferStatus { get; set; }
+        public int state { get; set; }
+        public int characterIndex { get; set; }
+        public object bucketHash { get; set; }
+        public PrimaryStat primaryStat { get; set; }
+    }
+
     public class STATDEFENSE
     {
         public object statHash { get; set; }
@@ -120,14 +142,14 @@ namespace DestinyAPI.InternalTypes
         public long face { get; set; }
         public object skinColor { get; set; }
         public long lipColor { get; set; }
-        public long eyeColor { get; set; }
-        public long hairColor { get; set; }
+        public int eyeColor { get; set; }
+        public int hairColor { get; set; }
         public object featureColor { get; set; }
         public object decalColor { get; set; }
         public bool wearHelmet { get; set; }
-        public long hairIndex { get; set; }
-        public long featureIndex { get; set; }
-        public long decalIndex { get; set; }
+        public int hairIndex { get; set; }
+        public int featureIndex { get; set; }
+        public int decalIndex { get; set; }
     }
 
     public class Equipment
@@ -159,8 +181,8 @@ namespace DestinyAPI.InternalTypes
         public Customization customization { get; set; }
         public int grimoireScore { get; set; }
         public PeerView peerView { get; set; }
-        public long genderType { get; set; }
-        public long classType { get; set; }
+        public int genderType { get; set; }
+        public int classType { get; set; }
         public long buildStatGroupHash { get; set; }
     }
 
@@ -189,29 +211,10 @@ namespace DestinyAPI.InternalTypes
         public double percentToNextLevel { get; set; }
     }
 
-    public class Buckets
-    {
-        public List<object> Invisible { get; set; }
-        public List<object> Item { get; set; }
-        public List<object> Currency { get; set; }
-    }
-
-    public class Inventory
-    {
-        public Buckets buckets { get; set; }
-    }
-
     public class Data
     {
-        public string membershipId { get; set; }
-        public int membershipType { get; set; }
+        public List<Item> items { get; set; }
         public List<Character> characters { get; set; }
-        public string clanName { get; set; }
-        public string clanTag { get; set; }
-        public Inventory inventory { get; set; }
-        public int grimoireScore { get; set; }
-        public List<object> vendorReceipts { get; set; }
-        public int versions { get; set; }
     }
 
     public class Response

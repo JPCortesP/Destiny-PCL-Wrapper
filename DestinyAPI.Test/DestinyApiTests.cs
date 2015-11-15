@@ -23,16 +23,7 @@ namespace DestinyAPI.Test
             
         }
 
-        [TestMethod]
-        public void ReturnsPlayerDetail()
-        {
-            DestinyAPI api = new DestinyAPI();
-            BungieUser user = new BungieUser() { GamerTag = "JPCortesP", type = MembershipType.Xbox };//Correct
-            var player = api.GetPlayer(user).Result;
-
-            var algo = api.GetPlayerDetail(player).Result;
-
-        }
+       
     }
     
 }

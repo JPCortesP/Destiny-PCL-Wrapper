@@ -35,26 +35,18 @@ namespace DestinyAPI
                 {
                     return null;
                 }
-                url = string.Format(APIUrls.URls["GetPlayer"], (int)user.type, SearchResult.Response);
+                url = string.Format(APIUrls.URls["GetPlayerDetail"], (int)user.type, SearchResult.Response);
                 var PlayerResultJS = await hc.GetStringAsync(url);
                 var PlayerResult = await Task.Run(() =>
                        Newtonsoft.Json.JsonConvert.DeserializeObject<InternalTypes.PlayerResultRootObject>(PlayerResultJS));
-                return await ConvertirAPlayer(PlayerResult, user);
+                var retorno = await ConvertirAPlayer(PlayerResult, user);
+                return retorno;
 
 
 
             }
         }
-        public async Task<object> GetPlayerDetail (Player player)
-        {
-            using (HttpClient hc = new HttpClient())
-            {
-                hc.DefaultRequestHeaders.Add("X-API-Key", _APIKEY);
-                var url = string.Format(APIUrls.URls["GetPlayerDetail"], (int)player.type, player.MembershipId);
-                var resultJS = await hc.GetStringAsync(url);
-            }
-            throw new NotImplementedException();
-        }
+        
 
 
 
@@ -74,8 +66,9 @@ namespace DestinyAPI
                var pl = new Player()
                {
                    GamerTag = user.GamerTag,
-                   Grimoire = pr.grimoireScore,
-                   MembershipId = pr.membershipId,
+                   Grimoire = pr.characters.First().characterBase.grimoireScore,
+                   MembershipId = pr.characters.First().characterBase.membershipId,
+                   
                    type = user.type,
                    Characters = new List<Character>()
                };
