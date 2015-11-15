@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Dictionaries\APIUrls.cs" />
     <Compile Include="Exceptions\NotFoundException.cs" />
+    <Compile Include="InternalTypes\PlayerData.cs" />
     <Compile Include="InternalTypes\PlayerSearchResult.cs" />
     <Compile Include="ObjectsDef\BungieUser.cs" />
     <Compile Include="DestinyAPI.cs" />
