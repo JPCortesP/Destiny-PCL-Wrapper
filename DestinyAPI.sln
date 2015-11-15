@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DestinyAPI", "DestinyAPI\DestinyAPI.csproj", "{BB87CAE1-5C9E-47AF-8C2D-E18D1A4F274B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DestinyAPI.Test", "DestinyAPI.Test\DestinyAPI.Test.csproj", "{104DDFCB-A3C8-495E-AD65-4F0205172DA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTests", "ConsoleTests\ConsoleTests.csproj", "{B2321C42-D822-4960-9AC6-025CC90AAD17}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BB87CAE1-5C9E-47AF-8C2D-E18D1A4F274B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB87CAE1-5C9E-47AF-8C2D-E18D1A4F274B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB87CAE1-5C9E-47AF-8C2D-E18D1A4F274B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB87CAE1-5C9E-47AF-8C2D-E18D1A4F274B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{104DDFCB-A3C8-495E-AD65-4F0205172DA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{104DDFCB-A3C8-495E-AD65-4F0205172DA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{104DDFCB-A3C8-495E-AD65-4F0205172DA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{104DDFCB-A3C8-495E-AD65-4F0205172DA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2321C42-D822-4960-9AC6-025CC90AAD17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2321C42-D822-4960-9AC6-025CC90AAD17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2321C42-D822-4960-9AC6-025CC90AAD17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2321C42-D822-4960-9AC6-025CC90AAD17}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
