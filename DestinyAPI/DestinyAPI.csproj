@@ -48,6 +48,7 @@
     <Compile Include="Exceptions\NotFoundException.cs" />
     <Compile Include="InternalTypes\PlayerData.cs" />
     <Compile Include="InternalTypes\PlayerSearchResult.cs" />
+    <Compile Include="Manifest.cs" />
     <Compile Include="ObjectsDef\BungieUser.cs" />
     <Compile Include="DestinyAPI.cs" />
     <Compile Include="Enums\MembershipType.cs" />

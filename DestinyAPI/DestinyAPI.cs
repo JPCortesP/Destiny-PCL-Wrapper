@@ -45,7 +45,23 @@ namespace DestinyAPI
 
             }
         }
+        public async Task<object> GetPlayerDetail (Player player)
+        {
+            using (HttpClient hc = new HttpClient())
+            {
+                hc.DefaultRequestHeaders.Add("X-API-Key", _APIKEY);
+                var url = string.Format(APIUrls.URls["GetPlayerDetail"], (int)player.type, player.MembershipId);
+                var resultJS = await hc.GetStringAsync(url);
+            }
+            throw new NotImplementedException();
+        }
 
+
+
+
+
+
+        #region Helpers
         private async Task<Player> ConvertirAPlayer(PlayerResultRootObject playerResult, BungieUser user)
         {
             if (playerResult.ErrorStatus != "Success")
@@ -85,7 +101,6 @@ namespace DestinyAPI
            }
             );
         }
-
         private string getRace(object v)
         {
             switch (v.ToString())
@@ -120,5 +135,7 @@ namespace DestinyAPI
                     return classType.ToString();
             }
         }
+        #endregion
+
     }
 }

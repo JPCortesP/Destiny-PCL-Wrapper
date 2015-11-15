@@ -12,16 +12,26 @@ namespace DestinyAPI.Test
         {
             DestinyAPI api = new DestinyAPI();
             BungieUser user = new BungieUser() { GamerTag = "JPCortesP", type = MembershipType.PSN };//Not found
-            BungieUser user1 = new BungieUser() { GamerTag = "JMasterNomad", type = MembershipType.Xbox };//Correct
+            BungieUser user1 = new BungieUser() { GamerTag = "JPCortesP", type = MembershipType.Xbox };//Correct
 
-            var Player = api.GetPlayer(user1).Result;
-            Assert.IsInstanceOfType(Player, typeof(Player));
+            var player = api.GetPlayer(user1).Result;
+            Assert.IsInstanceOfType(player, typeof(Player));
 
             //Not Found
                 var OtroPlayer = api.GetPlayer(user).Result;
             Assert.IsNull(OtroPlayer);
             
-            
+        }
+
+        [TestMethod]
+        public void ReturnsPlayerDetail()
+        {
+            DestinyAPI api = new DestinyAPI();
+            BungieUser user = new BungieUser() { GamerTag = "JPCortesP", type = MembershipType.Xbox };//Correct
+            var player = api.GetPlayer(user).Result;
+
+            var algo = api.GetPlayerDetail(player).Result;
+
         }
     }
     

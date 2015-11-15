@@ -14,6 +14,8 @@ namespace DestinyAPI
                 ,"https://www.bungie.net/platform/destiny/{0}/Stats/GetMembershipIdByDisplayName/{1}" }
             , {"GetPlayer", //0 =[1-2] MembershipType, 1 = MembershipID
             "https://www.bungie.net/platform/destiny/{0}/Account/{1}/"}
+            , { "GetPlayerDetail", //0 =[1-2] MembershipType, 1 = MembershipID
+                "https://www.bungie.net/platform/destiny/{0}/Account/{1}/Items/" }
         };
     }
 }
