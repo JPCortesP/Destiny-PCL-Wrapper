@@ -20,7 +20,16 @@ namespace DestinyAPI.Test
             //Not Found
                 var OtroPlayer = api.GetPlayer(user).Result;
             Assert.IsNull(OtroPlayer);
-            
+        }
+        [TestMethod]
+        public void ItemsAreNotNull()
+        {
+            DestinyAPI api = new DestinyAPI();
+            BungieUser user1 = new BungieUser() { GamerTag = "JPCortesP", type = MembershipType.Xbox };//Correct
+
+            var player = api.GetPlayer(user1).Result;
+
+            Assert.IsNotNull(player.Items);
         }
 
        

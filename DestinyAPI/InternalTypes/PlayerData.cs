@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace DestinyAPI.InternalTypes
 {
-    public class PrimaryStat
+    internal class PrimaryStat
     {
         public object statHash { get; set; }
         public int value { get; set; }
         public int maximumValue { get; set; }
     }
 
-    public class Item
+    internal class Item
     {
         public object itemHash { get; set; }
         public string itemId { get; set; }
@@ -28,98 +28,98 @@ namespace DestinyAPI.InternalTypes
         public PrimaryStat primaryStat { get; set; }
     }
 
-    public class STATDEFENSE
+    internal class STATDEFENSE
     {
         public object statHash { get; set; }
         public int value { get; set; }
         public int maximumValue { get; set; }
     }
 
-    public class STATINTELLECT
+    internal class STATINTELLECT
     {
         public int statHash { get; set; }
         public int value { get; set; }
         public int maximumValue { get; set; }
     }
 
-    public class STATDISCIPLINE
+    internal class STATDISCIPLINE
     {
         public int statHash { get; set; }
         public int value { get; set; }
         public int maximumValue { get; set; }
     }
 
-    public class STATSTRENGTH
+    internal class STATSTRENGTH
     {
         public object statHash { get; set; }
         public int value { get; set; }
         public int maximumValue { get; set; }
     }
 
-    public class STATLIGHT
+    internal class STATLIGHT
     {
         public object statHash { get; set; }
         public int value { get; set; }
         public int maximumValue { get; set; }
     }
 
-    public class STATARMOR
+    internal class STATARMOR
     {
         public int statHash { get; set; }
         public int value { get; set; }
         public int maximumValue { get; set; }
     }
 
-    public class STATAGILITY
+    internal class STATAGILITY
     {
         public object statHash { get; set; }
         public int value { get; set; }
         public int maximumValue { get; set; }
     }
 
-    public class STATRECOVERY
+    internal class STATRECOVERY
     {
         public int statHash { get; set; }
         public int value { get; set; }
         public int maximumValue { get; set; }
     }
 
-    public class STATOPTICS
+    internal class STATOPTICS
     {
         public object statHash { get; set; }
         public int value { get; set; }
         public int maximumValue { get; set; }
     }
 
-    public class STATATTACKSPEED
+    internal class STATATTACKSPEED
     {
         public object statHash { get; set; }
         public int value { get; set; }
         public int maximumValue { get; set; }
     }
 
-    public class STATDAMAGEREDUCTION
+    internal class STATDAMAGEREDUCTION
     {
         public int statHash { get; set; }
         public int value { get; set; }
         public int maximumValue { get; set; }
     }
 
-    public class STATATTACKEFFICIENCY
+    internal class STATATTACKEFFICIENCY
     {
         public object statHash { get; set; }
         public int value { get; set; }
         public int maximumValue { get; set; }
     }
 
-    public class STATATTACKENERGY
+    internal class STATATTACKENERGY
     {
         public int statHash { get; set; }
         public int value { get; set; }
         public int maximumValue { get; set; }
     }
 
-    public class Stats
+    internal class Stats
     {
         public STATDEFENSE STAT_DEFENSE { get; set; }
         public STATINTELLECT STAT_INTELLECT { get; set; }
@@ -136,7 +136,7 @@ namespace DestinyAPI.InternalTypes
         public STATATTACKENERGY STAT_ATTACK_ENERGY { get; set; }
     }
 
-    public class Customization
+    internal class Customization
     {
         public object personality { get; set; }
         public long face { get; set; }
@@ -152,18 +152,18 @@ namespace DestinyAPI.InternalTypes
         public int decalIndex { get; set; }
     }
 
-    public class Equipment
+    internal class Equipment
     {
         public object itemHash { get; set; }
         public List<object> dyes { get; set; }
     }
 
-    public class PeerView
+    internal class PeerView
     {
         public List<Equipment> equipment { get; set; }
     }
 
-    public class CharacterBase
+    internal class CharacterBase
     {
         public string membershipId { get; set; }
         public int membershipType { get; set; }
@@ -186,7 +186,7 @@ namespace DestinyAPI.InternalTypes
         public long buildStatGroupHash { get; set; }
     }
 
-    public class LevelProgression
+    internal class LevelProgression
     {
         public int dailyProgress { get; set; }
         public int weeklyProgress { get; set; }
@@ -198,7 +198,7 @@ namespace DestinyAPI.InternalTypes
         public int progressionHash { get; set; }
     }
 
-    public class Character
+    internal class Character
     {
         public CharacterBase characterBase { get; set; }
         public LevelProgression levelProgression { get; set; }
@@ -211,22 +211,22 @@ namespace DestinyAPI.InternalTypes
         public double percentToNextLevel { get; set; }
     }
 
-    public class Data
+    internal class Data
     {
         public List<Item> items { get; set; }
         public List<Character> characters { get; set; }
     }
 
-    public class Response
+    internal class Response
     {
         public Data data { get; set; }
     }
 
-    public class MessageData
+    internal class MessageData
     {
     }
 
-    public class PlayerResultRootObject
+    internal class PlayerResultRootObject
     {
         public Response Response { get; set; }
         public int ErrorCode { get; set; }

@@ -70,7 +70,8 @@ namespace DestinyAPI
                    MembershipId = pr.characters.First().characterBase.membershipId,
                    
                    type = user.type,
-                   Characters = new List<Character>()
+                   Characters = new List<Character>(),
+                   Items = new List<ItemBase>()
                };
                foreach (var item in pr.characters)
                {
@@ -88,6 +89,29 @@ namespace DestinyAPI
 
                    pl.Characters.Add(pers);
 
+               }
+               foreach (var item in pr.items)
+               {
+                   var newi = new ItemBase();
+                   newi.bucketHash = item.bucketHash;
+                   newi.characterIndex = item.characterIndex;
+                   newi.damageType = item.damageType;
+                   newi.damageTypeHash = item.damageTypeHash;
+                   newi.isGridComplete = item.isGridComplete;
+                   newi.itemHash = item.itemHash;
+                   newi.itemId = item.itemId;
+                   newi.quantity = item.quantity;
+                   newi.state = item.state;
+                   newi.transferStatus = item.transferStatus ;
+                   if (item.primaryStat != null)
+                   {
+                        newi.primaryStats_maximumValue = item.primaryStat.maximumValue;
+                        newi.primaryStats_statHash = item.primaryStat.statHash;
+                        newi.primaryStats_value = item.primaryStat.value;
+                   }
+                   
+
+                   pl.Items.Add(newi);
                }
 
                return pl;

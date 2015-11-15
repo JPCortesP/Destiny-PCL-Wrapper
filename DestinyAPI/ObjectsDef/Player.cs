@@ -15,6 +15,7 @@ namespace DestinyAPI
         //public string MainClan { get; set; }
         //public string MainClanTag { get; set; }
         public string MembershipId { get; set; }
+        public List<ItemBase> Items { get; set; }
     }
     public class Character
     {
@@ -27,5 +28,22 @@ namespace DestinyAPI
         public string EmblemPath { get; set; }
         public string EmblemHash { get; set; }
         public string CharacterId { get; set; }
+    }
+
+    public class ItemBase
+    {
+        public object itemHash { get; set; }
+        public string itemId { get; set; }
+        public int quantity { get; set; }
+        public int damageType { get; set; }
+        public object damageTypeHash { get; set; }
+        public bool isGridComplete { get; set; }
+        public int transferStatus { get; set; }
+        public int state { get; set; }
+        public int characterIndex { get; set; }
+        public object bucketHash { get; set; }
+        public object primaryStats_statHash { get; set; }
+        public int primaryStats_value { get; set; }
+        public int primaryStats_maximumValue { get; set; }
     }
 }
