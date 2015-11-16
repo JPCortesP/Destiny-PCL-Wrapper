@@ -22,15 +22,15 @@
         <StackPanel Grid.Column="2">
             <StackPanel Orientation="Horizontal">
                 <Label>Gamertag / Platform</Label>
-                <ComboBox Name="cb_platform">
+                <ComboBox Name="cb_platform" IsEnabled="{Binding ElementName=cb_publicAPI, Path=IsChecked}">
                     <ComboBox.Items>
                         <ComboBoxItem>Xbox</ComboBoxItem>
                         <ComboBoxItem>PSN</ComboBoxItem>
                     </ComboBox.Items>
-                    
                 </ComboBox>
+                <CheckBox Name="cb_publicAPI" IsChecked="True">Use Public API</CheckBox>
             </StackPanel>
-                <TextBox Name="txt_gt"></TextBox>
+            <TextBox Name="txt_gt"  IsEnabled="{Binding ElementName=cb_publicAPI, Path=IsChecked}"></TextBox>
                 <Button Click="Button_Click">Load/Refresh</Button>
         </StackPanel>
         <ListView Grid.Row="1" ItemsSource="{Binding Characters}" 

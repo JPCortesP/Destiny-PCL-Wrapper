@@ -25,12 +25,13 @@ namespace DestinyWeaponExplorer
         public MainWindow()
         {
             InitializeComponent();
-            
+
         }
 
-        private async void initPlayerInfo(string gamertag, bool isXbox )
+        private async void initPlayerInfo(string gamertag, bool isXbox)
         {
-            player = await api.GetPlayer(new DestinyAPI.BungieUser() { GamerTag = "JPCortesP", type = DestinyAPI.MembershipType.Xbox });
+            player = await api.GetPlayer(new DestinyAPI.BungieUser()
+            { GamerTag = "JPCortesP", type = DestinyAPI.MembershipType.Xbox });
             if (player == null)
             {
                 MessageBox.Show("GamerTag/Platform combination not found in Bungie");
@@ -41,7 +42,23 @@ namespace DestinyWeaponExplorer
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            initPlayerInfo(txt_gt.Text, cb_platform.Text == "Xbox");
+            var valor = (cb_publicAPI.IsChecked.HasValue ? cb_publicAPI.IsChecked.Value : true);
+            if (! valor )
+            {
+                LoginWindo login = new LoginWindo();
+                login.ShowDialog();
+                if (login.Resultado)
+                {
+                    var cookiecontainer = login.cookies;
+                    api = new DestinyAPI.DestinyAPI(cookies: cookiecontainer);
+                    initPlayerInfo(txt_gt.Text, cb_platform.Text == "Xbox");
+                }
+            }
+            else
+            {
+                initPlayerInfo(txt_gt.Text, cb_platform.Text == "Xbox");
+            }
+
         }
     }
 }

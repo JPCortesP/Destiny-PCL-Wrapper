@@ -19,22 +19,14 @@ namespace ConsoleTests
             Console.Clear();
             Console.WriteLine(Player.GamerTag);
             Console.WriteLine("===================");
-            int charindex = 0;
-            foreach (var personaje in Player.Characters)
+            var items = Player.Items.OrderByDescending(f => f.itemTypeName).ToList();
+            foreach (var item in items)
             {
-                Console.WriteLine("*****************************");
-                Console.WriteLine(personaje.Class + " " + personaje.Race + " " + personaje.Gender);
-                Console.WriteLine("Nivel: " + personaje.BaseLevel + " Luz: " + personaje.LightLevel);
-                Console.WriteLine("ITEMS");
-                foreach (var item in Player.Items.Where(g=>g.characterIndex == charindex).ToList() )
-                {
-                    var info = api.DestinyData.GetItemData(item.itemHash);
-                    Console.WriteLine("\t Name: " + info.itemName);
-                    Console.WriteLine("\t\t" + info.itemDescription);
-                }
-
-                charindex++;
+                Console.WriteLine(
+                    string.Format( "{0} - {1}", item.itemTypeName, item.itemName)
+                    );
             }
+            
             Console.ReadLine();
 
         }
