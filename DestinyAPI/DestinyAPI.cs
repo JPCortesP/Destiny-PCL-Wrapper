@@ -12,6 +12,13 @@ namespace DestinyAPI
     {
         private string _APIKEY;
         public db.Manifest DestinyData {get; set;}
+        /// <summary>
+        /// Creates a new instance of DestinyAPI. Use the created object to performs actions. 
+        /// Can throw exceptions if you don't specify any parameter, or if you set initManifest to true (for example,
+        /// file operations. 
+        /// </summary>
+        /// <param name="APIKEY">API Key para Bungie.NET</param>
+        /// <param name="initManifest">True para inicializar Manifesto. True por defecto.</param>
         public DestinyAPI(string APIKEY = "6def2424db3a4a8db1cef0a2c3a7807e", bool initManifest = true)
         {
             this._APIKEY = APIKEY;
@@ -78,6 +85,34 @@ namespace DestinyAPI
                    Characters = new List<Character>(),
                    Items = new List<ItemBase>()
                };
+               foreach (var item in pr.items)
+               {
+                   var newi = new ItemBase();
+
+                   newi.bucketHash = item.bucketHash;
+                   newi.characterIndex = item.characterIndex;
+                   newi.damageType = item.damageType;
+                   newi.damageTypeHash = item.damageTypeHash;
+                   newi.isGridComplete = item.isGridComplete;
+                   newi.itemHash = item.itemHash.ToString();
+                   newi.itemId = item.itemId;
+                   newi.quantity = item.quantity;
+                   newi.state = item.state;
+                   newi.transferStatus = item.transferStatus;
+                   if (item.primaryStat != null)
+                   {
+                       newi.primaryStats_maximumValue = item.primaryStat.maximumValue;
+                       newi.primaryStats_statHash = item.primaryStat.statHash;
+                       newi.primaryStats_value = item.primaryStat.value;
+                   }
+                   if (this.DestinyData != null)
+                   {
+                       newi.dbData = this.DestinyData.GetItemData(newi.itemHash);
+                   }
+
+                   pl.Items.Add(newi);
+               }
+               int charCount = 0;
                foreach (var item in pr.characters)
                {
                    var pers = new Character();
@@ -91,33 +126,11 @@ namespace DestinyAPI
                    pers.Class = getClass(item.characterBase.classType);
                    pers.Gender = getGender(item.characterBase.genderType);
                    pers.Race = getRace(item.characterBase.raceHash);
-
+                   pers.Items = pl.Items.Where(g => g.characterIndex == charCount).ToList();
                    pl.Characters.Add(pers);
-
+                   charCount++;
                }
-               foreach (var item in pr.items)
-               {
-                   var newi = new ItemBase();
-                   newi.bucketHash = item.bucketHash;
-                   newi.characterIndex = item.characterIndex;
-                   newi.damageType = item.damageType;
-                   newi.damageTypeHash = item.damageTypeHash;
-                   newi.isGridComplete = item.isGridComplete;
-                   newi.itemHash = item.itemHash.ToString();
-                   newi.itemId = item.itemId;
-                   newi.quantity = item.quantity;
-                   newi.state = item.state;
-                   newi.transferStatus = item.transferStatus ;
-                   if (item.primaryStat != null)
-                   {
-                        newi.primaryStats_maximumValue = item.primaryStat.maximumValue;
-                        newi.primaryStats_statHash = item.primaryStat.statHash;
-                        newi.primaryStats_value = item.primaryStat.value;
-                   }
-                   
-
-                   pl.Items.Add(newi);
-               }
+               
 
                return pl;
            }
