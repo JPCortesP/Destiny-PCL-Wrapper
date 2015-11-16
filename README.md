@@ -7,16 +7,41 @@ You can use the Library to query the Destiny API for the following information:
 
 + Player information 
 + Characters Race, Level, Class and Gender. Also, the emblem is present. 
++ Inventory, including DB information (must be done manually for now, see below)
 
 Planned up next:
-+ Inventory
++ Improve Inventory (ie, making it transparent to get item's details)
 
 ## Usage
  
 ```c#
-DestinyAPI api = new DestinyAPI("YOUR API KEY");
-BungieUser user1 = new BungieUser() { GamerTag = "Your Gamertag", type = MembershipType.Xbox };
-var Player = await api.GetPlayer(user1):
+            //Very simple console app, loading characters and items
+            Console.Write("Gamertag (XBOX Only): ");
+            var gt = Console.ReadLine();
+            Console.WriteLine("Loading");
+            DestinyAPI.DestinyAPI api = new DestinyAPI.DestinyAPI();
+            var Player = api.GetPlayer(new DestinyAPI.BungieUser()
+            { GamerTag = gt, type = DestinyAPI.MembershipType.Xbox }).Result;
+            Console.Clear();
+            Console.WriteLine(Player.GamerTag);
+            Console.WriteLine("===================");
+            int charindex = 0;
+            foreach (var personaje in Player.Characters)
+            {
+                Console.WriteLine("*****************************");
+                Console.WriteLine(personaje.Class + " " + personaje.Race + " " + personaje.Gender);
+                Console.WriteLine("Nivel: " + personaje.BaseLevel + " Luz: " + personaje.LightLevel);
+                Console.WriteLine("ITEMS");
+                foreach (var item in Player.Items.Where(g=>g.characterIndex == charindex).ToList() )
+                {
+                    var info = api.DestinyData.GetItemData(item.itemHash);
+                    Console.WriteLine("\t Name: " + info.itemName);
+                    Console.WriteLine("\t\t" + info.itemDescription);
+                }
+
+                charindex++;
+            }
+            Console.ReadLine();
 ```
 ###Notes:
 + DestinyAPI class is not tied to any player, it means you can load any player and reuse the object, as the only internal data it holds its the API KEY
