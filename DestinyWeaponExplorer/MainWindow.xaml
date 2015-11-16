@@ -7,18 +7,35 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"></RowDefinition>
-            <RowDefinition Height="5*"></RowDefinition>
+            <RowDefinition Height="4*"></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel Grid.ColumnSpan="3">
+        <StackPanel>
             <TextBlock Text="{Binding GamerTag}"></TextBlock>
             <TextBlock Text="{Binding type}"></TextBlock>
         </StackPanel>
+        <StackPanel Grid.Column="2">
+            <StackPanel Orientation="Horizontal">
+                <Label>Gamertag / Platform</Label>
+                <ComboBox Name="cb_platform">
+                    <ComboBox.Items>
+                        <ComboBoxItem>Xbox</ComboBoxItem>
+                        <ComboBoxItem>PSN</ComboBoxItem>
+                    </ComboBox.Items>
+                    
+                </ComboBox>
+            </StackPanel>
+                <TextBox Name="txt_gt"></TextBox>
+                <Button Click="Button_Click">Load/Refresh</Button>
+        </StackPanel>
         <ListView Grid.Row="1" ItemsSource="{Binding Characters}" 
                   ScrollViewer.HorizontalScrollBarVisibility="Visible"
-                  SelectionMode="Single" MaxHeight="800">
+                  SelectionMode="Single" MaxHeight="800" Grid.ColumnSpan="2">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="Focusable" Value="false"/>

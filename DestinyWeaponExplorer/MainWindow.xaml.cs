@@ -25,13 +25,23 @@ namespace DestinyWeaponExplorer
         public MainWindow()
         {
             InitializeComponent();
-            initPlayerInfo();
+            
         }
 
-        private async void initPlayerInfo()
+        private async void initPlayerInfo(string gamertag, bool isXbox )
         {
             player = await api.GetPlayer(new DestinyAPI.BungieUser() { GamerTag = "JPCortesP", type = DestinyAPI.MembershipType.Xbox });
-            this.DataContext = player;
+            if (player == null)
+            {
+                MessageBox.Show("GamerTag/Platform combination not found in Bungie");
+            }
+            else
+                this.DataContext = player;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            initPlayerInfo(txt_gt.Text, cb_platform.Text == "Xbox");
         }
     }
 }
