@@ -41,6 +41,18 @@ namespace DestinyAPI.db
             return new Manifest(tablas) ;
         }
 
+        public dynamic GetItemData(string itemHash)
+        {
+            var table = (from ex in Tables
+                         where ex.TableName == "DestinyInventoryItemDefinition"
+                         select ex).First();
+            var item = from ex in table.Rows
+                       where ex.id.ToString() == itemHash
+                       select ex;
+
+            return JObject.Parse(item.First().Json);
+        }
+
         private static List<ManifestTable> loadManifestData(string manifestFile)
         {
             List<ManifestTable> Lista = new List<ManifestTable>();
@@ -84,7 +96,6 @@ namespace DestinyAPI.db
                 }
             }
             return Lista;
-            throw new NotImplementedException();
         }
 
         private static void downloadManifest()

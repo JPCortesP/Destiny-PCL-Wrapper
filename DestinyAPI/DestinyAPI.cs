@@ -11,9 +11,14 @@ namespace DestinyAPI
     public sealed class DestinyAPI
     {
         private string _APIKEY;
-        public DestinyAPI(string APIKEY = "6def2424db3a4a8db1cef0a2c3a7807e")
+        public db.Manifest DestinyData {get; set;}
+        public DestinyAPI(string APIKEY = "6def2424db3a4a8db1cef0a2c3a7807e", bool initManifest = true)
         {
             this._APIKEY = APIKEY;
+            if (initManifest)
+            {
+                DestinyData = db.Manifest.Create();
+            }
         }
         /// <summary>
         /// Returns a Player Object, with a [optional] Character Collection, from

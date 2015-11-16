@@ -69,6 +69,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DestinyAPI\DestinyAPI.csproj">
+      <Project>{bb87cae1-5c9e-47af-8c2d-e18d1a4f274b}</Project>
+      <Name>DestinyAPI</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
