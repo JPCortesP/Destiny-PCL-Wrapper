@@ -24,7 +24,7 @@ namespace DestinyAPI.InternalTypes
         public int transferStatus { get; set; }
         public int state { get; set; }
         public int characterIndex { get; set; }
-        public object bucketHash { get; set; }
+        public string bucketHash { get; set; }
         public PrimaryStat primaryStat { get; set; }
     }
 

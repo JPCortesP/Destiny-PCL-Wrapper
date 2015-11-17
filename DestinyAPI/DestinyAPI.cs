@@ -68,7 +68,6 @@ namespace DestinyAPI
             using (hc)
             {
                 hc.DefaultRequestHeaders.Add("X-API-Key", _APIKEY);
-                hc.DefaultRequestHeaders.Add("Accept-Charset", "UTF-8");
 
                 return await hc.GetStringAsync(url);
 
@@ -113,13 +112,11 @@ namespace DestinyAPI
                    if (item.primaryStat != null)
                    {
                        newi.primaryStats_maximumValue = item.primaryStat.maximumValue;
-                       newi.primaryStats_statHash = item.primaryStat.statHash;
+                       newi.primaryStats_statHash = item.primaryStat.statHash.ToString();
                        newi.primaryStats_value = item.primaryStat.value;
                    }
-                   if (this.DestinyData != null)
-                   {
-                       newi.dbData = this.DestinyData.GetItemData(newi.itemHash);
-                   }
+                   //Inject Manifest DATA
+                   InjectManifestData(item, newi);
 
                    pl.Items.Add(newi);
                }
@@ -147,6 +144,23 @@ namespace DestinyAPI
            }
             );
         }
+
+        private void InjectManifestData(Item item, ItemBase newi)
+        {
+            if (this.DestinyData != null)
+            {
+                newi.dbData = this.DestinyData.GetItemData(newi.itemHash);
+                if (item.primaryStat != null)
+                {
+                    newi.statData = this.DestinyData.getStatsData(newi.primaryStats_statHash);
+                }
+                if (item.bucketHash != null)
+                {
+                    newi.bucketData = this.DestinyData.getBucketData(newi.bucketHash);
+                }
+            }
+        }
+
         private string getRace(object v)
         {
             switch (v.ToString())

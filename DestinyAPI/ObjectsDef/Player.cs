@@ -61,13 +61,19 @@ namespace DestinyAPI
         public int transferStatus { get; set; }
         public int state { get; set; }
         public int characterIndex { get; set; }
-        public object bucketHash { get; set; }
-        public object primaryStats_statHash { get; set; }
+        public string bucketHash { get; set; }
+        public string primaryStats_statHash { get; set; }
+
         public int primaryStats_value { get; set; }
         public int primaryStats_maximumValue { get; set; }
 
+        
         public dynamic dbData { get; set; }
-
+        public dynamic statData { get; set; }
+        public dynamic bucketData { get; set; }
+        
+        public bool Stats_Present { get { return primaryStats_statHash != null; } }
+        public string primaryStats_Name { get { return primaryStats_statHash != null? statData.statName : null; } }
         public string itemName { get { return (string)dbData.itemName; } }
         public string itemDescription { get { return (string)dbData.itemDescription; } }
         public string itemTypeName { get { return dbData.itemTypeName;  } }

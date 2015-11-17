@@ -16,7 +16,7 @@
 
     <Style TargetType="TextBlock" x:Key="txt_PrimaryStatsValue">
         <Setter Property="FontSize" Value="18"></Setter>
-        
+
     </Style>
     <Style TargetType="StackPanel" x:Key="sp_itemTextContainer">
         <Setter Property="Margin" Value="5"></Setter>
@@ -26,21 +26,42 @@
         <Setter Property="Height" Value="100" />
         <Setter Property="Width" Value="100" />
     </Style>
+    <Style TargetType="Image" x:Key="item_image_tooltip">
+        <Setter Property="Height" Value="300" />
+        <Setter Property="Width" Value="300" />
+    </Style>
+    <Style TargetType="StackPanel" x:Key="StatsVisibility">
+        <Setter Property="Visibility" Value="Collapsed"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Stats_Present}" Value="True">
+                <Setter Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+
     
+
     <DataTemplate x:Key="dt_ItemsView">
-        <StackPanel Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor,
+        <Border BorderBrush="Gray" BorderThickness="1">
+            <StackPanel Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor,
             AncestorType={x:Type ScrollContentPresenter}}}">
-            <StackPanel Orientation="Horizontal" MaxWidth="400">
-                <Image Source="{Binding Icon}" Style="{StaticResource item_image}" />
-                <StackPanel Style="{StaticResource sp_itemTextContainer}">
-                    <TextBlock Text="{Binding itemName}" Style="{StaticResource txt_itemName}" />
-                    <TextBlock Text="{Binding itemTypeName}" />
-                    <TextBlock Text="{Binding itemDescription}" Style="{StaticResource txt_itemDescription}" />
-                    <TextBlock Text="{Binding primaryStats_value}" Style="{StaticResource txt_PrimaryStatsValue}" />
+                <StackPanel Orientation="Horizontal" MaxWidth="400">
+                    <Image Source="{Binding Icon}" Style="{StaticResource item_image}" />
+                    <StackPanel Style="{StaticResource sp_itemTextContainer}">
+                        <TextBlock Text="{Binding itemName}" Style="{StaticResource txt_itemName}" />
+                        <TextBlock Text="{Binding itemTypeName}" />
+                        <TextBlock Text="{Binding itemDescription}" Style="{StaticResource txt_itemDescription}" />
+                        <StackPanel Orientation="Horizontal" Style="{StaticResource StatsVisibility}">
+                            <TextBlock Text="{Binding primaryStats_Name}" Style="{StaticResource txt_PrimaryStatsValue}"></TextBlock>
+                            <TextBlock>:&#160;</TextBlock>
+                            <TextBlock Text="{Binding primaryStats_value}" Style="{StaticResource txt_PrimaryStatsValue}" />
+                        </StackPanel>
+                    </StackPanel>
                 </StackPanel>
+
             </StackPanel>
-            
-        </StackPanel>
+        </Border>
     </DataTemplate>
-    
+
 </ResourceDictionary>

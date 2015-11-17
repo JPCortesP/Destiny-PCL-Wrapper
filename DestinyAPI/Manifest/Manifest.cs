@@ -52,6 +52,31 @@ namespace DestinyAPI.db
 
             return JObject.Parse(item.First().Json);
         }
+        public dynamic getBucketData (string bucketHash)
+        {
+            var table = (from ex in Tables
+                         where ex.TableName == "DestinyInventoryBucketDefinition"
+                         select ex).First();
+            var item = from ex in table.Rows
+                       where ex.id.ToString() == bucketHash
+                       select ex;
+
+            return JObject.Parse(item.First().Json);
+        }
+        public dynamic getStatsData(string statHash)
+        {
+            if (statHash == null)
+            {
+                return null;
+            }
+            var table = (from ex in Tables
+                         where ex.TableName == "DestinyStatDefinition"
+                         select ex).First();
+            var item = from ex in table.Rows
+                       where ex.id.ToString() == statHash
+                       select ex;
+            return JObject.Parse(item.First().Json);
+        }
 
         private static List<ManifestTable> loadManifestData(string manifestFile)
         {
@@ -73,25 +98,27 @@ namespace DestinyAPI.db
                 foreach (var tableName in tableNames)
                 {
                     string idKey = "id";
-                    if (tableName == "DestinyHistoricalStatsDefinition")
-                        break;//idKey = "key";
-                    ManifestTable table = new ManifestTable() { TableName = tableName, Rows = new List<ManifestRow>() };
-                    using (var sqCmd = new SQLiteCommand("SELECT * FROM " + tableName, sqConn))
+                    if (tableName != "DestinyHistoricalStatsDefinition")
                     {
-                        using (var sqReader = sqCmd.ExecuteReader())
+
+                        ManifestTable table = new ManifestTable() { TableName = tableName, Rows = new List<ManifestRow>() };
+                        using (var sqCmd = new SQLiteCommand("SELECT * FROM " + tableName, sqConn))
                         {
-                            while (sqReader.Read())
+                            using (var sqReader = sqCmd.ExecuteReader())
                             {
-                                
-                                long idData = (long)sqReader[idKey];
-                                byte[] jsonData = (byte[])sqReader["json"];
-                                string jsonString = Encoding.UTF8.GetString(jsonData);
-                                table.Rows.Add(new ManifestRow() { id = (UInt32)idData, Json = jsonString });
-                                
+                                while (sqReader.Read())
+                                {
+
+                                    long idData = (long)sqReader[idKey];
+                                    byte[] jsonData = (byte[])sqReader["json"];
+                                    string jsonString = Encoding.UTF8.GetString(jsonData);
+                                    table.Rows.Add(new ManifestRow() { id = (UInt32)idData, Json = jsonString });
+
+                                }
                             }
                         }
+                        Lista.Add(table);
                     }
-                    Lista.Add(table);
                 }
             }
             return Lista;
