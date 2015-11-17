@@ -64,9 +64,11 @@ namespace DestinyAPI
             }
             else
                 hc = new HttpClient();
+            
             using (hc)
             {
                 hc.DefaultRequestHeaders.Add("X-API-Key", _APIKEY);
+                hc.DefaultRequestHeaders.Add("Accept-Charset", "UTF-8");
 
                 return await hc.GetStringAsync(url);
 

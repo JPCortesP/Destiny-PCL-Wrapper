@@ -76,7 +76,6 @@ namespace DestinyAPI.db
                     if (tableName == "DestinyHistoricalStatsDefinition")
                         break;//idKey = "key";
                     ManifestTable table = new ManifestTable() { TableName = tableName, Rows = new List<ManifestRow>() };
-                    //var manifestBranch = new ManifestBranch { TableName = tableName, Json = new List<dynamic>(), JsonString = new List<string>() };
                     using (var sqCmd = new SQLiteCommand("SELECT * FROM " + tableName, sqConn))
                     {
                         using (var sqReader = sqCmd.ExecuteReader())
@@ -86,7 +85,7 @@ namespace DestinyAPI.db
                                 
                                 long idData = (long)sqReader[idKey];
                                 byte[] jsonData = (byte[])sqReader["json"];
-                                string jsonString = Encoding.ASCII.GetString(jsonData);
+                                string jsonString = Encoding.UTF8.GetString(jsonData);
                                 table.Rows.Add(new ManifestRow() { id = (UInt32)idData, Json = jsonString });
                                 
                             }
