@@ -40,23 +40,25 @@
     </Style>
 
 
-    
+
 
     <DataTemplate x:Key="dt_ItemsView">
-        <Border BorderBrush="Gray" BorderThickness="1">
-            <StackPanel Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor,
-            AncestorType={x:Type ScrollContentPresenter}}}">
-                <StackPanel Orientation="Horizontal" MaxWidth="400">
+        <Border BorderBrush="Gray" BorderThickness="1"  Width="320" Height="120">
+            <StackPanel>
+                <!--Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor,
+            AncestorType={x:Type ScrollContentPresenter}}}">-->
+                <StackPanel Orientation="Horizontal">
                     <Image Source="{Binding Icon}" Style="{StaticResource item_image}" />
                     <StackPanel Style="{StaticResource sp_itemTextContainer}">
                         <TextBlock Text="{Binding itemName}" Style="{StaticResource txt_itemName}" />
-                        <TextBlock Text="{Binding itemTypeName}" />
-                        <TextBlock Text="{Binding itemDescription}" Style="{StaticResource txt_itemDescription}" />
                         <StackPanel Orientation="Horizontal" Style="{StaticResource StatsVisibility}">
                             <TextBlock Text="{Binding primaryStats_Name}" Style="{StaticResource txt_PrimaryStatsValue}"></TextBlock>
-                            <TextBlock>:&#160;</TextBlock>
+                            <TextBlock Style="{StaticResource txt_PrimaryStatsValue}">:&#160;</TextBlock>
                             <TextBlock Text="{Binding primaryStats_value}" Style="{StaticResource txt_PrimaryStatsValue}" />
                         </StackPanel>
+                        <TextBlock Text="{Binding itemTypeName}" />
+                        <TextBlock Text="{Binding itemDescription}" Style="{StaticResource txt_itemDescription}" />
+
                     </StackPanel>
                 </StackPanel>
 

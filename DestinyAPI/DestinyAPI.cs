@@ -97,26 +97,47 @@ namespace DestinyAPI
                };
                foreach (var item in pr.items)
                {
-                   var newi = new ItemBase();
-
-                   newi.bucketHash = item.bucketHash;
-                   newi.characterIndex = item.characterIndex;
-                   newi.damageType = item.damageType;
-                   newi.damageTypeHash = item.damageTypeHash;
-                   newi.isGridComplete = item.isGridComplete;
-                   newi.itemHash = item.itemHash.ToString();
-                   newi.itemId = item.itemId;
-                   newi.quantity = item.quantity;
-                   newi.state = item.state;
-                   newi.transferStatus = item.transferStatus;
-                   if (item.primaryStat != null)
+                   var dbData = this.DestinyData.GetItemData(item.itemHash.ToString());
+                   var bucketData = this.DestinyData.getBucketData(item.bucketHash);
+                   ItemBase newi;
+                   if (isGear((string)dbData.itemTypeName))
                    {
-                       newi.primaryStats_maximumValue = item.primaryStat.maximumValue;
-                       newi.primaryStats_statHash = item.primaryStat.statHash.ToString();
-                       newi.primaryStats_value = item.primaryStat.value;
+                       var statData = this.DestinyData.getStatsData(item.primaryStat.statHash.ToString());
+                       newi = new ItemGear(
+                           (Int64)item.itemHash, item.itemId, (object)dbData, item.quantity, (object)bucketData,
+                       item.isGridComplete, item.transferStatus, item.state, item.characterIndex,
+                       item.bucketHash, 
+                       item.damageType, (Int64)item.damageTypeHash, item.primaryStat.maximumValue, (Int64)item.primaryStat.statHash,
+                       item.primaryStat.value, (object)statData
+                       );
                    }
+                   else
+                   {
+                        newi = new ItemBase((Int64)item.itemHash, item.itemId, (object)dbData, item.quantity, (object)bucketData,
+                       item.isGridComplete, item.transferStatus, item.state, item.characterIndex,
+                       item.bucketHash);
+                   }
+                  
+
+
+                   //newi.damageType = item.damageType;
+                   //newi.damageTypeHash = item.damageTypeHash;
+
+                   //if (item.primaryStat != null)
+                   //{
+                   //    newi.primaryStats_maximumValue = item.primaryStat.maximumValue;
+                   //    newi.primaryStats_statHash = item.primaryStat.statHash.ToString();
+                   //    newi.primaryStats_value = item.primaryStat.value;
+                   //}
                    //Inject Manifest DATA
-                   InjectManifestData(item, newi);
+                   //if (this.DestinyData != null)
+                   //{
+                   //    if (item.primaryStat != null)
+                   //    {
+                   //        newi.statData = this.DestinyData.getStatsData(newi.primaryStats_statHash);
+                   //    }
+
+                   //}
 
                    pl.Items.Add(newi);
                }
@@ -147,18 +168,7 @@ namespace DestinyAPI
 
         private void InjectManifestData(Item item, ItemBase newi)
         {
-            if (this.DestinyData != null)
-            {
-                newi.dbData = this.DestinyData.GetItemData(newi.itemHash);
-                if (item.primaryStat != null)
-                {
-                    newi.statData = this.DestinyData.getStatsData(newi.primaryStats_statHash);
-                }
-                if (item.bucketHash != null)
-                {
-                    newi.bucketData = this.DestinyData.getBucketData(newi.bucketHash);
-                }
-            }
+            
         }
 
         private string getRace(object v)
@@ -194,6 +204,31 @@ namespace DestinyAPI
                 default:
                     return classType.ToString();
             }
+        }
+
+        private bool isGear (string itemNameType)
+        {
+            var gearTypes = new List<string>()
+            {
+                "Scout Rifle"
+                ,"Sniper Rifle"
+                ,"Sword"
+                ,"Ghost Shell"
+                ,"Helmet"
+                ,"Gauntlets"
+                ,"Chest Armor"
+                ,"Leg Armor"
+                ,"Titan Mark"
+                ,"Titan Artifact"
+                ,"Pulse Rifle"
+                ,"Rocket Launcher"
+                ,"Hunter Cloak"
+                ,"Hunter Artifact"
+                ,"Warlock Bond"
+                ,"Warlock Artifact"
+            };
+            return gearTypes.Contains(itemNameType);
+                    
         }
         #endregion
 

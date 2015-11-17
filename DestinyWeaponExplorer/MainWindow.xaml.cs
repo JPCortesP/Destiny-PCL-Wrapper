@@ -28,15 +28,15 @@ namespace DestinyWeaponExplorer
         public MainWindow()
         {
             InitializeComponent();
-            paneles[0] = char1;
-            paneles[1] = char2;
-            paneles[2] = char3;
-            paneles[3] = char4; // Vault
+            //paneles[0] = char1;
+            //paneles[1] = char2;
+            //paneles[2] = char3;
+            //paneles[3] = char4; // Vault
 
-            listviews[0] = lv_1;
-            listviews[1] = lv_2;
-            listviews[2] = lv_3;
-            listviews[3] = lv_4;
+            //listviews[0] = lv_1;
+            //listviews[1] = lv_2;
+            //listviews[2] = lv_3;
+            //listviews[3] = lv_4;
             cb_platform.SelectedIndex = 0;
 
 
@@ -53,12 +53,13 @@ namespace DestinyWeaponExplorer
             else
             {
                 this.DataContext = player;
-                for (int i = 0; i < player.Characters.Count; i++)
-                {
-                    paneles[i].DataContext = player.Characters[i];
-                    listviews[i].DataContext = player.Characters[i].Items;
-                }
-                listviews[3].DataContext = player.Items.Where(g => g.characterIndex == -1).ToList();
+                this.lv_items.DataContext = player.Items
+                    .Where(t => t.GetType() == typeof(DestinyAPI.ItemGear))
+                    .Cast<DestinyAPI.ItemGear>()
+                    .OrderByDescending(g=>g.primaryStats_value)
+                    .ToList();
+
+                    
 
             }
             

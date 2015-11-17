@@ -43,14 +43,20 @@ namespace DestinyAPI.db
 
         public dynamic GetItemData(string itemHash)
         {
-            var table = (from ex in Tables
-                         where ex.TableName == "DestinyInventoryItemDefinition"
-                         select ex).First();
-            var item = from ex in table.Rows
-                       where ex.id.ToString() == itemHash
-                       select ex;
+            if (itemHash != null)
+            {
+                var table = (from ex in Tables
+                             where ex.TableName == "DestinyInventoryItemDefinition"
+                             select ex).First();
+                var item = from ex in table.Rows
+                           where ex.id.ToString() == itemHash
+                           select ex;
 
-            return JObject.Parse(item.First().Json);
+                return JObject.Parse(item.First().Json);
+            }
+            else
+                return null;
+            
         }
         public dynamic getBucketData (string bucketHash)
         {
