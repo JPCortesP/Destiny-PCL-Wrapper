@@ -12,8 +12,7 @@ namespace DestinyAPI
     public sealed class DestinyAPI
     {
         private string _APIKEY;
-        private bool UseCookies = false;
-        private CookieContainer cookies;
+        
         public db.Manifest DestinyData {get; set;}
         /// <summary>
         /// Creates a new instance of DestinyAPI. Use the created object to performs actions. 
@@ -22,18 +21,14 @@ namespace DestinyAPI
         /// </summary>
         /// <param name="APIKEY">API Key para Bungie.NET</param>
         /// <param name="initManifest">True para inicializar Manifesto. True por defecto.</param>
-        public DestinyAPI(string APIKEY = "6def2424db3a4a8db1cef0a2c3a7807e", bool initManifest = true, CookieContainer cookies = null)
+        public DestinyAPI(string APIKEY = "6def2424db3a4a8db1cef0a2c3a7807e", bool initManifest = true)
         {
             this._APIKEY = APIKEY;
             if (initManifest)
             {
                 DestinyData = db.Manifest.Create();
             }
-            if (cookies != null)
-            {
-                UseCookies = true;
-                this.cookies = cookies;
-            }
+            
         }
         /// <summary>
         /// Returns a Player Object, with a [optional] Character Collection, from
@@ -45,14 +40,14 @@ namespace DestinyAPI
         public async Task<Player> GetPlayer(BungieUser user)
         {
                 var url = String.Format(APIUrls.URls["SearchPlayer"], (int)user.type, user.GamerTag);
-                var SearchResultJS = await GetStringAsync(url);
+                var SearchResultJS = await GetStringAsync(url, user.cookies);
                 var SearchResult = Newtonsoft.Json.JsonConvert.DeserializeObject<InternalTypes.PlayerSearchResult>(SearchResultJS);
                 if (SearchResult.ErrorStatus != "Success")
                 {
                     return null;
                 }
                 url = string.Format(APIUrls.URls["GetPlayerDetail"], (int)user.type, SearchResult.Response);
-                var PlayerResultJS = await GetStringAsync(url);
+                var PlayerResultJS = await GetStringAsync(url, user.cookies);
                 var PlayerResult = await Task.Run(() =>
                        Newtonsoft.Json.JsonConvert.DeserializeObject<InternalTypes.PlayerResultRootObject>(PlayerResultJS));
                 var retorno = await ConvertirAPlayer(PlayerResult, user);
@@ -60,12 +55,12 @@ namespace DestinyAPI
 
         }
 
-        private async Task<string> GetStringAsync(string url)
+        private async Task<string> GetStringAsync(string url, CookieContainer cookies = null)
         {
             HttpClient hc;
-            if (UseCookies)
+            if (cookies !=null)
             {
-                hc = new HttpClient(new HttpClientHandler() { CookieContainer = this.cookies });
+                hc = new HttpClient(new HttpClientHandler() { CookieContainer = cookies });
             }
             else
                 hc = new HttpClient();

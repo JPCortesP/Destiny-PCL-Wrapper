@@ -142,14 +142,14 @@ namespace DestinyAPI.InternalTypes
         public long face { get; set; }
         public object skinColor { get; set; }
         public long lipColor { get; set; }
-        public int eyeColor { get; set; }
-        public int hairColor { get; set; }
+        public long eyeColor { get; set; }
+        public long hairColor { get; set; }
         public object featureColor { get; set; }
         public object decalColor { get; set; }
         public bool wearHelmet { get; set; }
-        public int hairIndex { get; set; }
-        public int featureIndex { get; set; }
-        public int decalIndex { get; set; }
+        public long hairIndex { get; set; }
+        public long featureIndex { get; set; }
+        public long decalIndex { get; set; }
     }
 
     internal class Equipment

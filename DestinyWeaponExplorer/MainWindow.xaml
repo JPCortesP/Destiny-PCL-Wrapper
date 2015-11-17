@@ -6,14 +6,21 @@
         xmlns:local="clr-namespace:DestinyWeaponExplorer"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="styles/estilos.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"></RowDefinition>
-            <RowDefinition Height="4*"></RowDefinition>
+            <RowDefinition Height="6*"></RowDefinition>
         </Grid.RowDefinitions>
         <StackPanel>
             <TextBlock Text="{Binding GamerTag}"></TextBlock>
@@ -22,7 +29,7 @@
         <StackPanel Grid.Column="2">
             <StackPanel Orientation="Horizontal">
                 <Label>Gamertag / Platform</Label>
-                <ComboBox Name="cb_platform" IsEnabled="{Binding ElementName=cb_publicAPI, Path=IsChecked}">
+                <ComboBox Name="cb_platform">
                     <ComboBox.Items>
                         <ComboBoxItem>Xbox</ComboBoxItem>
                         <ComboBoxItem>PSN</ComboBoxItem>
@@ -30,62 +37,66 @@
                 </ComboBox>
                 <CheckBox Name="cb_publicAPI" IsChecked="True">Use Public API</CheckBox>
             </StackPanel>
-            <TextBox Name="txt_gt"  IsEnabled="{Binding ElementName=cb_publicAPI, Path=IsChecked}"></TextBox>
-                <Button Click="Button_Click">Load/Refresh</Button>
+            <TextBox Name="txt_gt">JPCortesP</TextBox>
+            <Button Click="Button_Click">Load/Refresh</Button>
         </StackPanel>
-        <ListView Grid.Row="1" ItemsSource="{Binding Characters}" 
-                  ScrollViewer.HorizontalScrollBarVisibility="Visible"
-                  SelectionMode="Single" MaxHeight="800" Grid.ColumnSpan="2">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="Focusable" Value="false"/>
-                </Style>
-            </ListView.ItemContainerStyle>
-
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal" ScrollViewer.CanContentScroll="False"></StackPanel>
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Width="300">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Class}"></TextBlock>
-                        </StackPanel>
-                        
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Race}"></TextBlock>
-                            <TextBlock Text="{Binding Gender}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding BaseLevel}"></TextBlock>
-                            <TextBlock Text="{Binding LightLevel}" />
-                        </StackPanel>
-                        <ScrollViewer>
-                            <ListView ItemsSource="{Binding Items}">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Image Source="{Binding Icon}" />
-                                            <StackPanel>
-                                                <TextBlock Text="{Binding itemName}" />
-                                                <TextBlock Text="{Binding itemTypeName}" TextWrapping="Wrap" />
-                                                <TextBlock Text="{Binding itemDescription}" />
-                                            </StackPanel>
-                                            
-                                        </StackPanel>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                        </ScrollViewer>
-                        
-                        
+        <Grid Grid.Row="1" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition  Height="8*"/>
+            </Grid.RowDefinitions>
+            <!--Encabezados-->
+            <StackPanel Name="char1">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{Binding EmblemPath}" Width="50" Height="50"></Image>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Class}"></TextBlock>
+                        <TextBlock Text="{Binding Race}"></TextBlock>
+                        <TextBlock Text="{Binding LightLevel}"></TextBlock>
                     </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Name="char2" Grid.Column="1">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{Binding EmblemPath}" Width="50" Height="50"></Image>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Class}"></TextBlock>
+                        <TextBlock Text="{Binding Race}"></TextBlock>
+                        <TextBlock Text="{Binding LightLevel}"></TextBlock>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Name="char3" Grid.Column="2">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{Binding EmblemPath}" Width="50" Height="50"></Image>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Class}"></TextBlock>
+                        <TextBlock Text="{Binding Race}"></TextBlock>
+                        <TextBlock Text="{Binding LightLevel}"></TextBlock>
+                    </StackPanel>
+                </StackPanel>
+
+            </StackPanel>
+            <StackPanel Name="char4" Grid.Column="3">
+                <TextBlock Text="{Binding Class}">Vault</TextBlock>
+
+            </StackPanel>
+            <!--Fin Encabezados-->
+            <!--ListViews-->
+            <ListView Name="lv_1" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding}" ItemTemplate="{StaticResource dt_ItemsView}"  ScrollViewer.HorizontalScrollBarVisibility="Hidden"/>
+            <ListView Name="lv_2" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding}"  ItemTemplate="{StaticResource dt_ItemsView}"   ScrollViewer.HorizontalScrollBarVisibility="Hidden" />
+            <ListView Name="lv_3" Grid.Row="1" Grid.Column="2" ItemsSource="{Binding}"  ItemTemplate="{StaticResource dt_ItemsView}"   ScrollViewer.HorizontalScrollBarVisibility="Hidden" />
+            <ListView Name="lv_4" Grid.Row="1" Grid.Column="3" ItemsSource="{Binding}"  ItemTemplate="{StaticResource dt_ItemsView}"   ScrollViewer.HorizontalScrollBarVisibility="Hidden" />
+
+
+            <!--FIN ListViews-->
+        </Grid>
+
     </Grid>
 </Window>
