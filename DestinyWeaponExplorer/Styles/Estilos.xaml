@@ -47,7 +47,7 @@
             <StackPanel>
                 <!--Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor,
             AncestorType={x:Type ScrollContentPresenter}}}">-->
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
                     <Image Source="{Binding Icon}" Style="{StaticResource item_image}" />
                     <StackPanel Style="{StaticResource sp_itemTextContainer}">
                         <TextBlock Text="{Binding itemName}" Style="{StaticResource txt_itemName}" />

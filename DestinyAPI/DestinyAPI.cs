@@ -226,6 +226,8 @@ namespace DestinyAPI
                 ,"Hunter Artifact"
                 ,"Warlock Bond"
                 ,"Warlock Artifact"
+                ,"Shotgun"
+                ,"Auto Rifle"
             };
             return gearTypes.Contains(itemNameType);
                     

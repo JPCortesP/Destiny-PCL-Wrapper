@@ -16,19 +16,12 @@ namespace DestinyAPI
         //public string MainClanTag { get; set; }
         public string MembershipId { get; set; }
         public List<ItemBase> Items { get; set; }
-        public List<ItemBase> Gear
+        public List<ItemGear> Gear
         {
             get
             {
                 return Items != null ? Items
-                    .Where(g => g.itemTypeName != "Titan Subclass" )
-                    .Where(g => g.itemTypeName != "Warlock Subclass")
-                    .Where(g => g.itemTypeName != "Hunter Subclass")
-                    .Where(g => g.itemTypeName != "Vehicle")
-                    .Where(g => g.itemTypeName != "Ship")
-                    .Where(g => g.itemTypeName != "Armor Shader")
-                    .Where(g => g.itemTypeName != "Emblem")
-                    .Where(g => g.itemTypeName != "Emote")
+                    .OfType<ItemGear>()
 
                     .ToList() : null;
             }
@@ -96,7 +89,10 @@ namespace DestinyAPI
         public string itemName { get { return (string)dbData.itemName; } }
         public string itemDescription { get { return (string)dbData.itemDescription; } }
         public string itemTypeName { get { return dbData.itemTypeName; } }
-        
+        public override string ToString()
+        {
+            return itemName;
+        }
 
     }
     
@@ -131,6 +127,8 @@ namespace DestinyAPI
 
         public bool Stats_Present { get { return primaryStats_statHash != null; } }
         public string primaryStats_Name { get { return primaryStats_statHash != null ? statData.statName : null; } }
+        public string tierTypeName { get { return dbData.tierTypeName; } }
+
 
     }
 
