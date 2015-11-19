@@ -102,7 +102,7 @@ namespace DestinyWeaponExplorer
                 var valor = (cb_publicAPI.IsChecked.HasValue ? cb_publicAPI.IsChecked.Value : true);
                 if (!valor)
                 {
-                    LoginWindo login = new LoginWindo();
+                    LoginWindow login = new LoginWindow();
                     login.ShowDialog();
                     if (login.Resultado)
                     {

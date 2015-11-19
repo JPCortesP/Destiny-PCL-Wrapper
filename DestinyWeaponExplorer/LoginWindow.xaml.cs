@@ -19,12 +19,12 @@ namespace DestinyWeaponExplorer
     /// <summary>
     /// Interaction logic for LoginWindo.xaml
     /// </summary>
-    public partial class LoginWindo : Window
+    public partial class LoginWindow : Window
     {
         public CookieContainer cookies;
         private Uri url = new Uri("https://www.bungie.net");
         public bool Resultado = false;
-        public LoginWindo()
+        public LoginWindow()
         {
             InitializeComponent();
             browser.Navigate("https://www.bungie.net/en/User/SignIn/Xuid?bru=%252f");

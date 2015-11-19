@@ -69,7 +69,8 @@ namespace DestinyAPI.Test
         public void JPDoesntHaveThe_FUCKING_Messenger()
         {
             DestinyAPI api = new DestinyAPI();
-            var player = api.GetPlayer(new BungieUser() {GamerTag = "JPCortesP", type = MembershipType.Xbox }).Result;
+            var player = api.GetPlayer(new BungieUser()
+            { GamerTag = "JPCortesP", type = MembershipType.Xbox }).Result;
             var Manifest = db.Manifest.Create();
             var items = (from ex in Manifest.Tables
                          where ex.TableName == "DestinyInventoryItemDefinition"
