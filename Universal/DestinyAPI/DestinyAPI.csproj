@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DestinyAPI.cs" />
+    <Compile Include="Manifest\DestinyAPI.ManifestRelated.cs" />
     <Compile Include="Dictionaries\APIUrls.cs" />
     <Compile Include="Enums\MembershipType.cs" />
     <Compile Include="Exceptions\NotFoundException.cs" />

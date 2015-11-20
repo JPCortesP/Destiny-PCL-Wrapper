@@ -6,15 +6,17 @@ using System.Text;
 using System.Threading.Tasks;
 using DestinyAPI.InternalTypes;
 using System.Net;
+using DestinyAPI.db;
+using Windows.Storage;
 
 namespace DestinyAPI
 {
-    public sealed class DestinyAPI
+    public  sealed partial class DestinyAPI : IDestinyAPI
     {
         private string _APIKEY;
-        
-        public db.Manifest DestinyData {get; set;}
-        private bool isReady { get { return DestinyData != null; } }
+
+        public List<ManifestTable> DestinyData { get; set; }
+
         /// <summary>
         /// Creates a new instance of DestinyAPI. Use the created object to performs actions. 
         /// Can throw exceptions if you don't specify any parameter, or if you set initManifest to true (for example,
@@ -30,15 +32,18 @@ namespace DestinyAPI
         /// Loads in memory manifest data. 
         /// </summary>
         /// <returns>bool according to success</returns>
-        public async Task<bool> LoadManifestData( bool reloadIfExists = false, Windows.Storage.StorageFile archivo = null)
+        public async Task<bool> LoadManifestData( bool reloadIfExists = false)
         {
-            var algo =  db.Manifest.Create();
-            if (algo != null)
-            {
-                DestinyData = algo;
-            }
-            return algo != null;
+            bool descarga = await downloadManifest(reloadIfExists);
+            bool Carga = await CargarManifestData();
+            return descarga;
+            
         }
+
+        
+
+
+
         /// <summary>
         /// Returns a Player Object, with a [optional] Character Collection, from
         /// a user object. You can build your own user object. IF you provided the constructor 
@@ -48,23 +53,24 @@ namespace DestinyAPI
         /// <returns>Player object if found, null otherwise</returns>
         public async Task<Player> GetPlayer(BungieUser user)
         {
-            if (!isReady)
-            {
-                throw new NotImplementedException("No se ha hecho la vaina de hacerlo sin Data");
-            }
-                var url = String.Format(APIUrls.URls["SearchPlayer"], (int)user.type, user.GamerTag);
-                var SearchResultJS = await GetStringAsync(url, user.cookies);
-                var SearchResult = Newtonsoft.Json.JsonConvert.DeserializeObject<InternalTypes.PlayerSearchResult>(SearchResultJS);
-                if (SearchResult.ErrorStatus != "Success")
-                {
-                    return null;
-                }
-                url = string.Format(APIUrls.URls["GetPlayerDetail"], (int)user.type, SearchResult.Response);
-                var PlayerResultJS = await GetStringAsync(url, user.cookies);
-                var PlayerResult = await Task.Run(() =>
-                       Newtonsoft.Json.JsonConvert.DeserializeObject<InternalTypes.PlayerResultRootObject>(PlayerResultJS));
-                var retorno = await ConvertirAPlayer(PlayerResult, user);
-                return retorno;
+            throw new NotImplementedException();
+            //if (!isReady)
+            //{
+            //    throw new NotImplementedException("No se ha hecho la vaina de hacerlo sin Data");
+            //}
+            //    var url = String.Format(APIUrls.URls["SearchPlayer"], (int)user.type, user.GamerTag);
+            //    var SearchResultJS = await GetStringAsync(url, user.cookies);
+            //    var SearchResult = Newtonsoft.Json.JsonConvert.DeserializeObject<InternalTypes.PlayerSearchResult>(SearchResultJS);
+            //    if (SearchResult.ErrorStatus != "Success")
+            //    {
+            //        return null;
+            //    }
+            //    url = string.Format(APIUrls.URls["GetPlayerDetail"], (int)user.type, SearchResult.Response);
+            //    var PlayerResultJS = await GetStringAsync(url, user.cookies);
+            //    var PlayerResult = await Task.Run(() =>
+            //           Newtonsoft.Json.JsonConvert.DeserializeObject<InternalTypes.PlayerResultRootObject>(PlayerResultJS));
+            //    var retorno = await ConvertirAPlayer(PlayerResult, user);
+            //    return retorno;
 
         }
 
@@ -89,95 +95,95 @@ namespace DestinyAPI
 
 
         #region Helpers
-        private async Task<Player> ConvertirAPlayer(PlayerResultRootObject playerResult, BungieUser user)
-        {
-            if (playerResult.ErrorStatus != "Success")
-            {
-                return null;
-            }
-            var pr = playerResult.Response.data;
-            return await Task.Run(() =>
-           {
-               var pl = new Player()
-               {
-                   GamerTag = user.GamerTag,
-                   Grimoire = pr.characters.First().characterBase.grimoireScore,
-                   MembershipId = pr.characters.First().characterBase.membershipId,
+        //private async Task<Player> ConvertirAPlayer(PlayerResultRootObject playerResult, BungieUser user)
+        //{
+        //    if (playerResult.ErrorStatus != "Success")
+        //    {
+        //        return null;
+        //    }
+        //    var pr = playerResult.Response.data;
+        //    return await Task.Run(() =>
+        //   {
+        //       var pl = new Player()
+        //       {
+        //           GamerTag = user.GamerTag,
+        //           Grimoire = pr.characters.First().characterBase.grimoireScore,
+        //           MembershipId = pr.characters.First().characterBase.membershipId,
                    
-                   type = user.type,
-                   Characters = new List<Character>(),
-                   Items = new List<ItemBase>()
-               };
-               foreach (var item in pr.items)
-               {
-                   var dbData = this.DestinyData.GetItemData(item.itemHash.ToString());
-                   var bucketData = this.DestinyData.getBucketData(item.bucketHash);
-                   ItemBase newi;
-                   if (isGear((string)dbData.itemTypeName))
-                   {
-                       var statData = this.DestinyData.getStatsData(item.primaryStat.statHash.ToString());
-                       newi = new ItemGear(
-                           (Int64)item.itemHash, item.itemId, (object)dbData, item.quantity, (object)bucketData,
-                       item.isGridComplete, item.transferStatus, item.state, item.characterIndex,
-                       item.bucketHash, 
-                       item.damageType, (Int64)item.damageTypeHash, item.primaryStat.maximumValue, (Int64)item.primaryStat.statHash,
-                       item.primaryStat.value, (object)statData
-                       );
-                   }
-                   else
-                   {
-                        newi = new ItemBase((Int64)item.itemHash, item.itemId, (object)dbData, item.quantity, (object)bucketData,
-                       item.isGridComplete, item.transferStatus, item.state, item.characterIndex,
-                       item.bucketHash);
-                   }
+        //           type = user.type,
+        //           Characters = new List<Character>(),
+        //           Items = new List<ItemBase>()
+        //       };
+        //       foreach (var item in pr.items)
+        //       {
+        //           var dbData = this.DestinyData.GetItemData(item.itemHash.ToString());
+        //           var bucketData = this.DestinyData.getBucketData(item.bucketHash);
+        //           ItemBase newi;
+        //           if (isGear((string)dbData.itemTypeName))
+        //           {
+        //               var statData = this.DestinyData.getStatsData(item.primaryStat.statHash.ToString());
+        //               newi = new ItemGear(
+        //                   (Int64)item.itemHash, item.itemId, (object)dbData, item.quantity, (object)bucketData,
+        //               item.isGridComplete, item.transferStatus, item.state, item.characterIndex,
+        //               item.bucketHash, 
+        //               item.damageType, (Int64)item.damageTypeHash, item.primaryStat.maximumValue, (Int64)item.primaryStat.statHash,
+        //               item.primaryStat.value, (object)statData
+        //               );
+        //           }
+        //           else
+        //           {
+        //                newi = new ItemBase((Int64)item.itemHash, item.itemId, (object)dbData, item.quantity, (object)bucketData,
+        //               item.isGridComplete, item.transferStatus, item.state, item.characterIndex,
+        //               item.bucketHash);
+        //           }
                   
 
 
-                   //newi.damageType = item.damageType;
-                   //newi.damageTypeHash = item.damageTypeHash;
+        //           //newi.damageType = item.damageType;
+        //           //newi.damageTypeHash = item.damageTypeHash;
 
-                   //if (item.primaryStat != null)
-                   //{
-                   //    newi.primaryStats_maximumValue = item.primaryStat.maximumValue;
-                   //    newi.primaryStats_statHash = item.primaryStat.statHash.ToString();
-                   //    newi.primaryStats_value = item.primaryStat.value;
-                   //}
-                   //Inject Manifest DATA
-                   //if (this.DestinyData != null)
-                   //{
-                   //    if (item.primaryStat != null)
-                   //    {
-                   //        newi.statData = this.DestinyData.getStatsData(newi.primaryStats_statHash);
-                   //    }
+        //           //if (item.primaryStat != null)
+        //           //{
+        //           //    newi.primaryStats_maximumValue = item.primaryStat.maximumValue;
+        //           //    newi.primaryStats_statHash = item.primaryStat.statHash.ToString();
+        //           //    newi.primaryStats_value = item.primaryStat.value;
+        //           //}
+        //           //Inject Manifest DATA
+        //           //if (this.DestinyData != null)
+        //           //{
+        //           //    if (item.primaryStat != null)
+        //           //    {
+        //           //        newi.statData = this.DestinyData.getStatsData(newi.primaryStats_statHash);
+        //           //    }
 
-                   //}
+        //           //}
 
-                   pl.Items.Add(newi);
-               }
-               int charCount = 0;
-               foreach (var item in pr.characters)
-               {
-                   var pers = new Character();
-                   pers.BaseLevel = item.characterLevel;
-                   pers.EmblemBackgroundPath = item.backgroundPath;
-                   pers.EmblemHash = item.emblemHash.ToString();
-                   pers.EmblemPath = item.emblemPath;
-                   pers.LightLevel = item.characterBase.powerLevel;
-                   pers.CharacterId = item.characterBase.characterId;
+        //           pl.Items.Add(newi);
+        //       }
+        //       int charCount = 0;
+        //       foreach (var item in pr.characters)
+        //       {
+        //           var pers = new Character();
+        //           pers.BaseLevel = item.characterLevel;
+        //           pers.EmblemBackgroundPath = item.backgroundPath;
+        //           pers.EmblemHash = item.emblemHash.ToString();
+        //           pers.EmblemPath = item.emblemPath;
+        //           pers.LightLevel = item.characterBase.powerLevel;
+        //           pers.CharacterId = item.characterBase.characterId;
 
-                   pers.Class = getClass(item.characterBase.classType);
-                   pers.Gender = getGender(item.characterBase.genderType);
-                   pers.Race = getRace(item.characterBase.raceHash);
-                   pers.Items = pl.Items.Where(g => g.characterIndex == charCount).ToList();
-                   pl.Characters.Add(pers);
-                   charCount++;
-               }
+        //           pers.Class = getClass(item.characterBase.classType);
+        //           pers.Gender = getGender(item.characterBase.genderType);
+        //           pers.Race = getRace(item.characterBase.raceHash);
+        //           pers.Items = pl.Items.Where(g => g.characterIndex == charCount).ToList();
+        //           pl.Characters.Add(pers);
+        //           charCount++;
+        //       }
                
 
-               return pl;
-           }
-            );
-        }
+        //       return pl;
+        //   }
+        //    );
+        //}
 
         private void InjectManifestData(Item item, ItemBase newi)
         {
@@ -247,5 +253,12 @@ namespace DestinyAPI
         }
         #endregion
 
+    }
+
+    public interface IDestinyAPI
+    {
+        List<db.ManifestTable> DestinyData { get; set; }
+        Task<bool> LoadManifestData(bool reloadIfExists = false);
+        Task<Player> GetPlayer(BungieUser user);
     }
 }

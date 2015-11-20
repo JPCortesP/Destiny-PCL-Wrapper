@@ -13,155 +13,93 @@ using System.Threading.Tasks;
 
 namespace DestinyAPI.db
 {
-    public partial class Manifest
-    {
-        private static Windows.Storage.StorageFolder Folder = Windows.Storage.ApplicationData.Current.LocalFolder;
+    //public partial class Manifest
+    //{
 
-        public List<ManifestTable> Tables { get; set; }
+    //    public List<ManifestTable> Tables { get; set; }
 
-        private Manifest(List<ManifestTable> _tables)
-        {
-            this.Tables = _tables;
-            //https://bungie.net/common/destiny_content/sqlite/en/world_sql_content_87546da386887a26a50621a84eab1548.content
+    //    private Manifest(List<ManifestTable> _tables)
+    //    {
+    //        this.Tables = _tables;
+    //        //https://bungie.net/common/destiny_content/sqlite/en/world_sql_content_87546da386887a26a50621a84eab1548.content
 
-        }
-        public static Manifest Create(bool TryToUpdateIfExists = false)
-        {
-            try
-            {
-                var resultado = downloadManifest().Result;
-                if (!resultado)
-                    throw new InvalidOperationException("The Manifest file doesn't exist, and couldn't be downloaded");
-
-                //if (!File.Exists(manifestFile))
-                //{
-                //    var resultado = await downloadManifest();
-                //}
-                //else if (TryToUpdateIfExists)
-                //{
-                //    var resultado = await downloadManifest();
-                //}
-                //if (!File.Exists(manifestFile))
+    //    }
 
 
-                List<ManifestTable> tablas = loadManifestData("").Result;
-                return new Manifest(tablas);
-            }
-            catch (Exception ex)
-            {
-                return null;
-                throw new InvalidOperationException("The Manifest file doesn't exist, and couldn't be downloaded", ex);
-            }
-        }
+    //    public dynamic GetItemData(string itemHash)
+    //    {
+    //        if (itemHash != null)
+    //        {
+    //            var table = (from ex in Tables
+    //                         where ex.TableName == "DestinyInventoryItemDefinition"
+    //                         select ex).First();
+    //            var item = from ex in table.Rows
+    //                       where ex.id.ToString() == itemHash
+    //                       select ex;
 
-        public dynamic GetItemData(string itemHash)
-        {
-            if (itemHash != null)
-            {
-                var table = (from ex in Tables
-                             where ex.TableName == "DestinyInventoryItemDefinition"
-                             select ex).First();
-                var item = from ex in table.Rows
-                           where ex.id.ToString() == itemHash
-                           select ex;
+    //            return JObject.Parse(item.First().Json);
+    //        }
+    //        else
+    //            return null;
 
-                return JObject.Parse(item.First().Json);
-            }
-            else
-                return null;
+    //    }
+    //    public dynamic getBucketData(string bucketHash)
+    //    {
+    //        var table = (from ex in Tables
+    //                     where ex.TableName == "DestinyInventoryBucketDefinition"
+    //                     select ex).First();
+    //        var item = from ex in table.Rows
+    //                   where ex.id.ToString() == bucketHash
+    //                   select ex;
 
-        }
-        public dynamic getBucketData(string bucketHash)
-        {
-            var table = (from ex in Tables
-                         where ex.TableName == "DestinyInventoryBucketDefinition"
-                         select ex).First();
-            var item = from ex in table.Rows
-                       where ex.id.ToString() == bucketHash
-                       select ex;
-
-            return JObject.Parse(item.First().Json);
-        }
-        public dynamic getStatsData(string statHash)
-        {
-            if (statHash == null)
-            {
-                return null;
-            }
-            var table = (from ex in Tables
-                         where ex.TableName == "DestinyStatDefinition"
-                         select ex).First();
-            var item = from ex in table.Rows
-                       where ex.id.ToString() == statHash
-                       select ex;
-            return JObject.Parse(item.First().Json);
-        }
+    //        return JObject.Parse(item.First().Json);
+    //    }
+    //    public dynamic getStatsData(string statHash)
+    //    {
+    //        if (statHash == null)
+    //        {
+    //            return null;
+    //        }
+    //        var table = (from ex in Tables
+    //                     where ex.TableName == "DestinyStatDefinition"
+    //                     select ex).First();
+    //        var item = from ex in table.Rows
+    //                   where ex.id.ToString() == statHash
+    //                   select ex;
+    //        return JObject.Parse(item.First().Json);
+    //    }
 
 
+    //    public static Manifest Create(bool TryToUpdateIfExists = false)
+    //    {
+    //        try
+    //        {
+    //            var resultado = downloadManifest().Result;
+    //            if (!resultado)
+    //                throw new InvalidOperationException("The Manifest file doesn't exist, and couldn't be downloaded");
 
-        private static async Task<bool> downloadManifest()
-        {
-
-            using (var hc = new HttpClient())
-            {
-                //Downloads and extract the fucking file
-                try
-                {
-                    
-                    var tm = await Folder.GetFilesAsync(Windows.Storage.Search.CommonFileQuery.DefaultQuery);
-                    foreach (var item in tm)
-                    {
-                        var tarea = item.DeleteAsync();
-                        while (tarea.AsTask().Status != TaskStatus.RanToCompletion)
-                        {
-                            var temporal = tarea.AsTask().Status;
-                        }
-                    }
-
-                    hc.DefaultRequestHeaders.Add("X-API-Key", "6def2424db3a4a8db1cef0a2c3a7807e");
-                    var initialAnswer = hc.GetStringAsync("http://www.bungie.net/platform/destiny/manifest/").Result;
-                    dynamic jsonInitialAnswer = JObject.Parse(initialAnswer);
-                    var path = (string)jsonInitialAnswer.Response.mobileWorldContentPaths.en.Value;
-                    Uri url = new Uri("http://bungie.net/" + path);
-                    var fileStream = hc.GetStreamAsync(url).Result;
-
-                    //Se guarda el archivo como ZIP. 
-
-                    var TempZipFile = await Folder.CreateFileAsync("Temp.zip", Windows.Storage.CreationCollisionOption.ReplaceExisting);
-                    var StreamParaGuardarZip = await TempZipFile.OpenStreamForWriteAsync();
-                    fileStream.CopyTo(StreamParaGuardarZip);
-                    StreamParaGuardarZip.Dispose();
-                    //Archivo ZIP Guardado. 
-
-                    //Ahora a Descomprimirlo
-                    ZipFile.ExtractToDirectory(TempZipFile.Path, Folder.Path);
-
-                    //Cambiarle de Nombre
-                    var archivoDatos = await Folder.GetFileAsync(Path.GetFileName(url.AbsolutePath));
-                    var renameTask = archivoDatos.RenameAsync("data.content");
-                    var DeleteTask = TempZipFile.DeleteAsync();
-                    //while (renameTask.Status != Windows.Foundation.AsyncStatus.Completed)
-                    //{
-
-                    //}
-                    //while (DeleteTask.Status != Windows.Foundation.AsyncStatus.Completed)
-                    //{
-
-                    //}
+    //            //if (!File.Exists(manifestFile))
+    //            //{
+    //            //    var resultado = await downloadManifest();
+    //            //}
+    //            //else if (TryToUpdateIfExists)
+    //            //{
+    //            //    var resultado = await downloadManifest();
+    //            //}
+    //            //if (!File.Exists(manifestFile))
 
 
+    //            List<ManifestTable> tablas = loadManifestData("").Result;
+    //            return new Manifest(tablas);
+    //        }
+    //        catch (Exception ex)
+    //        {
+    //            return null;
+    //            throw new InvalidOperationException("The Manifest file doesn't exist, and couldn't be downloaded", ex);
+    //        }
+    //    }
 
-                    return true;
-                   
-                }
-                catch (Exception ex)
-                {
-                    return false;
-                    //throw ex;
-                }
-            }
-        }
-    }
+    //}
 
     public class ManifestTable
     {
@@ -171,7 +109,7 @@ namespace DestinyAPI.db
     }
     public class ManifestRow
     {
-        public UInt32 id { get; set; }
+        public string id { get; set; }
         public string Json { get; set; }
         public dynamic Data
         {
