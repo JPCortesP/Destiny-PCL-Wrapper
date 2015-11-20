@@ -25,7 +25,16 @@ namespace DestinyApp
         public MainPage()
         {
             this.InitializeComponent();
+            status.Text = "Componentes Inicializados";
+            
+        }
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
             var api = new DestinyAPI.DestinyAPI();
+            status.Text = "API Inicializado";
+            var resultado =await api.LoadManifestData();
+            status.Text = "Manifesto Cargado";
         }
     }
 }

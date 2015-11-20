@@ -15,8 +15,8 @@ namespace DestinyAPI.db
 {
     public partial class Manifest
     {
-        private static string manifestFile = ""; // Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "data.content");
-        private static string ManifestDirectory = ""; // Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        private static Windows.Storage.StorageFolder Folder = Windows.Storage.ApplicationData.Current.LocalFolder;
+
         public List<ManifestTable> Tables { get; set; }
 
         private Manifest(List<ManifestTable> _tables)
@@ -25,21 +25,33 @@ namespace DestinyAPI.db
             //https://bungie.net/common/destiny_content/sqlite/en/world_sql_content_87546da386887a26a50621a84eab1548.content
 
         }
-        public static async Task< Manifest> Create(bool TryToUpdateIfExists = false)
+        public static Manifest Create(bool TryToUpdateIfExists = false)
         {
-            if (!File.Exists(manifestFile))
+            try
             {
-                downloadManifest();
-            }
-            else if (TryToUpdateIfExists)
-            {
-                downloadManifest();
-            }
-            if (!File.Exists(manifestFile))
-                throw new InvalidOperationException("The Manifest file doesn't exist, and couldn't be downloaded");
+                var resultado = downloadManifest().Result;
+                if (!resultado)
+                    throw new InvalidOperationException("The Manifest file doesn't exist, and couldn't be downloaded");
 
-            List<ManifestTable> tablas = await loadManifestData(manifestFile);
-            return new Manifest(tablas) ;
+                //if (!File.Exists(manifestFile))
+                //{
+                //    var resultado = await downloadManifest();
+                //}
+                //else if (TryToUpdateIfExists)
+                //{
+                //    var resultado = await downloadManifest();
+                //}
+                //if (!File.Exists(manifestFile))
+
+
+                List<ManifestTable> tablas = loadManifestData("").Result;
+                return new Manifest(tablas);
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw new InvalidOperationException("The Manifest file doesn't exist, and couldn't be downloaded", ex);
+            }
         }
 
         public dynamic GetItemData(string itemHash)
@@ -57,9 +69,9 @@ namespace DestinyAPI.db
             }
             else
                 return null;
-            
+
         }
-        public dynamic getBucketData (string bucketHash)
+        public dynamic getBucketData(string bucketHash)
         {
             var table = (from ex in Tables
                          where ex.TableName == "DestinyInventoryBucketDefinition"
@@ -85,34 +97,68 @@ namespace DestinyAPI.db
             return JObject.Parse(item.First().Json);
         }
 
-        
 
-        private static void downloadManifest()
+
+        private static async Task<bool> downloadManifest()
         {
+
             using (var hc = new HttpClient())
             {
-                hc.DefaultRequestHeaders.Add("X-API-Key", "6def2424db3a4a8db1cef0a2c3a7807e");
-                var initialAnswer = hc.GetStringAsync("http://www.bungie.net/platform/destiny/manifest/").Result;
-                dynamic jsonInitialAnswer = JObject.Parse(initialAnswer);
-                var path = (string)jsonInitialAnswer.Response.mobileWorldContentPaths.en.Value;
-                Uri url = new Uri("https://bungie.net/" + path);
-                var fileStream = hc.GetStreamAsync("https://bungie.net/" + path).Result;
-                var compresedLocalFileStream = File.Create(ManifestDirectory + "\\Temp.zip");
-                fileStream.CopyTo(compresedLocalFileStream);
-                compresedLocalFileStream.Dispose();
-                FileInfo fileToDecompress = new FileInfo(ManifestDirectory + "\\Temp.zip");
-                if (File.Exists(fileToDecompress.DirectoryName + "\\" + Path.GetFileName(url.AbsolutePath)))
+                //Downloads and extract the fucking file
+                try
                 {
-                    File.Delete(fileToDecompress.DirectoryName + "\\" + Path.GetFileName(url.AbsolutePath));
-                }
-                ZipFile.ExtractToDirectory(fileToDecompress.FullName, fileToDecompress.DirectoryName);
+                    
+                    var tm = await Folder.GetFilesAsync(Windows.Storage.Search.CommonFileQuery.DefaultQuery);
+                    foreach (var item in tm)
+                    {
+                        var tarea = item.DeleteAsync();
+                        while (tarea.AsTask().Status != TaskStatus.RanToCompletion)
+                        {
+                            var temporal = tarea.AsTask().Status;
+                        }
+                    }
 
-                FileInfo newFile = new FileInfo(ManifestDirectory + "\\" + Path.GetFileName(url.AbsolutePath));
-                if (File.Exists(manifestFile))
-                    File.Delete(manifestFile);
-                File.Copy(newFile.FullName, manifestFile);
-                File.Delete(newFile.FullName);
-                File.Delete(ManifestDirectory + "\\Temp.zip");
+                    hc.DefaultRequestHeaders.Add("X-API-Key", "6def2424db3a4a8db1cef0a2c3a7807e");
+                    var initialAnswer = hc.GetStringAsync("http://www.bungie.net/platform/destiny/manifest/").Result;
+                    dynamic jsonInitialAnswer = JObject.Parse(initialAnswer);
+                    var path = (string)jsonInitialAnswer.Response.mobileWorldContentPaths.en.Value;
+                    Uri url = new Uri("http://bungie.net/" + path);
+                    var fileStream = hc.GetStreamAsync(url).Result;
+
+                    //Se guarda el archivo como ZIP. 
+
+                    var TempZipFile = await Folder.CreateFileAsync("Temp.zip", Windows.Storage.CreationCollisionOption.ReplaceExisting);
+                    var StreamParaGuardarZip = await TempZipFile.OpenStreamForWriteAsync();
+                    fileStream.CopyTo(StreamParaGuardarZip);
+                    StreamParaGuardarZip.Dispose();
+                    //Archivo ZIP Guardado. 
+
+                    //Ahora a Descomprimirlo
+                    ZipFile.ExtractToDirectory(TempZipFile.Path, Folder.Path);
+
+                    //Cambiarle de Nombre
+                    var archivoDatos = await Folder.GetFileAsync(Path.GetFileName(url.AbsolutePath));
+                    var renameTask = archivoDatos.RenameAsync("data.content");
+                    var DeleteTask = TempZipFile.DeleteAsync();
+                    //while (renameTask.Status != Windows.Foundation.AsyncStatus.Completed)
+                    //{
+
+                    //}
+                    //while (DeleteTask.Status != Windows.Foundation.AsyncStatus.Completed)
+                    //{
+
+                    //}
+
+
+
+                    return true;
+                   
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                    //throw ex;
+                }
             }
         }
     }

@@ -8,6 +8,6 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+        <TextBlock Name="status" Margin="100" VerticalAlignment="Center" HorizontalAlignment="Center">dfdf</TextBlock>
     </Grid>
 </Page>

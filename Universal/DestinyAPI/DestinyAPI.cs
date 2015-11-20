@@ -14,21 +14,30 @@ namespace DestinyAPI
         private string _APIKEY;
         
         public db.Manifest DestinyData {get; set;}
+        private bool isReady { get { return DestinyData != null; } }
         /// <summary>
         /// Creates a new instance of DestinyAPI. Use the created object to performs actions. 
         /// Can throw exceptions if you don't specify any parameter, or if you set initManifest to true (for example,
         /// file operations. 
         /// </summary>
         /// <param name="APIKEY">API Key para Bungie.NET</param>
-        /// <param name="initManifest">True para inicializar Manifesto. True por defecto.</param>
-        public DestinyAPI(string APIKEY = "6def2424db3a4a8db1cef0a2c3a7807e", bool initManifest = true)
+        public DestinyAPI(string APIKEY = "6def2424db3a4a8db1cef0a2c3a7807e")
         {
             this._APIKEY = APIKEY;
-            if (initManifest)
-            {
-                DestinyData = db.Manifest.Create().Result;
-            }
             
+        }
+        /// <summary>
+        /// Loads in memory manifest data. 
+        /// </summary>
+        /// <returns>bool according to success</returns>
+        public async Task<bool> LoadManifestData( bool reloadIfExists = false, Windows.Storage.StorageFile archivo = null)
+        {
+            var algo =  db.Manifest.Create();
+            if (algo != null)
+            {
+                DestinyData = algo;
+            }
+            return algo != null;
         }
         /// <summary>
         /// Returns a Player Object, with a [optional] Character Collection, from
@@ -39,6 +48,10 @@ namespace DestinyAPI
         /// <returns>Player object if found, null otherwise</returns>
         public async Task<Player> GetPlayer(BungieUser user)
         {
+            if (!isReady)
+            {
+                throw new NotImplementedException("No se ha hecho la vaina de hacerlo sin Data");
+            }
                 var url = String.Format(APIUrls.URls["SearchPlayer"], (int)user.type, user.GamerTag);
                 var SearchResultJS = await GetStringAsync(url, user.cookies);
                 var SearchResult = Newtonsoft.Json.JsonConvert.DeserializeObject<InternalTypes.PlayerSearchResult>(SearchResultJS);
