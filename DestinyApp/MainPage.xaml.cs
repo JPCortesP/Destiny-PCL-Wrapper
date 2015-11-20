@@ -33,7 +33,7 @@ namespace DestinyApp
             base.OnNavigatedTo(e);
             var api = new DestinyAPI.DestinyAPI();
             status.Text = "API Inicializado";
-            var resultado =await api.LoadManifestData();
+            var resultado =await api.LoadManifestData(true);
             status.Text = "Manifesto Cargado";
         }
     }

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DestinyAPI.InternalTypes;
 using System.Net;
-using DestinyAPI.db;
+
 using Windows.Storage;
 
 namespace DestinyAPI
@@ -26,6 +26,7 @@ namespace DestinyAPI
         public DestinyAPI(string APIKEY = "6def2424db3a4a8db1cef0a2c3a7807e")
         {
             this._APIKEY = APIKEY;
+            DestinyData = null;
             
         }
         /// <summary>
@@ -34,9 +35,9 @@ namespace DestinyAPI
         /// <returns>bool according to success</returns>
         public async Task<bool> LoadManifestData( bool reloadIfExists = false)
         {
-            bool descarga = await downloadManifest(reloadIfExists);
-            bool Carga = await CargarManifestData();
-            return descarga;
+            var descarga = await downloadManifest(reloadIfExists);
+            this.DestinyData = await CargarManifestData(descarga);
+            return descarga != null && DestinyData != null;
             
         }
 
@@ -185,10 +186,7 @@ namespace DestinyAPI
         //    );
         //}
 
-        private void InjectManifestData(Item item, ItemBase newi)
-        {
-            
-        }
+        
 
         private string getRace(object v)
         {
@@ -255,10 +253,5 @@ namespace DestinyAPI
 
     }
 
-    public interface IDestinyAPI
-    {
-        List<db.ManifestTable> DestinyData { get; set; }
-        Task<bool> LoadManifestData(bool reloadIfExists = false);
-        Task<Player> GetPlayer(BungieUser user);
-    }
+   
 }

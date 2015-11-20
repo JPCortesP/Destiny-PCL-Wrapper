@@ -11,8 +11,26 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DestinyAPI.db
+namespace DestinyAPI
 {
+    public class ManifestTable
+    {
+        public string TableName { get; set; }
+        public List<ManifestRow> Rows { get; set; }
+
+    }
+    public class ManifestRow
+    {
+        public string id { get; set; }
+        public string Json { get; set; }
+        public dynamic Data
+        {
+            get
+            {
+                return JObject.Parse(Json);
+            }
+        }
+    }
     //public partial class Manifest
     //{
 
@@ -101,22 +119,5 @@ namespace DestinyAPI.db
 
     //}
 
-    public class ManifestTable
-    {
-        public string TableName { get; set; }
-        public List<ManifestRow> Rows { get; set; }
 
-    }
-    public class ManifestRow
-    {
-        public string id { get; set; }
-        public string Json { get; set; }
-        public dynamic Data
-        {
-            get
-            {
-                return JObject.Parse(Json);
-            }
-        }
-    }
 }

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using SQLite;
+using SQLite.Net;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,12 +11,14 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
+using SQLite.Net.Interop;
 
 namespace DestinyAPI
 {
     public sealed partial class DestinyAPI : IDestinyAPI
     {
-        private async Task<bool> downloadManifest(bool reloadIfExists)
+
+        private async Task<StorageFile> downloadManifest(bool reloadIfExists)
         {
             Windows.Storage.StorageFolder Folder = Windows.Storage.ApplicationData.Current.LocalFolder;
             if (!reloadIfExists)
@@ -23,7 +26,7 @@ namespace DestinyAPI
                 try
                 {
                     var archivo = await Folder.GetFileAsync("data.content");
-                    return true;
+                    return archivo;
                 }   
                 catch (Exception)
                 {
@@ -68,19 +71,53 @@ namespace DestinyAPI
                     var DeleteTask = TempZipFile.DeleteAsync();
 
                     Task.WaitAll(renameTask.AsTask(), DeleteTask.AsTask());
-                    return true;
+                    return archivoDatos;
 
                 }
                 catch (Exception ex)
                 {
-                    return false;
+                    return null;
                     //throw ex;
                 }
             }
         }
-        private Task<bool> CargarManifestData()
+        private Task<List<ManifestTable>> CargarManifestData(StorageFile archivo)
         {
+            try
+            {
+                var lista = new List<ManifestTable>();
+                var db = new SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT()
+                    , archivo.Path);
+                var Tablas = db.Table<sqlite_master>().Where(t => t.type == "table").Select(g=>g.name)
+                    .ToList();
+                foreach (var item in Tablas)
+                {
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
             throw new NotImplementedException();
+
+        }
+
+       
+    }
+
+    public class sqlite_master
+    {
+        public string type { get; set; }
+        public string name { get; set; }
+        public string tbl_name { get; set; }
+        public int rootpage { get; set; }
+        public string sql { get; set; }
+        public override string ToString()
+        {
+            return name;
         }
     }
 }
