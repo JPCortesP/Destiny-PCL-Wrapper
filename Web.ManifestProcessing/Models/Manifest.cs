@@ -104,27 +104,35 @@ namespace Web.ManifestProcessing.Models
                 foreach (var tableName in tableNames)
                 {
                     string idKey = "id";
-                    if (tableName != "DestinyHistoricalStatsDefinition")
+                    if (tableName == "DestinyHistoricalStatsDefinition")
+                        idKey = "Key";
+
+                    ManifestTable table = new ManifestTable() { TableName = tableName, Rows = new List<ManifestRow>() };
+                    using (var sqCmd = new SQLiteCommand("SELECT * FROM " + tableName, sqConn))
                     {
-
-                        ManifestTable table = new ManifestTable() { TableName = tableName, Rows = new List<ManifestRow>() };
-                        using (var sqCmd = new SQLiteCommand("SELECT * FROM " + tableName, sqConn))
+                        using (var sqReader = sqCmd.ExecuteReader())
                         {
-                            using (var sqReader = sqCmd.ExecuteReader())
+                            while (sqReader.Read())
                             {
-                                while (sqReader.Read())
+                                byte[] jsonData = (byte[])sqReader["json"];
+                                string jsonString = Encoding.UTF8.GetString(jsonData);
+
+                                if (idKey == "Key")
                                 {
-
-                                    long idData = (long)sqReader[idKey];
-                                    byte[] jsonData = (byte[])sqReader["json"];
-                                    string jsonString = Encoding.UTF8.GetString(jsonData);
-                                    table.Rows.Add(new ManifestRow() { id = ((UInt32)idData).ToString(), Json = jsonString });
-
+                                    string idData = (string)sqReader[idKey];
+                                    table.Rows.Add(new ManifestRow() { id = idData, Json = jsonString });
                                 }
+                                else
+                                {
+                                    long idData = (long)sqReader[idKey];
+                                    table.Rows.Add(new ManifestRow() { id = ((UInt32)idData).ToString(), Json = jsonString });
+                                }
+
                             }
                         }
-                        Lista.Add(table);
                     }
+                    Lista.Add(table);
+
                 }
             }
             return Lista;
@@ -160,7 +168,7 @@ namespace Web.ManifestProcessing.Models
         }
     }
 
-    
+
 
     public class ManifestTable
     {
