@@ -8,13 +8,14 @@ using DestinyAPI.InternalTypes;
 using System.Net;
 
 using Windows.Storage;
+using System.IO;
 
 namespace DestinyAPI
 {
     public  sealed partial class DestinyAPI : IDestinyAPI
     {
         private string _APIKEY;
-
+        private string filename = "database.json";
         public List<ManifestTable> DestinyData { get; set; }
 
         /// <summary>
@@ -35,13 +36,41 @@ namespace DestinyAPI
         /// <returns>bool according to success</returns>
         public async Task<bool> LoadManifestData( bool reloadIfExists = false)
         {
-            var descarga = await downloadManifest(reloadIfExists);
-            this.DestinyData = await CargarManifestData(descarga);
-            return descarga != null && DestinyData != null;
-            
+            if (!await fileExists() || reloadIfExists)
+            {
+                using (var cliente = new HttpClient())
+                {
+                    var resultado = await cliente.GetStringAsync("http://destinydb.azurewebsites.net/api/manifest");
+                    //var objeto = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ManifestTable>>(resultado);
+                    StorageFile datos = await Windows.Storage.ApplicationData.Current.LocalFolder.CreateFileAsync(filename,CreationCollisionOption.ReplaceExisting);
+                    var tarea = Windows.Storage.FileIO.WriteTextAsync(datos,resultado );
+                    Task.WaitAll(tarea.AsTask());
+
+                    return true;
+                }
+            }
+            else
+            {
+                return await fileExists();
+            }
         }
 
-        
+        private async Task<bool> fileExists()
+        {
+            try
+            {
+                StorageFile datos = await Windows.Storage.ApplicationData.Current.LocalFolder.GetFileAsync(filename);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+
+        }
+
+
 
 
 

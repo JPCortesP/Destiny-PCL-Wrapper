@@ -11,8 +11,15 @@ namespace Web.ManifestProcessing.Controllers
     {
         public List<Models.ManifestTable> Get()
         {
-            var algo = Models.Manifest.Create();
-            return algo.Tables;
+            try
+            {
+                var algo = Models.Manifest.Create();
+                return algo.Tables;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

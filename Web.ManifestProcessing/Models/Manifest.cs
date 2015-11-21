@@ -169,7 +169,6 @@ namespace Web.ManifestProcessing.Models
     }
 
 
-
     public class ManifestTable
     {
         public string TableName { get; set; }
