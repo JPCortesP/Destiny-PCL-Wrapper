@@ -22,10 +22,11 @@ namespace DestinyAPI
             {
                 return Items != null ? Items
                     .OfType<ItemGear>()
-
+                    .OrderByDescending(b=>b.primaryStats_value)
                     .ToList() : null;
             }
         }
+        
     }
     public class Character
     {

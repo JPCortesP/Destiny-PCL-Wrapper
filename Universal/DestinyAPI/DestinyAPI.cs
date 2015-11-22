@@ -9,6 +9,7 @@ using System.Net;
 
 using Windows.Storage;
 using System.IO;
+using Newtonsoft.Json.Linq;
 
 namespace DestinyAPI
 {
@@ -16,6 +17,8 @@ namespace DestinyAPI
     {
         private string _APIKEY;
         private string filename = "database.json";
+        private bool isReady { get { return this.DestinyData != null; } }
+
         public List<ManifestTable> DestinyData { get; set; }
 
         /// <summary>
@@ -41,17 +44,27 @@ namespace DestinyAPI
                 using (var cliente = new HttpClient())
                 {
                     var resultado = await cliente.GetStringAsync("http://destinydb.azurewebsites.net/api/manifest");
-                    //var objeto = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ManifestTable>>(resultado);
-                    StorageFile datos = await Windows.Storage.ApplicationData.Current.LocalFolder.CreateFileAsync(filename,CreationCollisionOption.ReplaceExisting);
-                    var tarea = Windows.Storage.FileIO.WriteTextAsync(datos,resultado );
-                    Task.WaitAll(tarea.AsTask());
+                    var objeto = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ManifestTable>>(resultado);
+                    StorageFile datos = await Windows.Storage.ApplicationData.Current.LocalFolder
+                        .CreateFileAsync(filename,CreationCollisionOption.ReplaceExisting);
+                    var taskEscribirTexto = Windows.Storage.FileIO.WriteTextAsync(datos,resultado );
+                    Task.WaitAll(taskEscribirTexto.AsTask());
+
+                    this.DestinyData = objeto;
 
                     return true;
                 }
             }
             else
             {
-                return await fileExists();
+                if (await fileExists())
+                {
+                    var archivoDatos = await Windows.Storage.ApplicationData.Current.LocalFolder.GetFileAsync(filename);
+                    var texto = await FileIO.ReadTextAsync(archivoDatos);
+                    this.DestinyData = await Task.Run( () => Newtonsoft.Json.JsonConvert.DeserializeObject<List<ManifestTable>>(texto) );
+                    return DestinyData != null;
+                }
+                return false;
             }
         }
 
@@ -83,24 +96,23 @@ namespace DestinyAPI
         /// <returns>Player object if found, null otherwise</returns>
         public async Task<Player> GetPlayer(BungieUser user)
         {
-            throw new NotImplementedException();
-            //if (!isReady)
-            //{
-            //    throw new NotImplementedException("No se ha hecho la vaina de hacerlo sin Data");
-            //}
-            //    var url = String.Format(APIUrls.URls["SearchPlayer"], (int)user.type, user.GamerTag);
-            //    var SearchResultJS = await GetStringAsync(url, user.cookies);
-            //    var SearchResult = Newtonsoft.Json.JsonConvert.DeserializeObject<InternalTypes.PlayerSearchResult>(SearchResultJS);
-            //    if (SearchResult.ErrorStatus != "Success")
-            //    {
-            //        return null;
-            //    }
-            //    url = string.Format(APIUrls.URls["GetPlayerDetail"], (int)user.type, SearchResult.Response);
-            //    var PlayerResultJS = await GetStringAsync(url, user.cookies);
-            //    var PlayerResult = await Task.Run(() =>
-            //           Newtonsoft.Json.JsonConvert.DeserializeObject<InternalTypes.PlayerResultRootObject>(PlayerResultJS));
-            //    var retorno = await ConvertirAPlayer(PlayerResult, user);
-            //    return retorno;
+            if (!isReady)
+            {
+                throw new NotImplementedException("No se ha hecho la vaina de hacerlo sin Data");
+            }
+            var url = String.Format(APIUrls.URls["SearchPlayer"], (int)user.type, user.GamerTag);
+            var SearchResultJS = await GetStringAsync(url, user.cookies);
+            var SearchResult = Newtonsoft.Json.JsonConvert.DeserializeObject<InternalTypes.PlayerSearchResult>(SearchResultJS);
+            if (SearchResult.ErrorStatus != "Success")
+            {
+                return null;
+            }
+            url = string.Format(APIUrls.URls["GetPlayerDetail"], (int)user.type, SearchResult.Response);
+            var PlayerResultJS = await GetStringAsync(url, user.cookies);
+            var PlayerResult = await Task.Run(() =>
+                   Newtonsoft.Json.JsonConvert.DeserializeObject<InternalTypes.PlayerResultRootObject>(PlayerResultJS));
+            var retorno = await ConvertirAPlayer(PlayerResult, user);
+            return retorno;
 
         }
 
@@ -113,6 +125,8 @@ namespace DestinyAPI
             }
             else
                 hc = new HttpClient();
+
+            
             
             using (hc)
             {
@@ -125,97 +139,119 @@ namespace DestinyAPI
 
 
         #region Helpers
-        //private async Task<Player> ConvertirAPlayer(PlayerResultRootObject playerResult, BungieUser user)
-        //{
-        //    if (playerResult.ErrorStatus != "Success")
-        //    {
-        //        return null;
-        //    }
-        //    var pr = playerResult.Response.data;
-        //    return await Task.Run(() =>
-        //   {
-        //       var pl = new Player()
-        //       {
-        //           GamerTag = user.GamerTag,
-        //           Grimoire = pr.characters.First().characterBase.grimoireScore,
-        //           MembershipId = pr.characters.First().characterBase.membershipId,
-                   
-        //           type = user.type,
-        //           Characters = new List<Character>(),
-        //           Items = new List<ItemBase>()
-        //       };
-        //       foreach (var item in pr.items)
-        //       {
-        //           var dbData = this.DestinyData.GetItemData(item.itemHash.ToString());
-        //           var bucketData = this.DestinyData.getBucketData(item.bucketHash);
-        //           ItemBase newi;
-        //           if (isGear((string)dbData.itemTypeName))
-        //           {
-        //               var statData = this.DestinyData.getStatsData(item.primaryStat.statHash.ToString());
-        //               newi = new ItemGear(
-        //                   (Int64)item.itemHash, item.itemId, (object)dbData, item.quantity, (object)bucketData,
-        //               item.isGridComplete, item.transferStatus, item.state, item.characterIndex,
-        //               item.bucketHash, 
-        //               item.damageType, (Int64)item.damageTypeHash, item.primaryStat.maximumValue, (Int64)item.primaryStat.statHash,
-        //               item.primaryStat.value, (object)statData
-        //               );
-        //           }
-        //           else
-        //           {
-        //                newi = new ItemBase((Int64)item.itemHash, item.itemId, (object)dbData, item.quantity, (object)bucketData,
-        //               item.isGridComplete, item.transferStatus, item.state, item.characterIndex,
-        //               item.bucketHash);
-        //           }
-                  
+        private async Task<Player> ConvertirAPlayer(PlayerResultRootObject playerResult, BungieUser user)
+        {
+            if (playerResult.ErrorStatus != "Success")
+            {
+                return null;
+            }
+            var pr = playerResult.Response.data;
+            return await Task.Run(() =>
+           {
+               var pl = new Player()
+               {
+                   GamerTag = user.GamerTag,
+                   Grimoire = pr.characters.First().characterBase.grimoireScore,
+                   MembershipId = pr.characters.First().characterBase.membershipId,
+
+                   type = user.type,
+                   Characters = new List<Character>(),
+                   Items = new List<ItemBase>()
+               };
+               foreach (var item in pr.items)
+               {
+                   var dbData = this.GetItemData(item.itemHash.ToString());
+                   var bucketData = this.getBucketData(item.bucketHash);
+                   ItemBase newi;
+                   if (isGear((string)dbData.itemTypeName))
+                   {
+                       var statData = this.getStatsData(item.primaryStat.statHash.ToString());
+                       newi = new ItemGear(
+                           (Int64)item.itemHash, item.itemId, (object)dbData, item.quantity, (object)bucketData,
+                       item.isGridComplete, item.transferStatus, item.state, item.characterIndex,
+                       item.bucketHash,
+                       item.damageType, (Int64)item.damageTypeHash, item.primaryStat.maximumValue, (Int64)item.primaryStat.statHash,
+                       item.primaryStat.value, (object)statData
+                       );
+                   }
+                   else
+                   {
+                       newi = new ItemBase((Int64)item.itemHash, item.itemId, (object)dbData, item.quantity, (object)bucketData,
+                      item.isGridComplete, item.transferStatus, item.state, item.characterIndex,
+                      item.bucketHash);
+                   }
 
 
-        //           //newi.damageType = item.damageType;
-        //           //newi.damageTypeHash = item.damageTypeHash;
 
-        //           //if (item.primaryStat != null)
-        //           //{
-        //           //    newi.primaryStats_maximumValue = item.primaryStat.maximumValue;
-        //           //    newi.primaryStats_statHash = item.primaryStat.statHash.ToString();
-        //           //    newi.primaryStats_value = item.primaryStat.value;
-        //           //}
-        //           //Inject Manifest DATA
-        //           //if (this.DestinyData != null)
-        //           //{
-        //           //    if (item.primaryStat != null)
-        //           //    {
-        //           //        newi.statData = this.DestinyData.getStatsData(newi.primaryStats_statHash);
-        //           //    }
+                   //newi.damageType = item.damageType;
+                   //newi.damageTypeHash = item.damageTypeHash;
 
-        //           //}
+                   //if (item.primaryStat != null)
+                   //{
+                   //    newi.primaryStats_maximumValue = item.primaryStat.maximumValue;
+                   //    newi.primaryStats_statHash = item.primaryStat.statHash.ToString();
+                   //    newi.primaryStats_value = item.primaryStat.value;
+                   //}
+                   //Inject Manifest DATA
+                   //if (this.DestinyData != null)
+                   //{
+                   //    if (item.primaryStat != null)
+                   //    {
+                   //        newi.statData = this.DestinyData.getStatsData(newi.primaryStats_statHash);
+                   //    }
 
-        //           pl.Items.Add(newi);
-        //       }
-        //       int charCount = 0;
-        //       foreach (var item in pr.characters)
-        //       {
-        //           var pers = new Character();
-        //           pers.BaseLevel = item.characterLevel;
-        //           pers.EmblemBackgroundPath = item.backgroundPath;
-        //           pers.EmblemHash = item.emblemHash.ToString();
-        //           pers.EmblemPath = item.emblemPath;
-        //           pers.LightLevel = item.characterBase.powerLevel;
-        //           pers.CharacterId = item.characterBase.characterId;
+                   //}
 
-        //           pers.Class = getClass(item.characterBase.classType);
-        //           pers.Gender = getGender(item.characterBase.genderType);
-        //           pers.Race = getRace(item.characterBase.raceHash);
-        //           pers.Items = pl.Items.Where(g => g.characterIndex == charCount).ToList();
-        //           pl.Characters.Add(pers);
-        //           charCount++;
-        //       }
-               
+                   pl.Items.Add(newi);
+               }
+               int charCount = 0;
+               foreach (var item in pr.characters)
+               {
+                   var pers = new Character();
+                   pers.BaseLevel = item.characterLevel;
+                   pers.EmblemBackgroundPath = item.backgroundPath;
+                   pers.EmblemHash = item.emblemHash.ToString();
+                   pers.EmblemPath = item.emblemPath;
+                   pers.LightLevel = item.characterBase.powerLevel;
+                   pers.CharacterId = item.characterBase.characterId;
 
-        //       return pl;
-        //   }
-        //    );
-        //}
+                   pers.Class = getClass(item.characterBase.classType);
+                   pers.Gender = getGender(item.characterBase.genderType);
+                   pers.Race = getRace(item.characterBase.raceHash);
+                   pers.Items = pl.Items.Where(g => g.characterIndex == charCount).ToList();
+                   pl.Characters.Add(pers);
+                   charCount++;
+               }
 
-        
+
+               return pl;
+           }
+            );
+        }
+
+        private dynamic getStatsData(string v)
+        {
+            var tabla = DestinyData.Where(t => t.TableName == "DestinyStatDefinition")
+                .First();
+            var value = tabla.Rows.Where(g => g.id == v).First().Json;
+            return JObject.Parse(value);
+        }
+
+        private dynamic getBucketData(string bucketHash)
+        {
+            var tabla = DestinyData.Where(t => t.TableName == "DestinyInventoryBucketDefinition")
+                .First();
+            var value = tabla.Rows.Where(g => g.id == bucketHash).First().Json;
+            return JObject.Parse(value);
+        }
+
+        private dynamic GetItemData(string v) //DestinyInventoryItemDefinition
+        {
+            var tabla = DestinyData.Where(t => t.TableName == "DestinyInventoryItemDefinition")
+                .First();
+            var value = tabla.Rows.Where(g => g.id == v).First().Json;
+            return JObject.Parse(value);
+        }
 
         private string getRace(object v)
         {

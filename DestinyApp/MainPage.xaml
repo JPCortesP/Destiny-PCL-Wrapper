@@ -6,8 +6,93 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Estilos/MainStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock Name="status" Margin="100" VerticalAlignment="Center" HorizontalAlignment="Center">dfdf</TextBlock>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*" MinHeight="300" />
+            <RowDefinition Height="4*"/>
+        </Grid.RowDefinitions>
+
+        <!--Header-->
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource txt_MainTitle}">Destiny Gear Manager</TextBlock>
+                    <TextBlock Style="{StaticResource txt_version}">Version 0.1</TextBlock>
+                </StackPanel>
+
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Width="300" HorizontalAlignment="Left" Margin="20">
+                <StackPanel>
+                    <TextBlock>Gamertag</TextBlock>
+                    <TextBox Name="txt_gt"></TextBox>
+                    <TextBlock>Platform</TextBlock>
+                    <ComboBox Name="cbb_platform" ItemsSource="{Binding}"></ComboBox>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Name="btn_load" Margin="5" Click="Load_Withouth_Auth_Click" IsEnabled="False">Load Public</Button>
+                        <Button Margin="5" IsEnabled="False">Load Authenticated</Button>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+
+
+
+        </StackPanel>
+        <!--end Header-->
+       
+        
+        <!--Data-->
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="10*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition MinWidth="100" MaxWidth="300" />
+            </Grid.ColumnDefinitions>
+            <!--Sorting y demás-->
+            <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" VerticalAlignment="Center" Name="sp_filter" Visibility="Collapsed" Margin="5">
+                <TextBlock VerticalAlignment="Center">Filter Type: </TextBlock>
+                <ComboBox VerticalAlignment="Center" Name="cbb_GearType" ItemsSource="{Binding}" SelectionChanged="cbb_GearType_SelectionChanged" />
+                <TextBlock VerticalAlignment="Center" Margin="10,0,0,0">Equipable in: </TextBlock>
+                <ComboBox VerticalAlignment="Center" Name="cbb_class"></ComboBox>
+            </StackPanel>
+            <!--Mega ListView-->
+            <ListView Grid.Column="0" Grid.Row="1" ItemsSource="{Binding}" Name="lv_gear"
+                      ItemTemplate="{StaticResource template_ItemView}">
+
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+            </ListView>
+            <!--Detalles del seleccionado-->
+            <StackPanel Grid.Column="1" Grid.Row="1" DataContext="{Binding ElementName=lv_gear, Path=SelectedItem}" Margin="10">
+                <StackPanel Margin="2">
+                    <Image Source="{Binding Icon}" Style="{StaticResource item_image}" VerticalAlignment="Top" />
+                    <StackPanel Style="{StaticResource sp_itemTextContainer}" VerticalAlignment="Top">
+                        <TextBlock Text="{Binding itemName}" Style="{StaticResource txt_itemName}" />
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding primaryStats_Name}" Style="{StaticResource txt_PrimaryStatsValue}"></TextBlock>
+                            <TextBlock Style="{StaticResource txt_PrimaryStatsValue}">:&#160;</TextBlock>
+                            <TextBlock Text="{Binding primaryStats_value}" Style="{StaticResource txt_PrimaryStatsValue}" />
+                        </StackPanel>
+                        <TextBlock Text="{Binding itemTypeName}" />
+                        <TextBlock Text="{Binding itemDescription}" Style="{StaticResource txt_itemDescription}" />
+
+                    </StackPanel>
+
+
+                </StackPanel>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>
