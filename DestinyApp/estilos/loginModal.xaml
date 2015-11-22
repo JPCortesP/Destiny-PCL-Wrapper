@@ -1,0 +1,25 @@
+﻿<ContentDialog
+    x:Class="DestinyApp.loginModal"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DestinyApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" SecondaryButtonText="Cancel" PrimaryButtonText="Ok"
+    Width="800" Height="800">
+
+    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <WebView Name="wb_login" Width="800" Height="600">
+        </WebView>
+        <TextBlock Name="confirmation" Visibility="Collapsed">Now you can click Ok below.</TextBlock>
+    </StackPanel>
+</ContentDialog>
+
+
+<!--<ContentDialog x:Key ="loginModal" x:Name="loginModal" SecondaryButtonText="Cancel">
+    <StackPanel>
+        <WebView Name="wb_login">
+
+        </WebView>
+    </StackPanel>
+</ContentDialog>-->

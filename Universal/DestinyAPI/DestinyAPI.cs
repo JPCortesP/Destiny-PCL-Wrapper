@@ -19,7 +19,10 @@ namespace DestinyAPI
         private string filename = "database.json";
         private bool isReady { get { return this.DestinyData != null; } }
 
-        public List<ManifestTable> DestinyData { get; set; }
+        public List<ManifestTable> DestinyData
+        { get; set; }
+            
+        
 
         /// <summary>
         /// Creates a new instance of DestinyAPI. Use the created object to performs actions. 
@@ -39,20 +42,47 @@ namespace DestinyAPI
         /// <returns>bool according to success</returns>
         public async Task<bool> LoadManifestData( bool reloadIfExists = false)
         {
+            if (this.DestinyData != null)
+            {
+                return true;
+            }
             if (!await fileExists() || reloadIfExists)
             {
                 using (var cliente = new HttpClient())
                 {
-                    var resultado = await cliente.GetStringAsync("http://destinydb.azurewebsites.net/api/manifest");
-                    var objeto = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ManifestTable>>(resultado);
-                    StorageFile datos = await Windows.Storage.ApplicationData.Current.LocalFolder
-                        .CreateFileAsync(filename,CreationCollisionOption.ReplaceExisting);
-                    var taskEscribirTexto = Windows.Storage.FileIO.WriteTextAsync(datos,resultado );
-                    Task.WaitAll(taskEscribirTexto.AsTask());
+                    /*
+                    ESTA VAINA ES PARA DESCARGAR UNO NUEVO. */
+                    //var resultado = await cliente.GetStringAsync("http://destinydb.azurewebsites.net/api/manifest");
+                    //var objeto = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ManifestTable>>(resultado);
+                    //StorageFile datos = await Windows.Storage.ApplicationData.Current.LocalFolder
+                    //    .CreateFileAsync(filename, CreationCollisionOption.ReplaceExisting);
+                    //var taskEscribirTexto = Windows.Storage.FileIO.WriteTextAsync(datos, resultado);
+                    //Task.WaitAll(taskEscribirTexto.AsTask());
+                    //this.DestinyData = objeto;
 
-                    this.DestinyData = objeto;
+                    var path = Windows.ApplicationModel.Package.Current.InstalledLocation.Path + @"\DestinyAPI";
+                    var folder = await StorageFolder.GetFolderFromPathAsync(path);
+                    var file = await folder.GetFileAsync(filename);
+                    if (await fileExists())
+                    {
+                        await file.CopyAndReplaceAsync(await Windows.Storage.ApplicationData.Current.LocalFolder.GetFileAsync(filename));
+                    }
+                    else
+                    {
+                        await file.CopyAsync(Windows.Storage.ApplicationData.Current.LocalFolder);
+                    }
+                    if (await fileExists())
+                    {
+                        var archivoDatos = await Windows.Storage.ApplicationData.Current.LocalFolder.GetFileAsync(filename);
+                        var texto = await FileIO.ReadTextAsync(archivoDatos);
+                        this.DestinyData = await Task.Run(() => Newtonsoft.Json.JsonConvert.DeserializeObject<List<ManifestTable>>(texto));
+                        return DestinyData != null;
+                    }
+                    return false;
 
-                    return true;
+                    /*****ESTA VAINA ES PARA USAR EL DESPLEGADO. ****/
+
+
                 }
             }
             else
@@ -68,20 +98,7 @@ namespace DestinyAPI
             }
         }
 
-        private async Task<bool> fileExists()
-        {
-            try
-            {
-                StorageFile datos = await Windows.Storage.ApplicationData.Current.LocalFolder.GetFileAsync(filename);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-
-
-        }
+        
 
 
 
@@ -122,6 +139,7 @@ namespace DestinyAPI
             if (cookies !=null)
             {
                 hc = new HttpClient(new HttpClientHandler() { CookieContainer = cookies });
+                
             }
             else
                 hc = new HttpClient();
@@ -139,6 +157,20 @@ namespace DestinyAPI
 
 
         #region Helpers
+        private async Task<bool> fileExists()
+        {
+            try
+            {
+                StorageFile datos = await Windows.Storage.ApplicationData.Current.LocalFolder.GetFileAsync(filename);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+
+        }
         private async Task<Player> ConvertirAPlayer(PlayerResultRootObject playerResult, BungieUser user)
         {
             if (playerResult.ErrorStatus != "Success")

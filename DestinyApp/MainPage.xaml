@@ -35,8 +35,8 @@
                     <TextBlock>Platform</TextBlock>
                     <ComboBox Name="cbb_platform" ItemsSource="{Binding}"></ComboBox>
                     <StackPanel Orientation="Horizontal">
-                        <Button Name="btn_load" Margin="5" Click="Load_Withouth_Auth_Click" IsEnabled="False">Load Public</Button>
-                        <Button Margin="5" IsEnabled="False">Load Authenticated</Button>
+                        <Button Name="btn_load" Margin="5" Click="Load_Withouth_Auth_Click" IsEnabled="True">Load Public</Button>
+                        <Button Margin="5" Click="LoginLoad_Click">Load Authenticated</Button>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
@@ -95,4 +95,5 @@
             </StackPanel>
         </Grid>
     </Grid>
+    
 </Page>
