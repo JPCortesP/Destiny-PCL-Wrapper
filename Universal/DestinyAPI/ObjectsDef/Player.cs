@@ -129,7 +129,7 @@ namespace DestinyAPI
         public bool Stats_Present { get { return primaryStats_statHash != null; } }
         public string primaryStats_Name { get { return primaryStats_statHash != null ? statData.statName : null; } }
         public string tierTypeName { get { return dbData.tierTypeName; } }
-        public List<StatBase> Stats { get; set; }
+        public List<StatBase> BaseStats { get; set; }
 
 
     }

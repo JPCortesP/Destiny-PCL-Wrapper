@@ -218,7 +218,7 @@ namespace DestinyAPI
                        {
                            if (newi.dbData.stats != null)
                            {
-                               ((ItemGear)newi).Stats = new List<StatBase>();
+                               ((ItemGear)newi).BaseStats = new List<StatBase>();
                                foreach (dynamic stat in newi.dbData.stats)
                                {
                                    StatBase Base = new StatBase();
@@ -228,7 +228,7 @@ namespace DestinyAPI
                                    Base.maximum = stat.First.maximum;
                                    var resultado = getStatsData(Base.statHash);
                                    Base.statName = resultado.statName;
-                                   ((ItemGear)newi).Stats.Add(Base);
+                                   ((ItemGear)newi).BaseStats.Add(Base);
                                }
 
                            }

@@ -87,7 +87,7 @@
                             </StackPanel>
                             <TextBlock Text="{Binding itemTypeName}" />
                             <TextBlock Text="{Binding itemDescription}" Style="{StaticResource txt_itemDescription}" />
-                            <ListView ItemsSource="{Binding Stats}" MaxHeight="300">
+                        <ListView ItemsSource="{Binding BaseStats}" MaxHeight="300">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel>
