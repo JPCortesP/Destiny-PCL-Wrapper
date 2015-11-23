@@ -139,7 +139,15 @@ namespace DestinyAPI
             if (cookies !=null)
             {
                 hc = new HttpClient(new HttpClientHandler() { CookieContainer = cookies });
-                
+                var galletas = cookies.GetCookies(new Uri("https://bungie.net"));
+                foreach (Cookie item in galletas)
+                {
+                    if (item.Name == "bungled")
+                    {
+                        hc.DefaultRequestHeaders.Add("X-csrf", item.Value);
+                    }
+                }
+
             }
             else
                 hc = new HttpClient();
@@ -198,6 +206,7 @@ namespace DestinyAPI
                    if (isGear((string)dbData.itemTypeName))
                    {
                        var statData = this.getStatsData(item.primaryStat.statHash.ToString());
+                       
                        newi = new ItemGear(
                            (Int64)item.itemHash, item.itemId, (object)dbData, item.quantity, (object)bucketData,
                        item.isGridComplete, item.transferStatus, item.state, item.characterIndex,
@@ -205,6 +214,26 @@ namespace DestinyAPI
                        item.damageType, (Int64)item.damageTypeHash, item.primaryStat.maximumValue, (Int64)item.primaryStat.statHash,
                        item.primaryStat.value, (object)statData
                        );
+                       if (newi.dbData != null)
+                       {
+                           if (newi.dbData.stats != null)
+                           {
+                               ((ItemGear)newi).Stats = new List<StatBase>();
+                               foreach (dynamic stat in newi.dbData.stats)
+                               {
+                                   StatBase Base = new StatBase();
+                                   Base.statHash = stat.First.statHash;
+                                   Base.value = stat.First.value;
+                                   Base.minimum = stat.First.minimum;
+                                   Base.maximum = stat.First.maximum;
+                                   var resultado = getStatsData(Base.statHash);
+                                   Base.statName = resultado.statName;
+                                   ((ItemGear)newi).Stats.Add(Base);
+                               }
+
+                           }
+                       }
+                       
                    }
                    else
                    {

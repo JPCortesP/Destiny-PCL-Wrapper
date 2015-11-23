@@ -45,8 +45,8 @@
 
         </StackPanel>
         <!--end Header-->
-       
-        
+
+
         <!--Data-->
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
@@ -59,9 +59,9 @@
             </Grid.ColumnDefinitions>
             <!--Sorting y demás-->
             <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" VerticalAlignment="Center" Name="sp_filter" Visibility="Collapsed" Margin="5">
-                <TextBlock VerticalAlignment="Center">Filter Type: </TextBlock>
+                <TextBlock VerticalAlignment="Center">Filter Type:</TextBlock>
                 <ComboBox VerticalAlignment="Center" Name="cbb_GearType" ItemsSource="{Binding}" SelectionChanged="cbb_GearType_SelectionChanged" />
-                <TextBlock VerticalAlignment="Center" Margin="10,0,0,0">Equipable in: </TextBlock>
+                <TextBlock VerticalAlignment="Center" Margin="10,0,0,0">Equipable in:</TextBlock>
                 <ComboBox VerticalAlignment="Center" Name="cbb_class"></ComboBox>
             </StackPanel>
             <!--Mega ListView-->
@@ -75,25 +75,48 @@
                 </ListView.ItemsPanel>
             </ListView>
             <!--Detalles del seleccionado-->
-            <StackPanel Grid.Column="1" Grid.Row="1" DataContext="{Binding ElementName=lv_gear, Path=SelectedItem}" Margin="10">
-                <StackPanel Margin="2">
-                    <Image Source="{Binding Icon}" Style="{StaticResource item_image}" VerticalAlignment="Top" />
-                    <StackPanel Style="{StaticResource sp_itemTextContainer}" VerticalAlignment="Top">
-                        <TextBlock Text="{Binding itemName}" Style="{StaticResource txt_itemName}" />
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding primaryStats_Name}" Style="{StaticResource txt_PrimaryStatsValue}"></TextBlock>
-                            <TextBlock Style="{StaticResource txt_PrimaryStatsValue}">:&#160;</TextBlock>
-                            <TextBlock Text="{Binding primaryStats_value}" Style="{StaticResource txt_PrimaryStatsValue}" />
+            <StackPanel Grid.Column="1" Grid.Row="1" DataContext="{Binding ElementName=lv_gear, Path=SelectedItem}" Margin="10" >
+                    <StackPanel Margin="2">
+                        <Image Source="{Binding Icon}" Style="{StaticResource item_image}" VerticalAlignment="Top" />
+                        <StackPanel Style="{StaticResource sp_itemTextContainer}" VerticalAlignment="Top">
+                            <TextBlock Text="{Binding itemName}" Style="{StaticResource txt_itemName}" />
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding primaryStats_Name}" Style="{StaticResource txt_PrimaryStatsValue}"></TextBlock>
+                                <TextBlock Style="{StaticResource txt_PrimaryStatsValue}">:&#160;</TextBlock>
+                                <TextBlock Text="{Binding primaryStats_value}" Style="{StaticResource txt_PrimaryStatsValue}" />
+                            </StackPanel>
+                            <TextBlock Text="{Binding itemTypeName}" />
+                            <TextBlock Text="{Binding itemDescription}" Style="{StaticResource txt_itemDescription}" />
+                            <ListView ItemsSource="{Binding Stats}" MaxHeight="300">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding statName}" />
+                                                <TextBlock>:&#160;</TextBlock>
+                                                <TextBlock Text="{Binding value}" />
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock>Min:</TextBlock>
+                                                <TextBlock>&#160;</TextBlock>
+                                                <TextBlock Text="{Binding minimum}" />
+                                                <TextBlock>&#160;</TextBlock>
+                                                <TextBlock>Max:</TextBlock>
+                                                <TextBlock>&#160;</TextBlock>
+                                                <TextBlock Text="{Binding maximum}" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+
                         </StackPanel>
-                        <TextBlock Text="{Binding itemTypeName}" />
-                        <TextBlock Text="{Binding itemDescription}" Style="{StaticResource txt_itemDescription}" />
+
 
                     </StackPanel>
-
-
-                </StackPanel>
+                
             </StackPanel>
         </Grid>
     </Grid>
-    
+
 </Page>
