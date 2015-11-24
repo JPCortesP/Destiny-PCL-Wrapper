@@ -10,9 +10,11 @@ using System.Net;
 using Windows.Storage;
 using System.IO;
 using Newtonsoft.Json.Linq;
+using Windows.Foundation.Metadata;
 
 namespace DestinyAPI
 {
+    [Deprecated("Please use the Portable version of this library. Expect breaking API changes", DeprecationType.Remove,(uint)1)]
     public  sealed partial class DestinyAPI : IDestinyAPI
     {
         private string _APIKEY;

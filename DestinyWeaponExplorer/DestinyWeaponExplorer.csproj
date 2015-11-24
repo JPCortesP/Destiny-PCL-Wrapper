@@ -140,9 +140,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DestinyAPI\DestinyAPI.csproj">
+    <ProjectReference Include="..\DestinyAPI\Deprecated_BaseDestinyAPI.csproj">
       <Project>{bb87cae1-5c9e-47af-8c2d-e18d1a4f274b}</Project>
-      <Name>DestinyAPI</Name>
+      <Name>Deprecated_BaseDestinyAPI</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

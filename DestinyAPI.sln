@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseDestinyAPI", "DestinyAPI\BaseDestinyAPI.csproj", "{BB87CAE1-5C9E-47AF-8C2D-E18D1A4F274B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deprecated_BaseDestinyAPI", "DestinyAPI\Deprecated_BaseDestinyAPI.csproj", "{BB87CAE1-5C9E-47AF-8C2D-E18D1A4F274B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTests", "ConsoleTests\ConsoleTests.csproj", "{B2321C42-D822-4960-9AC6-025CC90AAD17}"
 EndProject
@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windows Universal", "Window
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DestinyApp", "DestinyApp\DestinyApp.csproj", "{8AECC36B-97D4-4671-A216-088A127814DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DestinyAPI", "Universal\DestinyAPI\DestinyAPI.csproj", "{5815C78A-B820-4494-96AF-A1A033753824}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deprecated_DestinyAPI", "Universal\DestinyAPI\Deprecated_DestinyAPI.csproj", "{5815C78A-B820-4494-96AF-A1A033753824}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.ManifestProcessing", "Web.ManifestProcessing\Web.ManifestProcessing.csproj", "{8CF05B8D-73D2-4FFE-8C77-8208265A3D74}"
 EndProject
@@ -178,6 +178,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{BB87CAE1-5C9E-47AF-8C2D-E18D1A4F274B} = {32647048-F3E1-416F-A975-C989520282D9}
 		{B2321C42-D822-4960-9AC6-025CC90AAD17} = {32647048-F3E1-416F-A975-C989520282D9}
 		{0BA6418C-18DE-4070-9CB9-0AC1470A2643} = {32647048-F3E1-416F-A975-C989520282D9}
 		{8AECC36B-97D4-4671-A216-088A127814DA} = {18D9F996-ED01-420A-B3AE-890C6ACF9FFC}

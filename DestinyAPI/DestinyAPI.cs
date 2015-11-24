@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 using DestinyAPI.InternalTypes;
 using System.Net;
 
+
 namespace DestinyAPI
 {
+    [Obsolete("Please use the Portable version of this library. Expect breaking API changes",true)]
     public sealed class DestinyAPI
     {
         private string _APIKEY;

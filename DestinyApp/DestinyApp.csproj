@@ -145,9 +145,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Universal\DestinyAPI\DestinyAPI.csproj">
+    <ProjectReference Include="..\Universal\DestinyAPI\Deprecated_DestinyAPI.csproj">
       <Project>{5815c78a-b820-4494-96af-a1a033753824}</Project>
-      <Name>DestinyAPI</Name>
+      <Name>Deprecated_DestinyAPI</Name>
       <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
