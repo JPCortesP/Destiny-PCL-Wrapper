@@ -28,7 +28,7 @@ namespace Api
 
     public interface DestinyManifest : IDisposable
     {
-        Task<dynamic> getData(Manifest.ManifestTable table, string hash);
+        dynamic getData(Manifest.ManifestTable table, string hash);
     }
     
 }

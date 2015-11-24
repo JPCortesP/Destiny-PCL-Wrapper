@@ -53,9 +53,9 @@ namespace Api.Objects
         {
             this.itemHash = itemHash.ToString();
             this.itemId = itemId;
-            this.dbData = dbData;
+            this.dbData =(dynamic)dbData;
             this.quantity = quantity;
-            this.bucketData = bucketData;
+            this.bucketData = (dynamic)bucketData;
             this.isGridComplete = isGridComplete;
             this.transferStatus = transferStatus;
             this.state = state;

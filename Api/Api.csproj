@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API.cs" />
+    <Compile Include="Extensiones.cs" />
     <Compile Include="IApi.cs" />
     <Compile Include="Manifest\ManifestTable.cs" />
     <Compile Include="Manifest\OnlineManifest.cs" />
@@ -49,6 +50,9 @@
     <Compile Include="Objects\BungieUser.cs" />
     <Compile Include="Objects\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="InternalImplementation\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

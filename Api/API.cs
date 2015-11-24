@@ -1,8 +1,10 @@
 ﻿using Api.Objects;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,12 +12,16 @@ namespace Api
 {
     public partial class API : IApi
     {
-        public API( DestinyManifest defaultManifest)
+        public API( DestinyManifest defaultManifest, string _ApiKey)
         {
             this.Manifest = defaultManifest;
+            this.ApiKey = _ApiKey;
+            hc = new HttpClient();
+            hc.DefaultRequestHeaders.Add("X-API-Key", ApiKey);
         }
         public string ApiKey { get; set; }
         public DestinyManifest Manifest { get; set; }
+        private HttpClient hc;
 
         public string ManifestTypeName
         {
@@ -33,7 +39,12 @@ namespace Api
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            this.ApiKey = "";
+            if(Manifest != null)
+                this.Manifest.Dispose();
+            if (hc != null)
+                hc.Dispose();
+
         }
         public Task<bool> EquipItem(Character target, ItemBase item)
         {
@@ -55,10 +66,42 @@ namespace Api
             throw new NotImplementedException();
         }
 
-        public Task<Player> getPlayerAsync(BungieUser user)
-        {
+        public async Task<Player> getPlayerAsync(BungieUser user)
+        {//http://bungie.net/platform/destiny/SearchDestinyPlayer/1/jpcortesp
+            var url = String.Format("http://bungie.net/platform/destiny/SearchDestinyPlayer/{0}/{1}", (int)user.type, user.GamerTag);
+            var respuesta = await getString(url);
+            dynamic objRespuesta = JObject.Parse(respuesta);
+            var algoParaEspacio = objRespuesta;
+            dynamic listaRespuesta = ((Newtonsoft.Json.Linq.JContainer)((((dynamic)((dynamic)objRespuesta).Response)))).HasValues;
+            if (listaRespuesta)
+            {
+                dynamic response = ((dynamic)((dynamic)objRespuesta).Response)[0];
+                Player p = new Player();
+                p.GamerTag = response.displayName;
+                p.MembershipId = response.membershipId;
+                url = String.Format("http://www.bungie.net/platform/destiny/{0}/Account/{1}/Items/", (int)user.type, p.MembershipId);
+                respuesta = await getString(url);
+                var _PlayerResult = await Task.Run(() =>
+                   Newtonsoft.Json.JsonConvert.DeserializeObject<InternalTypes.PlayerResultRootObject>(respuesta));
+                var res = await convertirAPlayer(_PlayerResult, p);
+                if (res != null)
+                {
+                    return res;
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+            else
+            {
+                return null;
+            }
             throw new NotImplementedException();
         }
+
+        
 
         public Task<List<Player>> getPlayersAsync(List<BungieUser> users)
         {
@@ -74,5 +117,7 @@ namespace Api
         {
             throw new NotImplementedException();
         }
+
+        
     }
 }

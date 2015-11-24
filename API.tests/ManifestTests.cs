@@ -15,7 +15,7 @@ namespace API.tests
         {
             using (var manifest = new OnlineManifest(key))
             {
-                dynamic respuesta = manifest.getData(ManifestTable.InventoryItem, "1256644900").Result;
+                dynamic respuesta = manifest.getData(ManifestTable.InventoryItem, "1256644900");
                 Assert.IsNotNull(respuesta);
                  //.data.inventoryItem.itemName;
                 dynamic itemName = respuesta.itemName;
@@ -28,7 +28,7 @@ namespace API.tests
         {
             using (var manifest = new OnlineManifest(key))
             {
-                dynamic respuesta = manifest.getData(ManifestTable.Activity, "1005705920").Result;
+                dynamic respuesta = manifest.getData(ManifestTable.Activity, "1005705920");
                 Assert.IsNotNull(respuesta);
                 //.data.inventoryItem.itemName;
                 dynamic itemName = respuesta.activityName;
@@ -41,7 +41,7 @@ namespace API.tests
         {
             using (var manifest = new OnlineManifest(key))
             {
-                dynamic respuesta = manifest.getData(ManifestTable.Gender, "3111576190").Result;
+                dynamic respuesta = manifest.getData(ManifestTable.Gender, "3111576190");
                 Assert.IsNotNull(respuesta);
                 Assert.IsTrue(((string)respuesta) == "Male");
                 
@@ -55,7 +55,7 @@ namespace API.tests
         {
             using (var manifest = new OnlineManifest(key))
             {
-                dynamic respuesta = manifest.getData(ManifestTable.InventoryBucket, "138197802").Result;
+                dynamic respuesta = manifest.getData(ManifestTable.InventoryBucket, "138197802");
                 Assert.IsNotNull(respuesta);
                 //.data.inventoryItem.itemName;
                 dynamic itemName = respuesta.bucketIdentifier;
@@ -72,7 +72,7 @@ namespace API.tests
         {
             using (var manifest = new OnlineManifest(key))
             {
-                dynamic respuesta = manifest.getData(ManifestTable.Race, "3887404748").Result;
+                dynamic respuesta = manifest.getData(ManifestTable.Race, "3887404748");
                 Assert.IsNotNull(respuesta);
                 var shouldbeHuman = (string)respuesta;
                 Assert.IsTrue(shouldbeHuman == "Human");
@@ -85,7 +85,7 @@ namespace API.tests
         {
             using (var manifest = new OnlineManifest(key))
             {
-                dynamic respuesta = manifest.getData(ManifestTable.Stat, "2996146975").Result;
+                dynamic respuesta = manifest.getData(ManifestTable.Stat, "2996146975");
                 Assert.IsNotNull(respuesta);
                 //.data.inventoryItem.itemName;
                 dynamic itemName = respuesta.statName;
@@ -100,7 +100,7 @@ namespace API.tests
         {
             using (var manifest = new OnlineManifest(key))
             {
-                dynamic respuesta = manifest.getData(ManifestTable.Class, "3655393761").Result;
+                dynamic respuesta = manifest.getData(ManifestTable.Class, "3655393761");
                 Assert.IsNotNull(respuesta);
                 var shouldbeTitan = (string)respuesta;
                 Assert.IsTrue(shouldbeTitan == "Titan");

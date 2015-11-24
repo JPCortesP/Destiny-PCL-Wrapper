@@ -36,7 +36,7 @@ namespace Api.Manifest
             hc.Dispose();
         }
 
-        public async Task<dynamic> getData(ManifestTable table, string hash)
+        public dynamic getData(ManifestTable table, string hash)
         {
             var cache = checkCache(table, hash);
             if (cache != null)
@@ -47,7 +47,7 @@ namespace Api.Manifest
             if (tabla != null)
             {
                 var url = String.Format("http://www.bungie.net/Platform/Destiny/Manifest/{0}/{1}/", tabla, hash);
-                var resultado = await hc.GetStringAsync(url);
+                var resultado = hc.GetStringAsync(url).Result;
                 dynamic objeto = JObject.Parse(resultado);
                 if (objeto.ErrorStatus == "Success")
                 {
