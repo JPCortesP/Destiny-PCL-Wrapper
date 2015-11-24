@@ -10,17 +10,37 @@ namespace Api
 {
     public partial class API : IApi
     {
-        public API()
+        public API( DestinyManifest defaultManifest)
         {
-
+            this.Manifest = defaultManifest;
         }
         public string ApiKey { get; set; }
         public DestinyManifest Manifest { get; set; }
+
+        public string ManifestTypeName
+        {
+            get
+            {
+                if (Manifest != null)
+                {
+                    return Manifest.GetType().ToString();
+                }
+                else
+                    return "NO Manifest in use";
+                
+            }
+        }
+
         public void Dispose()
         {
             throw new NotImplementedException();
         }
         public Task<bool> EquipItem(Character target, ItemBase item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<Player>> getAllPlayersInClan(BungieUser user)
         {
             throw new NotImplementedException();
         }

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Api.Manifest
 {
+    /// <summary>
+    /// Tables in the Manifest. Required for any implementator.
+    /// </summary>
     public enum ManifestTable
     {
         InventoryItem,
