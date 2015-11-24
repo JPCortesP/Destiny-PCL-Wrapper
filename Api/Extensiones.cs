@@ -36,7 +36,7 @@ namespace Api
                 ch.Gender = Manifest.getData(Api.Manifest.ManifestTable.Gender, item.characterBase.genderHash.ToString());
                 ch.LightLevel = item.characterBase.powerLevel;
                 ch.Race = Manifest.getData(Api.Manifest.ManifestTable.Race, item.characterBase.raceHash.ToString());
-                ch.Items = new List<ItemBase>();
+                
                 p.Characters.Add(ch);
             }
             foreach (var item in origen.items)

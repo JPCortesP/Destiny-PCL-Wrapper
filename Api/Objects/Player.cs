@@ -42,7 +42,7 @@ namespace Api.Objects
         private string _EmblemPath;
         public string EmblemHash { get; set; }
         public string CharacterId { get; set; }
-        public List<ItemBase> Items { get; set; }
+        
     }
 
     public class ItemBase
