@@ -4,14 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleTests
+namespace Api.Objects
 {
-    class Program
+    public enum MembershipType
     {
-        static void Main(string[] args)
-        {
-            
-        }
+        Xbox = 1,
+        PSN = 2
     }
-   
 }

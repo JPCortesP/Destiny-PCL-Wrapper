@@ -120,11 +120,14 @@ namespace DestinyAPI
             var url = String.Format(APIUrls.URls["SearchPlayer"], (int)user.type, user.GamerTag);
             var SearchResultJS = await GetStringAsync(url, user.cookies);
             var SearchResult = Newtonsoft.Json.JsonConvert.DeserializeObject<InternalTypes.PlayerSearchResult>(SearchResultJS);
+            //dynamic SearchResult = Newtonsoft.Json.JsonConvert.DeserializeObject(SearchResultJS);
             if (SearchResult.ErrorStatus != "Success")
             {
                 return null;
             }
+            
             url = string.Format(APIUrls.URls["GetPlayerDetail"], (int)user.type, SearchResult.Response);
+            
             var PlayerResultJS = await GetStringAsync(url, user.cookies);
             var PlayerResult = await Task.Run(() =>
                    Newtonsoft.Json.JsonConvert.DeserializeObject<InternalTypes.PlayerResultRootObject>(PlayerResultJS));

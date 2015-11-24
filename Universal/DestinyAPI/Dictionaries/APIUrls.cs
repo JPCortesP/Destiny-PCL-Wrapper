@@ -11,10 +11,11 @@ namespace DestinyAPI
         public static Dictionary<string, string> URls = new Dictionary<string, string>()
         {
             {"SearchPlayer" //0 = [1-2] MembershipType, 1 = Gamertag
-                ,"http://www.bungie.net/platform/destiny/{0}/Stats/GetMembershipIdByDisplayName/{1}" }
-            
+                ,"http://www.bungie.net/platform/destiny/{0}/Stats/GetMembershipIdByDisplayName/{1}" },
+            {"SearchPlayerBasic", "http://bungie.net/platform/destiny/SearchDestinyPlayer/{0}/{1}" }
             , { "GetPlayerDetail", //0 =[1-2] MembershipType, 1 = MembershipID
                 "http://www.bungie.net/platform/destiny/{0}/Account/{1}/Items/" }
         };
     }
 }
+//4611686018430931367

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -72,7 +73,7 @@ namespace DestinyApp
             await Load(sender, true);
         }
 
-        private async System.Threading.Tasks.Task Load(object sender, bool auth = false)
+        private async Task Load(object sender, bool auth = false)
         {
             ((Button)sender).IsEnabled = false;
 
@@ -132,11 +133,16 @@ namespace DestinyApp
                 {
                     if (cbb_GearType.SelectedValue.ToString() == "---- All ----")
                     {
-                        this.lv_gear.DataContext = player.Gear;
+                        var grupos = player.Gear
+                            //.GroupBy(g => g.itemTypeName)
+                            .ToList();
+                        this.lv_gear.DataContext = grupos;
                     }
                     else
                     {
-                        var gear = player.Gear.Where(g => g.itemTypeName == cbb_GearType.SelectedValue.ToString()).ToList();
+                        var gear = player.Gear.Where(g => g.itemTypeName == cbb_GearType.SelectedValue.ToString())
+                            //.GroupBy(g=>g.itemTypeName)
+                            .ToList();
                         this.lv_gear.DataContext = gear;
                     }
                 }
