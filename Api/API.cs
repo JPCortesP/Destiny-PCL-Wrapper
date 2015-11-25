@@ -83,7 +83,7 @@ namespace Api
                 respuesta = await getString(url, user.cookies);
                 var _PlayerResult = await Task.Run(() =>
                    Newtonsoft.Json.JsonConvert.DeserializeObject<InternalTypes.PlayerResultRootObject>(respuesta));
-                var res = convertirAPlayer(_PlayerResult, p);
+                var res = convertirALazyPlayer(_PlayerResult, p);
                 if (res != null)
                 {
                     return res;

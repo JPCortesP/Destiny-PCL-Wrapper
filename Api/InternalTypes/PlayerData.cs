@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Api.InternalTypes
 {
-    internal class PrimaryStat
+    public class PrimaryStat
     {
         public object statHash { get; set; }
         public int value { get; set; }
         public int maximumValue { get; set; }
     }
 
-    internal class Item
+    public class Item
     {
         public object itemHash { get; set; }
         public string itemId { get; set; }
@@ -28,98 +28,98 @@ namespace Api.InternalTypes
         public PrimaryStat primaryStat { get; set; }
     }
 
-    internal class STATDEFENSE
+    public class STATDEFENSE
     {
         public object statHash { get; set; }
         public int value { get; set; }
         public int maximumValue { get; set; }
     }
 
-    internal class STATINTELLECT
+    public class STATINTELLECT
     {
         public int statHash { get; set; }
         public int value { get; set; }
         public int maximumValue { get; set; }
     }
 
-    internal class STATDISCIPLINE
+    public class STATDISCIPLINE
     {
         public int statHash { get; set; }
         public int value { get; set; }
         public int maximumValue { get; set; }
     }
 
-    internal class STATSTRENGTH
+    public class STATSTRENGTH
     {
         public object statHash { get; set; }
         public int value { get; set; }
         public int maximumValue { get; set; }
     }
 
-    internal class STATLIGHT
+    public class STATLIGHT
     {
         public object statHash { get; set; }
         public int value { get; set; }
         public int maximumValue { get; set; }
     }
 
-    internal class STATARMOR
+    public class STATARMOR
     {
         public int statHash { get; set; }
         public int value { get; set; }
         public int maximumValue { get; set; }
     }
 
-    internal class STATAGILITY
+    public class STATAGILITY
     {
         public object statHash { get; set; }
         public int value { get; set; }
         public int maximumValue { get; set; }
     }
 
-    internal class STATRECOVERY
+    public class STATRECOVERY
     {
         public int statHash { get; set; }
         public int value { get; set; }
         public int maximumValue { get; set; }
     }
 
-    internal class STATOPTICS
+    public class STATOPTICS
     {
         public object statHash { get; set; }
         public int value { get; set; }
         public int maximumValue { get; set; }
     }
 
-    internal class STATATTACKSPEED
+    public class STATATTACKSPEED
     {
         public object statHash { get; set; }
         public int value { get; set; }
         public int maximumValue { get; set; }
     }
 
-    internal class STATDAMAGEREDUCTION
+    public class STATDAMAGEREDUCTION
     {
         public int statHash { get; set; }
         public int value { get; set; }
         public int maximumValue { get; set; }
     }
 
-    internal class STATATTACKEFFICIENCY
+    public class STATATTACKEFFICIENCY
     {
         public object statHash { get; set; }
         public int value { get; set; }
         public int maximumValue { get; set; }
     }
 
-    internal class STATATTACKENERGY
+    public class STATATTACKENERGY
     {
         public int statHash { get; set; }
         public int value { get; set; }
         public int maximumValue { get; set; }
     }
 
-    internal class Stats
+    public class Stats
     {
         public STATDEFENSE STAT_DEFENSE { get; set; }
         public STATINTELLECT STAT_INTELLECT { get; set; }
@@ -136,7 +136,7 @@ namespace Api.InternalTypes
         public STATATTACKENERGY STAT_ATTACK_ENERGY { get; set; }
     }
 
-    internal class Customization
+    public class Customization
     {
         public object personality { get; set; }
         public long face { get; set; }
@@ -152,18 +152,18 @@ namespace Api.InternalTypes
         public long decalIndex { get; set; }
     }
 
-    internal class Equipment
+    public class Equipment
     {
         public object itemHash { get; set; }
         public List<object> dyes { get; set; }
     }
 
-    internal class PeerView
+    public class PeerView
     {
         public List<Equipment> equipment { get; set; }
     }
 
-    internal class CharacterBase
+    public class CharacterBase
     {
         public string membershipId { get; set; }
         public int membershipType { get; set; }
@@ -186,7 +186,7 @@ namespace Api.InternalTypes
         public long buildStatGroupHash { get; set; }
     }
 
-    internal class LevelProgression
+    public class LevelProgression
     {
         public int dailyProgress { get; set; }
         public int weeklyProgress { get; set; }
@@ -198,7 +198,7 @@ namespace Api.InternalTypes
         public int progressionHash { get; set; }
     }
 
-    internal class Character
+    public class Character
     {
         public CharacterBase characterBase { get; set; }
         public LevelProgression levelProgression { get; set; }
@@ -211,22 +211,22 @@ namespace Api.InternalTypes
         public double percentToNextLevel { get; set; }
     }
 
-    internal class Data
+    public class Data
     {
         public List<Item> items { get; set; }
         public List<Character> characters { get; set; }
     }
 
-    internal class Response
+    public class Response
     {
         public Data data { get; set; }
     }
 
-    internal class MessageData
+    public class MessageData
     {
     }
 
-    internal class PlayerResultRootObject
+    public class PlayerResultRootObject
     {
         public Response Response { get; set; }
         public int ErrorCode { get; set; }

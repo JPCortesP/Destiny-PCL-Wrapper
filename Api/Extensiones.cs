@@ -46,9 +46,9 @@ namespace Api
         }
         private Player convertirAPlayer(InternalTypes.PlayerResultRootObject playerResult, Player p)
         {
-           
                if (p == null)
                    p = new Player();
+               
                var origen = playerResult.Response.data;
                p.Characters = new List<Character>();
                p.Items = new List<ItemBase>();
@@ -67,7 +67,7 @@ namespace Api
                    p.Characters.Add(ch);
                }
                object lockedObj = new object();
-               var loop = Parallel.ForEach(origen.items, (item) => 
+               Parallel.ForEach(origen.items, (item) => 
                {
                    ItemBase b;
                    if (item.primaryStat != null)
@@ -116,12 +116,42 @@ namespace Api
                //{
 
                //}
-               while (!loop.IsCompleted)
-               {
-                   Task.Delay(10);
-               }
+               
                return p;
            
+        }
+
+        private LazyPlayer convertirALazyPlayer(InternalTypes.PlayerResultRootObject playerResult, Player p)
+        {
+            
+            if (p == null)
+                p = new Player();
+
+            var origen = playerResult.Response.data;
+            
+            var lp = new LazyPlayer(origen.items, Manifest);
+            lp.MembershipId = p.MembershipId;
+            lp.GamerTag = p.GamerTag;
+            lp.Characters = new List<Character>();
+            
+            foreach (var item in origen.characters)
+            {
+                Character ch = new Character();
+                ch.BaseLevel = item.characterLevel;
+                ch.CharacterId = item.characterBase.characterId;
+                ch.Class = ((dynamic)Manifest.getData(Api.Manifest.ManifestTable.Class, item.characterBase.classHash.ToString())).className;
+                ch.EmblemBackgroundPath = item.backgroundPath;
+                ch.EmblemPath = item.emblemPath;
+                ch.Gender = ((dynamic)Manifest.getData(Api.Manifest.ManifestTable.Gender, item.characterBase.genderHash.ToString())).genderName;
+                ch.LightLevel = item.characterBase.powerLevel;
+                ch.Race = ((dynamic)Manifest.getData(Api.Manifest.ManifestTable.Race, item.characterBase.raceHash.ToString())).raceName;
+
+                lp.Characters.Add(ch);
+            }
+            
+
+            return lp;
+
         }
     }
 }
