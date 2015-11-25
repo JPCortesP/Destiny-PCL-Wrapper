@@ -35,6 +35,40 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="Manifest\db\Activity.json" />
+    <None Include="Manifest\db\ActivityBundle.json" />
+    <None Include="Manifest\db\ActivityType.json" />
+    <None Include="Manifest\db\Bond.json" />
+    <None Include="Manifest\db\Class.json" />
+    <None Include="Manifest\db\DamageType.json" />
+    <None Include="Manifest\db\db.zip.zip" />
+    <None Include="Manifest\db\Destination.json" />
+    <None Include="Manifest\db\DirectorBook.json" />
+    <None Include="Manifest\db\EnemyRace.json" />
+    <None Include="Manifest\db\Faction.json" />
+    <None Include="Manifest\db\Gender.json" />
+    <None Include="Manifest\db\Grimoire.json" />
+    <None Include="Manifest\db\GrimoireCard.json" />
+    <None Include="Manifest\db\HistoricalStats.json" />
+    <None Include="Manifest\db\InventoryBucket.json" />
+    <None Include="Manifest\db\InventoryItem.json" />
+    <None Include="Manifest\db\ItemCategory.json" />
+    <None Include="Manifest\db\Location.json" />
+    <None Include="Manifest\db\Objective.json" />
+    <None Include="Manifest\db\Place.json" />
+    <None Include="Manifest\db\Progression.json" />
+    <None Include="Manifest\db\Race.json" />
+    <None Include="Manifest\db\RewardSource.json" />
+    <None Include="Manifest\db\SandboxPerk.json" />
+    <None Include="Manifest\db\ScriptedSkull.json" />
+    <None Include="Manifest\db\SpecialEvent.json" />
+    <None Include="Manifest\db\Stat.json" />
+    <None Include="Manifest\db\StatGroup.json" />
+    <None Include="Manifest\db\TalentGrid.json" />
+    <None Include="Manifest\db\TriumphSet.json" />
+    <None Include="Manifest\db\UnlockFlag.json" />
+    <None Include="Manifest\db\Vendor.json" />
+    <None Include="Manifest\db\VendorCategory.json" />
     <None Include="project.json" />
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
@@ -43,6 +77,7 @@
     <Compile Include="Extensiones.cs" />
     <Compile Include="IApi.cs" />
     <Compile Include="Manifest\ManifestTable.cs" />
+    <Compile Include="Manifest\OfflineManifest.cs" />
     <Compile Include="Manifest\OnlineManifest.cs" />
     <Compile Include="Objects\MembershipType.cs" />
     <Compile Include="InternalTypes\PlayerData.cs" />
