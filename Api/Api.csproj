@@ -41,7 +41,6 @@
     <None Include="Manifest\db\Bond.json" />
     <None Include="Manifest\db\Class.json" />
     <None Include="Manifest\db\DamageType.json" />
-    <None Include="Manifest\db\db.zip.zip" />
     <None Include="Manifest\db\Destination.json" />
     <None Include="Manifest\db\DirectorBook.json" />
     <None Include="Manifest\db\EnemyRace.json" />
@@ -88,6 +87,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="InternalImplementation\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Manifest\db\1 Readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
