@@ -35,105 +35,39 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="Manifest\db\Activity.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Manifest\db\ActivityBundle.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Manifest\db\ActivityType.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Manifest\db\Bond.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Manifest\db\Class.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Manifest\db\DamageType.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Manifest\db\Destination.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Manifest\db\DirectorBook.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Manifest\db\EnemyRace.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Manifest\db\Faction.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Manifest\db\Gender.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Manifest\db\Grimoire.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Manifest\db\GrimoireCard.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Manifest\db\HistoricalStats.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Manifest\db\InventoryBucket.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Manifest\db\InventoryItem.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Manifest\db\ItemCategory.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Manifest\db\Location.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Manifest\db\Objective.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Manifest\db\Place.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Manifest\db\Progression.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Manifest\db\Race.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Manifest\db\RewardSource.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Manifest\db\SandboxPerk.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Manifest\db\ScriptedSkull.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Manifest\db\SpecialEvent.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Manifest\db\Stat.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Manifest\db\StatGroup.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Manifest\db\TalentGrid.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Manifest\db\TriumphSet.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Manifest\db\UnlockFlag.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Manifest\db\Vendor.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Manifest\db\VendorCategory.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <EmbeddedResource Include="Manifest\db\Activity.json" />
+    <EmbeddedResource Include="Manifest\db\ActivityBundle.json" />
+    <EmbeddedResource Include="Manifest\db\ActivityType.json" />
+    <EmbeddedResource Include="Manifest\db\Bond.json" />
+    <EmbeddedResource Include="Manifest\db\Class.json" />
+    <EmbeddedResource Include="Manifest\db\DamageType.json" />
+    <EmbeddedResource Include="Manifest\db\Destination.json" />
+    <EmbeddedResource Include="Manifest\db\DirectorBook.json" />
+    <EmbeddedResource Include="Manifest\db\EnemyRace.json" />
+    <EmbeddedResource Include="Manifest\db\Faction.json" />
+    <EmbeddedResource Include="Manifest\db\Gender.json" />
+    <EmbeddedResource Include="Manifest\db\Grimoire.json" />
+    <EmbeddedResource Include="Manifest\db\GrimoireCard.json" />
+    <EmbeddedResource Include="Manifest\db\HistoricalStats.json" />
+    <EmbeddedResource Include="Manifest\db\InventoryBucket.json" />
+    <EmbeddedResource Include="Manifest\db\InventoryItem.json" />
+    <EmbeddedResource Include="Manifest\db\ItemCategory.json" />
+    <EmbeddedResource Include="Manifest\db\Location.json" />
+    <EmbeddedResource Include="Manifest\db\Objective.json" />
+    <EmbeddedResource Include="Manifest\db\Place.json" />
+    <EmbeddedResource Include="Manifest\db\Progression.json" />
+    <EmbeddedResource Include="Manifest\db\Race.json" />
+    <EmbeddedResource Include="Manifest\db\RewardSource.json" />
+    <EmbeddedResource Include="Manifest\db\SandboxPerk.json" />
+    <EmbeddedResource Include="Manifest\db\ScriptedSkull.json" />
+    <EmbeddedResource Include="Manifest\db\SpecialEvent.json" />
+    <EmbeddedResource Include="Manifest\db\Stat.json" />
+    <EmbeddedResource Include="Manifest\db\StatGroup.json" />
+    <EmbeddedResource Include="Manifest\db\TalentGrid.json" />
+    <EmbeddedResource Include="Manifest\db\TriumphSet.json" />
+    <EmbeddedResource Include="Manifest\db\UnlockFlag.json" />
+    <EmbeddedResource Include="Manifest\db\Vendor.json" />
+    <EmbeddedResource Include="Manifest\db\VendorCategory.json" />
     <None Include="project.json" />
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
@@ -155,9 +89,7 @@
     <Folder Include="InternalImplementation\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Manifest\db\1 Readme.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <EmbeddedResource Include="Manifest\db\1 Readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

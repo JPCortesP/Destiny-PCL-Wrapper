@@ -4,6 +4,7 @@ using Api;
 using Api.Manifest;
 using Microsoft.CSharp;
 
+
 namespace API.tests
 {
     [TestClass]
@@ -44,7 +45,7 @@ namespace API.tests
             {
                 dynamic respuesta = manifest.getData(ManifestTable.Gender, "3111576190");
                 Assert.IsNotNull(respuesta);
-                Assert.IsTrue(((string)respuesta) == "Male");
+                Assert.IsTrue(((string)respuesta.genderName) == "Male");
                 
             }
         }
@@ -75,7 +76,7 @@ namespace API.tests
             {
                 dynamic respuesta = manifest.getData(ManifestTable.Race, "3887404748");
                 Assert.IsNotNull(respuesta);
-                var shouldbeHuman = (string)respuesta;
+                var shouldbeHuman = (string)respuesta.raceName;
                 Assert.IsTrue(shouldbeHuman == "Human");
                
             }
@@ -93,7 +94,7 @@ namespace API.tests
                 Assert.IsNotNull(itemName);
                 string name = (string)respuesta.statName;
                 Assert.IsTrue(name == "Agility");
-            }
+           } 
         }
 
         [TestMethod]
@@ -103,7 +104,7 @@ namespace API.tests
             {
                 dynamic respuesta = manifest.getData(ManifestTable.Class, "3655393761");
                 Assert.IsNotNull(respuesta);
-                var shouldbeTitan = (string)respuesta;
+                var shouldbeTitan = (string)respuesta.className;
                 Assert.IsTrue(shouldbeTitan == "Titan");
                 
             }
