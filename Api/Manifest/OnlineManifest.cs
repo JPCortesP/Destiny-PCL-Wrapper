@@ -90,34 +90,64 @@ namespace Api.Manifest
             }
         }
 
+        public async Task<dynamic> getDataAsync(ManifestTable table, string hash)
+        {
+            var cache = checkCache(table, hash);
+            if (cache != null)
+            {
+                return cache;
+            }
+            string tabla = convertir(table);
+            if (tabla != null)
+            {
+                var url = String.Format("http://www.bungie.net/Platform/Destiny/Manifest/{0}/{1}/", tabla, hash);
+                var resultado = await hc.GetStringAsync(url);
+                dynamic objeto = JObject.Parse(resultado);
+                if (objeto.ErrorStatus == "Success")
+                {
+                    dynamic response = PrepareReturn(objeto, table);
+                    return response;
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+        }
+
         private dynamic checkCache(ManifestTable table,string hash)
         {
             switch (table)
             {
                 case ManifestTable.Gender:
                     if (hash == "2204441813")
-                        return "Female";
+                        return JObject.Parse("{'genderName': 'Female'}");
                     if (hash == "3111576190")
-                        return "Male";
+                        return JObject.Parse("{'genderName': 'Male'}");
                     else
                         return null;
                 case ManifestTable.Race:
                     if (hash == "2803282938")
-                        return "Awoken";
+                        return JObject.Parse("{'raceName': 'Awoken'}");
                     if (hash == "3887404748")
-                        return "Human";
+                        return JObject.Parse("{'raceName': 'Human'}");
                     if (hash == "898834093")
-                        return "Exo";
+                        return JObject.Parse("{'raceName': 'Exo'}");
                     else
                         return null;
                 
                 case ManifestTable.Class:
                     if (hash == "2271682572")
-                        return "Warlock";
+                        return JObject.Parse("{'className': 'Warlock'}");
                     if (hash == "3655393761")
-                        return "Titan";
+                        return JObject.Parse("{'className': 'Titan'}");
                     if (hash == "671679327")
-                        return "Hunter";
+                        return JObject.Parse("{'className': 'Hunter'}");
                     else
                         return null;
                 default:
@@ -163,7 +193,7 @@ namespace Api.Manifest
 
         }
 
-
+        
     }
 
 

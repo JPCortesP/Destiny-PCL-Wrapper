@@ -30,6 +30,7 @@ namespace Api
     {
         string ApiKey { get; set; }
         dynamic getData(Manifest.ManifestTable table, string hash);
+        Task<dynamic> getDataAsync(Manifest.ManifestTable table, string hash);
     }
     
 }

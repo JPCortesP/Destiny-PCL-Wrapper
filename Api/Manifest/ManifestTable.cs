@@ -15,7 +15,6 @@ namespace Api.Manifest
         Activity,
         Gender,
         InventoryBucket,
-        
         Race,
         Stat,
         Class
