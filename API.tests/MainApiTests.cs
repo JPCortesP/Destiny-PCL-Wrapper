@@ -32,6 +32,9 @@ namespace API.tests
             Assert.IsTrue(player.Characters.Count == 3);
             Assert.IsNotNull(player.Gear);
             Assert.IsNotNull(player.Gear.First().primaryStats_Name);
+            Assert.IsNotNull(player.Characters.First().Class);
+            Assert.IsNotNull(player.Characters.First().Gender);
+            Assert.IsNotNull(player.Characters.First().Race);
         }
 
         [TestMethod]
