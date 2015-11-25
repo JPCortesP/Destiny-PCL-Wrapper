@@ -1,0 +1,1 @@
+<Playlist Version="1.0"><Add Test="API.tests.MainApiTests.MainApi_ReturnsPlayerCorrectly" /><Add Test="API.tests.MainApiTests.MainApi_GT_Is_Case_Insensitive" /><Add Test="API.tests.MainApiTests.MainApi_ManifestNameWorks" /></Playlist>
