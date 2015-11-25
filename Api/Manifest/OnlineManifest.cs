@@ -12,6 +12,29 @@ namespace Api.Manifest
     public sealed partial class OnlineManifest : DestinyManifest
     {
         private string _apikey { get; set; }
+
+        /// <summary>
+        /// Stores the API-KEY. Don't update while using.
+        /// </summary>
+        public string ApiKey
+        {
+            get
+            {
+                return _apikey;
+            }
+
+            set
+            {
+                _apikey = value;
+                updateKey();
+            }
+        }
+
+        private void updateKey()
+        {
+            hc.DefaultRequestHeaders.Add("X-API-Key", _apikey);
+        }
+
         private HttpClient hc = new HttpClient();
         public Dictionary<ManifestTable, string> Tables = new Dictionary<ManifestTable, string>()
         {
@@ -26,10 +49,11 @@ namespace Api.Manifest
             {ManifestTable.Class, "Class" }
 
         };
+        public OnlineManifest() { }
         public OnlineManifest(string APiKey)
         {
             this._apikey = APiKey;
-            hc.DefaultRequestHeaders.Add("X-API-Key", APiKey);
+            updateKey();
         }
         public void Dispose()
         {

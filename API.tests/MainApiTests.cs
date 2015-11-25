@@ -12,7 +12,7 @@ namespace API.tests
     public class MainApiTests
     {
         private static string key = "6def2424db3a4a8db1cef0a2c3a7807e";
-        private Api.IApi api = new Api.API(new OnlineManifest(key), key);
+        private Api.IApi api = new Api.API(new OnlineManifest(), key);
         [TestMethod]
         public void MainApi_ManifestNameWorks()
         {

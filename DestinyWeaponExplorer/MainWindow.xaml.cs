@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Api.Objects;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -22,8 +24,8 @@ namespace DestinyWeaponExplorer
     /// </summary>
     public partial class MainWindow : Window
     {
-        public DestinyAPI.DestinyAPI api = new DestinyAPI.DestinyAPI();
-        public DestinyAPI.Player player { get; set; }
+        public Api.API api = new Api.API(new Api.Manifest.OnlineManifest(), "6def2424db3a4a8db1cef0a2c3a7807e");
+        public Player player { get; set; }
         private ObservableCollection<string> GearType = new ObservableCollection<string>() { "All" };
         private ObservableCollection<string> GearTier = new ObservableCollection<string>() { "All" };
         public MainWindow()
@@ -46,16 +48,27 @@ namespace DestinyWeaponExplorer
 
         }
 
-        private async void initPlayerInfo(string gamertag, bool isXbox, CookieContainer cookies = null)
+        private async Task<bool> initPlayerInfo(string gamertag, bool isXbox, CookieContainer cookies = null)
         {
-            player = await api.GetPlayer(new DestinyAPI.BungieUser()
-            { GamerTag = gamertag, type = isXbox ? DestinyAPI.MembershipType.Xbox : DestinyAPI.MembershipType.PSN, cookies = cookies });
-            if (player == null)
+            var cachedPlayer = retrievePlayer(gamertag);
+            if (cachedPlayer != null)
             {
-                MessageBox.Show("GamerTag/Platform combination not found in Bungie");
+                player = cachedPlayer;
             }
             else
             {
+                player = await api.getPlayerAsync(new BungieUser()
+                { GamerTag = gamertag, type = isXbox ? MembershipType.Xbox : MembershipType.PSN, cookies = cookies });
+            }
+            
+            if (player == null)
+            {
+                MessageBox.Show("GamerTag/Platform combination not found in Bungie");
+                return false;
+            }
+            else
+            {
+                savePlayer(player);
                 GearType.Clear();
                 GearType.Add("All");
                 GearTier.Clear();
@@ -65,8 +78,8 @@ namespace DestinyWeaponExplorer
 
                 this.DataContext = player;
                 var gear = player.Items
-                    .Where(t => t.GetType() == typeof(DestinyAPI.ItemGear))
-                    .Cast<DestinyAPI.ItemGear>()
+                    .Where(t => t.GetType() == typeof(ItemGear))
+                    .Cast<ItemGear>()
                     .OrderByDescending(g => g.primaryStats_value)
                     .ToList();
                 this.lv_items.DataContext = gear;
@@ -81,7 +94,7 @@ namespace DestinyWeaponExplorer
                 {
                     GearTier.Add(item);
                 }
-                
+                return true;
 
 
             }
@@ -90,9 +103,39 @@ namespace DestinyWeaponExplorer
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private Player retrievePlayer(string gamertag)
         {
+            //if (ConfigurationManager.AppSettings[gamertag] != null)
+            //{
+            //    var texto = ConfigurationManager.AppSettings[gamertag];
+            //    var p = Newtonsoft.Json.JsonConvert.DeserializeObject<Player>(texto);
+            //    return p;
+            //}
+            //else
+                return null;
+        }
 
+        private void savePlayer(Player player)
+        {
+            var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            var settings = configFile.AppSettings.Settings;
+            var texto = Newtonsoft.Json.JsonConvert.SerializeObject(player);
+            if (settings[player.GamerTag] != null)
+            {
+                settings[player.GamerTag].Value = texto;
+            }
+            else
+                settings.Add(player.GamerTag,texto);
+            configFile.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection(configFile.AppSettings.SectionInformation.Name);
+            
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ((Button)sender).IsEnabled = false;
+            bool resultado = false;
+            
             if (string.IsNullOrWhiteSpace(txt_gt.Text) || cb_platform.SelectedValue == null)
             {
                 MessageBox.Show("Gamertag and Platorm are required. ");
@@ -108,15 +151,17 @@ namespace DestinyWeaponExplorer
                     {
                         var cookiecontainer = login.cookies;
 
-                        initPlayerInfo(txt_gt.Text, cb_platform.Text == "Xbox", cookiecontainer);
+                        resultado = await initPlayerInfo(txt_gt.Text, cb_platform.Text == "Xbox", cookiecontainer);
                     }
                 }
                 else
                 {
-                    initPlayerInfo(txt_gt.Text, cb_platform.Text == "Xbox");
+                    resultado = await initPlayerInfo(txt_gt.Text, cb_platform.Text == "Xbox");
                 }
 
             }
+            ((Button)sender).IsEnabled = true;
+            MessageBox.Show(resultado.ToString());
         }
 
         private void cb_Type_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -130,8 +175,8 @@ namespace DestinyWeaponExplorer
             if (player == null)
                 return;
             var filtered = player.Items
-                                .Where(t => t.GetType() == typeof(DestinyAPI.ItemGear))
-                                .Cast<DestinyAPI.ItemGear>()
+                                .Where(t => t.GetType() == typeof(ItemGear))
+                                .Cast<ItemGear>()
                                 .OrderByDescending(g => g.primaryStats_value)
                                 .ToList();
             if (cb_Type.SelectedItem != null)

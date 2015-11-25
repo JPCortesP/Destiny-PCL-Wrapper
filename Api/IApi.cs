@@ -28,6 +28,7 @@ namespace Api
 
     public interface DestinyManifest : IDisposable
     {
+        string ApiKey { get; set; }
         dynamic getData(Manifest.ManifestTable table, string hash);
     }
     

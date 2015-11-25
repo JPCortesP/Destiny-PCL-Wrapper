@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,9 +15,34 @@ namespace Api
         {
             if (cookies != null)
             {
-                throw new NotImplementedException("Implemente las cookies weon!");
+                hc = new HttpClient(new HttpClientHandler() { CookieContainer = cookies });
+                var galletas = cookies.GetCookies(new Uri("https://bungie.net"));
+                foreach (Cookie item in galletas)
+                {
+                    if (item.Name == "bungled")
+                    {
+                        hc.DefaultRequestHeaders.Add("X-csrf", item.Value);
+                    }
+                }
+                galletas = cookies.GetCookies(new Uri("https://www.bungie.net"));
+                foreach (Cookie item in galletas)
+                {
+                    if (item.Name == "bungled")
+                    {
+                        hc.DefaultRequestHeaders.Add("X-csrf", item.Value);
+                    }
+                }
             }
-            return await hc.GetStringAsync(url);
+            else
+            {
+                hc = new HttpClient();
+            }
+            using (hc)
+            {
+                hc.DefaultRequestHeaders.Add("X-API-Key", this.ApiKey);
+                return await hc.GetStringAsync(url);
+            }
+
         }
         private async Task<Player> convertirAPlayer(InternalTypes.PlayerResultRootObject playerResult, Player p)
         {

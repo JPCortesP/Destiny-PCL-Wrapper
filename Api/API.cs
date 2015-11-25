@@ -15,9 +15,9 @@ namespace Api
         public API( DestinyManifest defaultManifest, string _ApiKey)
         {
             this.Manifest = defaultManifest;
+            this.Manifest.ApiKey = _ApiKey;
             this.ApiKey = _ApiKey;
-            hc = new HttpClient();
-            hc.DefaultRequestHeaders.Add("X-API-Key", ApiKey);
+            
         }
         public string ApiKey { get; set; }
         public DestinyManifest Manifest { get; set; }
@@ -69,7 +69,7 @@ namespace Api
         public async Task<Player> getPlayerAsync(BungieUser user)
         {//http://bungie.net/platform/destiny/SearchDestinyPlayer/1/jpcortesp
             var url = String.Format("http://bungie.net/platform/destiny/SearchDestinyPlayer/{0}/{1}", (int)user.type, user.GamerTag);
-            var respuesta = await getString(url);
+            var respuesta = await getString(url,user.cookies);
             dynamic objRespuesta = JObject.Parse(respuesta);
             var algoParaEspacio = objRespuesta;
             dynamic listaRespuesta = ((Newtonsoft.Json.Linq.JContainer)((((dynamic)((dynamic)objRespuesta).Response)))).HasValues;
@@ -80,7 +80,7 @@ namespace Api
                 p.GamerTag = response.displayName;
                 p.MembershipId = response.membershipId;
                 url = String.Format("http://www.bungie.net/platform/destiny/{0}/Account/{1}/Items/", (int)user.type, p.MembershipId);
-                respuesta = await getString(url);
+                respuesta = await getString(url, user.cookies);
                 var _PlayerResult = await Task.Run(() =>
                    Newtonsoft.Json.JsonConvert.DeserializeObject<InternalTypes.PlayerResultRootObject>(respuesta));
                 var res = await convertirAPlayer(_PlayerResult, p);
