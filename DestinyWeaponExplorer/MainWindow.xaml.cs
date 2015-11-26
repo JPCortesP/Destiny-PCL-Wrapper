@@ -1,4 +1,5 @@
-﻿using DestinyPCL.Objects;
+﻿
+using DestinyPCL.Objects;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

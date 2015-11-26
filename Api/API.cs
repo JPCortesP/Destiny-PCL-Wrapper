@@ -1,4 +1,5 @@
-﻿using DestinyPCL.Objects;
+﻿
+using DestinyPCL.Objects;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;

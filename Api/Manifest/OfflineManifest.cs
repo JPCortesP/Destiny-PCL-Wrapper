@@ -25,7 +25,7 @@ namespace DestinyPCL.Manifest
         public dynamic getData(ManifestTable table, string hash)
         {
 
-            var file = "Api.Manifest.db.";
+            var file = "DestinyPCL.Manifest.db.";
             switch (table)
             {
                 case ManifestTable.InventoryItem:

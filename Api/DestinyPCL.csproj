@@ -8,8 +8,8 @@
     <ProjectGuid>{731C27FF-E7B0-4B1A-A6AD-354F652B38C8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Api</RootNamespace>
-    <AssemblyName>Api</AssemblyName>
+    <RootNamespace>DestinyPCL</RootNamespace>
+    <AssemblyName>DestinyPCL</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -78,11 +78,14 @@
     <Compile Include="Manifest\ManifestTable.cs" />
     <Compile Include="Manifest\OfflineManifest.cs" />
     <Compile Include="Manifest\OnlineManifest.cs" />
+    <Compile Include="Objects\Character.cs" />
+    <Compile Include="Objects\Item.cs" />
     <Compile Include="Objects\MembershipType.cs" />
     <Compile Include="InternalTypes\PlayerData.cs" />
     <Compile Include="InternalTypes\PlayerSearchResult.cs" />
     <Compile Include="Objects\BungieUser.cs" />
     <Compile Include="Objects\Player.cs" />
+    <Compile Include="Objects\Stat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -19,7 +19,7 @@ namespace API.tests
            
             var name = api.ManifestTypeName;
             Assert.IsNotNull(name);
-            Assert.IsTrue(name == "Api.Manifest.OnlineManifest");
+            Assert.IsTrue(name == "DestinyPCL.Manifest.OnlineManifest");
 
         }
         [TestMethod]
