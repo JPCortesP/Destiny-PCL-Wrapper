@@ -25,7 +25,9 @@ namespace DestinyPCL.Objects
             _items = new Lazy<List<DestinyItemBase>>(() => fillItems(manifest, data), true);
             if (data.characters != null)
             {
-                this.Grimoire = data.characters.FirstOrDefault().characterBase.grimoireScore;
+                if(data.characters.Count > 0)
+                    if(data.characters.First().characterBase != null)
+                        this.Grimoire = data.characters.FirstOrDefault().characterBase.grimoireScore;
             }
         }
         private DestinyManifest Manifest;
