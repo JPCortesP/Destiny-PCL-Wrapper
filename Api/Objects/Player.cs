@@ -11,10 +11,11 @@ namespace DestinyPCL.Objects
     public class Player
     {
                 
-        internal Player(DestinyManifest manifest, InternalTypes.Data data)
+        internal Player(DestinyManifest manifest, InternalTypes.Data data, BungieUser user)
         {
             this.Manifest = manifest;
             this.data = data;
+            this.type = user.type;
             _characters = new Lazy<List<Character>>(() => fillChars(manifest, data), true);
             _items = new Lazy<List<ItemBase>>(() => fillItems(manifest, data), true);
         }
@@ -73,12 +74,15 @@ namespace DestinyPCL.Objects
                 ItemBase b;
                 if (item.primaryStat != null)
                 {
+                    var itemData = manifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryItem, item.itemHash.ToString());
+                    var bucketData = manifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryBucket, item.bucketHash.ToString());
+                    var stathash = manifest.getData(DestinyPCL.Manifest.ManifestTable.Stat, item.primaryStat.statHash.ToString());
                     b = new ItemGear(
                         (long)item.itemHash,
                         item.itemId,
-                        (object)manifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryItem, item.itemHash.ToString()),
+                        (object) itemData,
                         item.quantity,
-                        (object)manifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryBucket, item.bucketHash.ToString()),
+                        (object)bucketData,
                         item.isGridComplete,
                         item.transferStatus,
                         item.state,
@@ -89,17 +93,19 @@ namespace DestinyPCL.Objects
                         item.primaryStat.maximumValue,
                         (long)item.primaryStat.statHash,
                         item.primaryStat.value,
-                        (object)manifest.getData(DestinyPCL.Manifest.ManifestTable.Stat, item.primaryStat.statHash.ToString())
+                        (object)stathash
                         );
                 }
                 else
                 {
+                    var itemData = manifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryItem, item.itemHash.ToString());
+                    var bucketData = manifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryBucket, item.bucketHash.ToString());
                     b = new ItemBase(
                         (long)item.itemHash,
                         item.itemId,
-                        (object)manifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryItem, item.itemHash.ToString()).Result,
+                        (object)itemData,
                         item.quantity,
-                        (object)manifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryBucket, item.bucketHash.ToString()),
+                        (object)bucketData,
                         item.isGridComplete,
                         item.transferStatus,
                         item.state,

@@ -82,7 +82,7 @@ namespace DestinyPCL
                 respuesta = await getString(url, user.cookies);
                 var _PlayerResult = await Task.Run(() =>
                    Newtonsoft.Json.JsonConvert.DeserializeObject<InternalTypes.PlayerResultRootObject>(respuesta));
-                Player p = new Player(Manifest,_PlayerResult.Response.data);
+                Player p = new Player(Manifest,_PlayerResult.Response.data, user);
                 p.GamerTag = response.displayName;
                 p.MembershipId = response.membershipId;
                                 //var res = convertirAPlayer(_PlayerResult, p);
