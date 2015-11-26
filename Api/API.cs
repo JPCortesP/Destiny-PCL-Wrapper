@@ -77,17 +77,18 @@ namespace DestinyPCL
             if (listaRespuesta)
             {
                 dynamic response = ((dynamic)((dynamic)objRespuesta).Response)[0];
-                Player p = new Player();
-                p.GamerTag = response.displayName;
-                p.MembershipId = response.membershipId;
-                url = String.Format("http://www.bungie.net/platform/destiny/{0}/Account/{1}/Items/", (int)user.type, p.MembershipId);
+                
+                url = String.Format("http://www.bungie.net/platform/destiny/{0}/Account/{1}/Items/", (int)user.type, response.membershipId);
                 respuesta = await getString(url, user.cookies);
                 var _PlayerResult = await Task.Run(() =>
                    Newtonsoft.Json.JsonConvert.DeserializeObject<InternalTypes.PlayerResultRootObject>(respuesta));
-                var res = convertirALazyPlayer(_PlayerResult, p);
-                if (res != null)
+                Player p = new Player(Manifest,_PlayerResult.Response.data);
+                p.GamerTag = response.displayName;
+                p.MembershipId = response.membershipId;
+                                //var res = convertirAPlayer(_PlayerResult, p);
+                if (p != null)
                 {
-                    return res;
+                    return p;
                 }
                 else
                 {
@@ -99,7 +100,6 @@ namespace DestinyPCL
             {
                 return null;
             }
-            throw new NotImplementedException();
         }
 
         

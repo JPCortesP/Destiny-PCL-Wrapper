@@ -47,12 +47,9 @@ namespace DestinyPCL
         }
         private Player convertirAPlayer(InternalTypes.PlayerResultRootObject playerResult, Player p)
         {
-               if (p == null)
-                   p = new Player();
                
                var origen = playerResult.Response.data;
-               p.Characters = new List<Character>();
-               p.Items = new List<ItemBase>();
+               
                foreach (var item in origen.characters)
                {
                    Character ch = new Character();
@@ -67,7 +64,6 @@ namespace DestinyPCL
 
                    p.Characters.Add(ch);
                }
-               object lockedObj = new object();
                Parallel.ForEach(origen.items, (item) => 
                {
                    ItemBase b;
@@ -113,46 +109,12 @@ namespace DestinyPCL
                    
                    
                });
-               //foreach (var item in origen.items)
-               //{
-
-               //}
+               
                
                return p;
            
         }
 
-        private LazyPlayer convertirALazyPlayer(InternalTypes.PlayerResultRootObject playerResult, Player p)
-        {
-            
-            if (p == null)
-                p = new Player();
-
-            var origen = playerResult.Response.data;
-            
-            var lp = new LazyPlayer(origen.items, Manifest);
-            lp.MembershipId = p.MembershipId;
-            lp.GamerTag = p.GamerTag;
-            lp.Characters = new List<Character>();
-            
-            foreach (var item in origen.characters)
-            {
-                Character ch = new Character();
-                ch.BaseLevel = item.characterLevel;
-                ch.CharacterId = item.characterBase.characterId;
-                ch.Class = ((dynamic)Manifest.getData(DestinyPCL.Manifest.ManifestTable.Class, item.characterBase.classHash.ToString())).className;
-                ch.EmblemBackgroundPath = item.backgroundPath;
-                ch.EmblemPath = item.emblemPath;
-                ch.Gender = ((dynamic)Manifest.getData(DestinyPCL.Manifest.ManifestTable.Gender, item.characterBase.genderHash.ToString())).genderName;
-                ch.LightLevel = item.characterBase.powerLevel;
-                ch.Race = ((dynamic)Manifest.getData(DestinyPCL.Manifest.ManifestTable.Race, item.characterBase.raceHash.ToString())).raceName;
-
-                lp.Characters.Add(ch);
-            }
-            
-
-            return lp;
-
-        }
+        
     }
 }

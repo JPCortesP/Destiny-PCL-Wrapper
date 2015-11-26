@@ -36,7 +36,7 @@ namespace API.tests
             Assert.IsNotNull(player.Characters.First().Gender);
             Assert.IsNotNull(player.Characters.First().Race);
         }
-
+            
         [TestMethod]
         public void MainApi_GT_Is_Case_Insensitive()
         {

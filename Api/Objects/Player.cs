@@ -10,15 +10,27 @@ namespace DestinyPCL.Objects
 {
     public class Player
     {
+        [Obsolete("Use el constructor Lazy por Favor", true)]
+        internal Player() { throw new NotImplementedException(); }
+        internal Player(DestinyManifest manifest, InternalTypes.Data data)
+        {
+            this.Manifest = manifest;
+            this.data = data;
+            _characters = new Lazy<List<Character>>(() => fillChars(manifest, data), true);
+            _items = new Lazy<List<ItemBase>>(() => fillItems(manifest, data), true);
+        }
+        private DestinyManifest Manifest;
+        private InternalTypes.Data data;
         public string GamerTag { get; set; }
         public MembershipType type { get; set; }
-        public virtual List<Character> Characters { get; set; }
+        
         public int Grimoire { get; set; }
         //public string MainClan { get; set; }
         //public string MainClanTag { get; set; }
         public string MembershipId { get; set; }
-        public virtual List<ItemBase> Items { get; set; }
-        public virtual List<ItemGear> Gear
+        public List<ItemBase> Items { get { return this._items.Value; } }
+        public List<Character> Characters { get { return this._characters.Value; } }
+        public List<ItemGear> Gear
         {
             get
             {
@@ -28,42 +40,36 @@ namespace DestinyPCL.Objects
                     .ToList() : null;
             }
         }
-        
-    }
 
-    public class LazyPlayer : Player
-    {
-        internal LazyPlayer() { }
-        internal LazyPlayer(List<InternalTypes.Item> items, DestinyManifest Manifest)
+        private Lazy<List<Character>> _characters { get; set; }
+        private Lazy<List<ItemBase>> _items { get; set; }
+
+        private static List<Character> fillChars(DestinyManifest manifest, InternalTypes.Data data)
         {
-            this._internalItems = items;
-            this._internalManifest = Manifest;
+            var lista = new List<Character>();
+            Parallel.ForEach(data.characters, (item) =>
+           {
+               Character ch = new Character();
+               ch.BaseLevel = item.characterLevel;
+               ch.CharacterId = item.characterBase.characterId;
+               ch.Class = ((dynamic)manifest.getData(DestinyPCL.Manifest.ManifestTable.Class, item.characterBase.classHash.ToString())).className;
+               ch.EmblemBackgroundPath = item.backgroundPath;
+               ch.EmblemPath = item.emblemPath;
+               ch.Gender = ((dynamic)manifest.getData(DestinyPCL.Manifest.ManifestTable.Gender, item.characterBase.genderHash.ToString())).genderName;
+               ch.LightLevel = item.characterBase.powerLevel;
+               ch.Race = ((dynamic)manifest.getData(DestinyPCL.Manifest.ManifestTable.Race, item.characterBase.raceHash.ToString())).raceName;
+               //lock (lista)
+               {
+                   lista.Add(ch);
+               }
+
+           });
+            return lista;
         }
-        private List<InternalTypes.Item> _internalItems { get; set; }
-        private DestinyManifest _internalManifest;
-        //public List<InternalTypes.Character> characters { get; set; }
-        private List<ItemBase> _items;
-        public override List<ItemBase> Items
+        private static List<ItemBase> fillItems(DestinyManifest manifest, InternalTypes.Data data)
         {
-            get
-            {
-                if (_items == null)
-                {
-                    initItems();
-                }
-                return _items;
-            }
-
-            set
-            {
-                base.Items = value;
-            }
-        }
-
-        private void initItems()
-        {
-            _items = new List<ItemBase>();
-            Parallel.ForEach(this._internalItems, (item) =>
+            var lista = new List<ItemBase>();
+            Parallel.ForEach(data.items, (item) =>
             {
                 ItemBase b;
                 if (item.primaryStat != null)
@@ -71,9 +77,9 @@ namespace DestinyPCL.Objects
                     b = new ItemGear(
                         (long)item.itemHash,
                         item.itemId,
-                        (object)_internalManifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryItem, item.itemHash.ToString()),
+                        (object)manifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryItem, item.itemHash.ToString()),
                         item.quantity,
-                        (object)_internalManifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryBucket, item.bucketHash.ToString()),
+                        (object)manifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryBucket, item.bucketHash.ToString()),
                         item.isGridComplete,
                         item.transferStatus,
                         item.state,
@@ -84,7 +90,7 @@ namespace DestinyPCL.Objects
                         item.primaryStat.maximumValue,
                         (long)item.primaryStat.statHash,
                         item.primaryStat.value,
-                        (object)_internalManifest.getData(DestinyPCL.Manifest.ManifestTable.Stat, item.primaryStat.statHash.ToString())
+                        (object)manifest.getData(DestinyPCL.Manifest.ManifestTable.Stat, item.primaryStat.statHash.ToString())
                         );
                 }
                 else
@@ -92,9 +98,9 @@ namespace DestinyPCL.Objects
                     b = new ItemBase(
                         (long)item.itemHash,
                         item.itemId,
-                        (object)_internalManifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryItem, item.itemHash.ToString()).Result,
+                        (object)manifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryItem, item.itemHash.ToString()).Result,
                         item.quantity,
-                        (object)_internalManifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryBucket, item.bucketHash.ToString()),
+                        (object)manifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryBucket, item.bucketHash.ToString()),
                         item.isGridComplete,
                         item.transferStatus,
                         item.state,
@@ -104,12 +110,15 @@ namespace DestinyPCL.Objects
 
                 }
 
-                _items.Add(b);
+                lista.Add(b);
 
 
             });
+            return lista;
         }
+        
     }
+
     
 
     
