@@ -1,4 +1,4 @@
-﻿using Api.Objects;
+﻿using DestinyPCL.Objects;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -8,11 +8,11 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Api
+namespace DestinyPCL
 {
-    public partial class API : IApi
+    public partial class DestinyService : IDestnyService
     {
-        public API( DestinyManifest defaultManifest, string _ApiKey)
+        public DestinyService( DestinyManifest defaultManifest, string _ApiKey)
         {
             this.Manifest = defaultManifest;
             this.Manifest.ApiKey = _ApiKey;

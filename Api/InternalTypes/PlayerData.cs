@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Api.InternalTypes
+namespace DestinyPCL.InternalTypes
 {
     public class PrimaryStat
     {

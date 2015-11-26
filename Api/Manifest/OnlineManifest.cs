@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Api.Manifest
+namespace DestinyPCL.Manifest
 {
 
     public sealed partial class OnlineManifest : DestinyManifest

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Api.Manifest
+namespace DestinyPCL.Manifest
 {
     /// <summary>
     /// Tables in the Manifest. Required for any implementator.

@@ -1,11 +1,11 @@
-﻿using Api.Objects;
+﻿using DestinyPCL.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Api.Objects
+namespace DestinyPCL.Objects
 {
     public class Player
     {
@@ -70,9 +70,9 @@ namespace Api.Objects
                     b = new ItemGear(
                         (long)item.itemHash,
                         item.itemId,
-                        (object)_internalManifest.getData(Api.Manifest.ManifestTable.InventoryItem, item.itemHash.ToString()),
+                        (object)_internalManifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryItem, item.itemHash.ToString()),
                         item.quantity,
-                        (object)_internalManifest.getData(Api.Manifest.ManifestTable.InventoryBucket, item.bucketHash.ToString()),
+                        (object)_internalManifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryBucket, item.bucketHash.ToString()),
                         item.isGridComplete,
                         item.transferStatus,
                         item.state,
@@ -83,7 +83,7 @@ namespace Api.Objects
                         item.primaryStat.maximumValue,
                         (long)item.primaryStat.statHash,
                         item.primaryStat.value,
-                        (object)_internalManifest.getData(Api.Manifest.ManifestTable.Stat, item.primaryStat.statHash.ToString())
+                        (object)_internalManifest.getData(DestinyPCL.Manifest.ManifestTable.Stat, item.primaryStat.statHash.ToString())
                         );
                 }
                 else
@@ -91,9 +91,9 @@ namespace Api.Objects
                     b = new ItemBase(
                         (long)item.itemHash,
                         item.itemId,
-                        (object)_internalManifest.getData(Api.Manifest.ManifestTable.InventoryItem, item.itemHash.ToString()).Result,
+                        (object)_internalManifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryItem, item.itemHash.ToString()).Result,
                         item.quantity,
-                        (object)_internalManifest.getData(Api.Manifest.ManifestTable.InventoryBucket, item.bucketHash.ToString()),
+                        (object)_internalManifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryBucket, item.bucketHash.ToString()),
                         item.isGridComplete,
                         item.transferStatus,
                         item.state,

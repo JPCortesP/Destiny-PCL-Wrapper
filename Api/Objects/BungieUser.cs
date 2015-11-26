@@ -1,7 +1,7 @@
-﻿using Api.Objects;
+﻿using DestinyPCL.Objects;
 using System.Net;
 
-namespace Api.Objects
+namespace DestinyPCL.Objects
 {
     public class BungieUser
     {

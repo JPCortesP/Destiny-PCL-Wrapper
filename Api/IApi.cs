@@ -1,4 +1,4 @@
-﻿using Api.Objects;
+﻿using DestinyPCL.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,9 +6,9 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Api
+namespace DestinyPCL
 {
-    public interface IApi : IDisposable
+    public interface IDestnyService : IDisposable
     {
         
         string ApiKey { get; set; }

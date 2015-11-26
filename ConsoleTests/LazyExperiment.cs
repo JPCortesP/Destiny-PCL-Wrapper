@@ -23,6 +23,8 @@ namespace ConsoleTests
         {
             _items = new Lazy<List<ItemBase>>(() => ( initItems (manifest, origen)), true);
             _characters = new Lazy<List<Character>>(() => initChars(manifest, origen), true);
+            manifest = Manifest;
+            origen = Origen;
         }
         private object manifest;
         private object origen;

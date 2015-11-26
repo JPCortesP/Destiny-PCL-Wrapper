@@ -1,4 +1,4 @@
-﻿using Api.Manifest;
+﻿using DestinyPCL.Manifest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ namespace API.tests
     public class MainApiTests
     {
         private static string key = "6def2424db3a4a8db1cef0a2c3a7807e";
-        private Api.IApi api = new Api.API(new OnlineManifest(), key);
+        private DestinyPCL.IDestnyService api = new DestinyPCL.DestinyService(new OnlineManifest(), key);
         [TestMethod]
         public void MainApi_ManifestNameWorks()
         {
@@ -25,7 +25,7 @@ namespace API.tests
         [TestMethod]
         public void MainApi_ReturnsPlayerCorrectly()
         {
-            var player = api.getPlayerAsync(new Api.Objects.BungieUser() { GamerTag = "JPCortesP", type = Api.Objects.MembershipType.Xbox }).Result;
+            var player = api.getPlayerAsync(new DestinyPCL.Objects.BungieUser() { GamerTag = "JPCortesP", type = DestinyPCL.Objects.MembershipType.Xbox }).Result;
             Assert.IsNotNull(player);
 
             Assert.IsTrue(player.GamerTag == "JPCortesP");
@@ -40,8 +40,8 @@ namespace API.tests
         [TestMethod]
         public void MainApi_GT_Is_Case_Insensitive()
         {
-            var player1 = api.getPlayerAsync(new Api.Objects.BungieUser() { GamerTag = "jpcortesp", type = Api.Objects.MembershipType.Xbox });
-            var player2 = api.getPlayerAsync(new Api.Objects.BungieUser() { GamerTag = "JPCortesP", type = Api.Objects.MembershipType.Xbox });
+            var player1 = api.getPlayerAsync(new DestinyPCL.Objects.BungieUser() { GamerTag = "jpcortesp", type = DestinyPCL.Objects.MembershipType.Xbox });
+            var player2 = api.getPlayerAsync(new DestinyPCL.Objects.BungieUser() { GamerTag = "JPCortesP", type = DestinyPCL.Objects.MembershipType.Xbox });
 
             Assert.AreEqual(player1.Result.MembershipId, player2.Result.MembershipId);
         }

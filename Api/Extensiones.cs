@@ -1,4 +1,4 @@
-﻿using Api.Objects;
+﻿using DestinyPCL.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +7,9 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Api
+namespace DestinyPCL
 {
-    public partial class API : IApi
+    public partial class DestinyService : IDestnyService
     {
         private async Task<string> getString(string url, CookieContainer cookies = null)
         {
@@ -57,12 +57,12 @@ namespace Api
                    Character ch = new Character();
                    ch.BaseLevel = item.characterLevel;
                    ch.CharacterId = item.characterBase.characterId;
-                   ch.Class = ((dynamic)Manifest.getData(Api.Manifest.ManifestTable.Class, item.characterBase.classHash.ToString())).className;
+                   ch.Class = ((dynamic)Manifest.getData(DestinyPCL.Manifest.ManifestTable.Class, item.characterBase.classHash.ToString())).className;
                    ch.EmblemBackgroundPath = item.backgroundPath;
                    ch.EmblemPath = item.emblemPath;
-                   ch.Gender = ((dynamic)Manifest.getData(Api.Manifest.ManifestTable.Gender, item.characterBase.genderHash.ToString())).genderName;
+                   ch.Gender = ((dynamic)Manifest.getData(DestinyPCL.Manifest.ManifestTable.Gender, item.characterBase.genderHash.ToString())).genderName;
                    ch.LightLevel = item.characterBase.powerLevel;
-                   ch.Race = ((dynamic)Manifest.getData(Api.Manifest.ManifestTable.Race, item.characterBase.raceHash.ToString())).raceName;
+                   ch.Race = ((dynamic)Manifest.getData(DestinyPCL.Manifest.ManifestTable.Race, item.characterBase.raceHash.ToString())).raceName;
 
                    p.Characters.Add(ch);
                }
@@ -75,9 +75,9 @@ namespace Api
                        b = new ItemGear(
                            (long)item.itemHash,
                            item.itemId,
-                           (object)Manifest.getData(Api.Manifest.ManifestTable.InventoryItem, item.itemHash.ToString()),
+                           (object)Manifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryItem, item.itemHash.ToString()),
                            item.quantity,
-                           (object) Manifest.getData(Api.Manifest.ManifestTable.InventoryBucket, item.bucketHash.ToString()),
+                           (object) Manifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryBucket, item.bucketHash.ToString()),
                            item.isGridComplete,
                            item.transferStatus,
                            item.state,
@@ -88,7 +88,7 @@ namespace Api
                            item.primaryStat.maximumValue,
                            (long)item.primaryStat.statHash,
                            item.primaryStat.value,
-                           (object)Manifest.getData(Api.Manifest.ManifestTable.Stat, item.primaryStat.statHash.ToString())
+                           (object)Manifest.getData(DestinyPCL.Manifest.ManifestTable.Stat, item.primaryStat.statHash.ToString())
                            );
                    }
                    else
@@ -96,9 +96,9 @@ namespace Api
                        b = new ItemBase(
                            (long)item.itemHash,
                            item.itemId,
-                           (object)Manifest.getData(Api.Manifest.ManifestTable.InventoryItem, item.itemHash.ToString()).Result,
+                           (object)Manifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryItem, item.itemHash.ToString()).Result,
                            item.quantity,
-                           (object)Manifest.getData(Api.Manifest.ManifestTable.InventoryBucket, item.bucketHash.ToString()),
+                           (object)Manifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryBucket, item.bucketHash.ToString()),
                            item.isGridComplete,
                            item.transferStatus,
                            item.state,
@@ -139,12 +139,12 @@ namespace Api
                 Character ch = new Character();
                 ch.BaseLevel = item.characterLevel;
                 ch.CharacterId = item.characterBase.characterId;
-                ch.Class = ((dynamic)Manifest.getData(Api.Manifest.ManifestTable.Class, item.characterBase.classHash.ToString())).className;
+                ch.Class = ((dynamic)Manifest.getData(DestinyPCL.Manifest.ManifestTable.Class, item.characterBase.classHash.ToString())).className;
                 ch.EmblemBackgroundPath = item.backgroundPath;
                 ch.EmblemPath = item.emblemPath;
-                ch.Gender = ((dynamic)Manifest.getData(Api.Manifest.ManifestTable.Gender, item.characterBase.genderHash.ToString())).genderName;
+                ch.Gender = ((dynamic)Manifest.getData(DestinyPCL.Manifest.ManifestTable.Gender, item.characterBase.genderHash.ToString())).genderName;
                 ch.LightLevel = item.characterBase.powerLevel;
-                ch.Race = ((dynamic)Manifest.getData(Api.Manifest.ManifestTable.Race, item.characterBase.raceHash.ToString())).raceName;
+                ch.Race = ((dynamic)Manifest.getData(DestinyPCL.Manifest.ManifestTable.Race, item.characterBase.raceHash.ToString())).raceName;
 
                 lp.Characters.Add(ch);
             }

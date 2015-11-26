@@ -1,4 +1,4 @@
-﻿using Api.Objects;
+﻿using DestinyPCL.Objects;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,7 +24,7 @@ namespace DestinyWeaponExplorer
     /// </summary>
     public partial class MainWindow : Window
     {
-        public Api.API api = new Api.API(new Api.Manifest.OnlineManifest(), "6def2424db3a4a8db1cef0a2c3a7807e");
+        public DestinyPCL.DestinyService api = new DestinyPCL.DestinyService(new DestinyPCL.Manifest.OnlineManifest(), "6def2424db3a4a8db1cef0a2c3a7807e");
         public Player player { get; set; }
         private ObservableCollection<string> GearType = new ObservableCollection<string>() { "All" };
         private ObservableCollection<string> GearTier = new ObservableCollection<string>() { "All" };

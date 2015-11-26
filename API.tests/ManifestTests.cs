@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Api;
-using Api.Manifest;
+using DestinyPCL;
+using DestinyPCL.Manifest;
 using Microsoft.CSharp;
 
 

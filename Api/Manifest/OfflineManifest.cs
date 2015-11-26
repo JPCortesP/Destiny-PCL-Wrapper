@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Api.Manifest
+namespace DestinyPCL.Manifest
 {
     public partial class OfflineManifest : DestinyManifest
     {
