@@ -8,6 +8,11 @@ using System.Threading.Tasks;
 
 namespace DestinyPCL.Objects
 {
+    /// <summary>
+    /// Class that represent a Player. Can't be instantiated.
+    /// Properties Characters and Items (and then Gear) are Lazy, so they will be available only after you access them 
+    /// the first time, so you might want to use Async to access them (They are thread-safe for the initialization). 
+    /// </summary>
     public class Player
     {
                 
@@ -18,6 +23,10 @@ namespace DestinyPCL.Objects
             this.type = user.type;
             _characters = new Lazy<List<Character>>(() => fillChars(manifest, data), true);
             _items = new Lazy<List<ItemBase>>(() => fillItems(manifest, data), true);
+            if (data.characters != null)
+            {
+                this.Grimoire = data.characters.FirstOrDefault().characterBase.grimoireScore;
+            }
         }
         private DestinyManifest Manifest;
         private InternalTypes.Data data;
