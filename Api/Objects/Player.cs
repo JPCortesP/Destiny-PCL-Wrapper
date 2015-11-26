@@ -10,8 +10,7 @@ namespace DestinyPCL.Objects
 {
     public class Player
     {
-        [Obsolete("Use el constructor Lazy por Favor", true)]
-        internal Player() { throw new NotImplementedException(); }
+                
         internal Player(DestinyManifest manifest, InternalTypes.Data data)
         {
             this.Manifest = manifest;
@@ -46,7 +45,7 @@ namespace DestinyPCL.Objects
 
         private static List<Character> fillChars(DestinyManifest manifest, InternalTypes.Data data)
         {
-            var lista = new List<Character>();
+            var lista = new List<Character>(3);
             Parallel.ForEach(data.characters, (item) =>
            {
                Character ch = new Character();
@@ -68,7 +67,7 @@ namespace DestinyPCL.Objects
         }
         private static List<ItemBase> fillItems(DestinyManifest manifest, InternalTypes.Data data)
         {
-            var lista = new List<ItemBase>();
+            var lista = new List<ItemBase>(data.items.Count);
             Parallel.ForEach(data.items, (item) =>
             {
                 ItemBase b;
