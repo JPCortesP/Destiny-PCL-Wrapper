@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace DestinyPCL.Objects
 {
-    public class ItemBase
+    public class DestinyItemBase
     {
-        public ItemBase() { }
+        public DestinyItemBase() { }
 
-        public ItemBase(Int64 itemHash, string itemId, object dbData, int quantity, object bucketData, bool isGridComplete, int transferStatus, int state, int characterIndex, string bucketHash)
+        public DestinyItemBase(Int64 itemHash, string itemId, object dbData, int quantity, object bucketData, bool isGridComplete, int transferStatus, int state, int characterIndex, string bucketHash)
         {
             this.itemHash = itemHash.ToString();
             this.itemId = itemId;
@@ -46,16 +46,16 @@ namespace DestinyPCL.Objects
 
     }
 
-    public class ItemGear : ItemBase
+    public class DestinyItemGear : DestinyItemBase
     {
         //private int maximumValue;
         //private string statHash;
         //private int value;
 
-        public ItemGear() { }
-        public ItemGear(ItemBase item) { }
+        public DestinyItemGear() { }
+        public DestinyItemGear(DestinyItemBase item) { }
 
-        public ItemGear(Int64 itemHash, string itemId, object dbData, int quantity, object bucketData, bool isGridComplete,
+        public DestinyItemGear(Int64 itemHash, string itemId, object dbData, int quantity, object bucketData, bool isGridComplete,
             int transferStatus, int state, int characterIndex, string bucketHash, int damageType,
             Int64 damageTypeHash, int maximumValue, Int64 statHash, int value, object statData)
             : base(itemHash, itemId, dbData, quantity, bucketData, isGridComplete, transferStatus, state, characterIndex, bucketHash)

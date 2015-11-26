@@ -79,6 +79,7 @@
     <Compile Include="Manifest\OfflineManifest.cs" />
     <Compile Include="Manifest\OnlineManifest.cs" />
     <Compile Include="Objects\Character.cs" />
+    <Compile Include="Objects\DestinyClan.cs" />
     <Compile Include="Objects\Item.cs" />
     <Compile Include="Objects\MembershipType.cs" />
     <Compile Include="InternalTypes\PlayerData.cs" />

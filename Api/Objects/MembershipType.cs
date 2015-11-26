@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DestinyPCL.Objects
 {
-    public enum MembershipType
+    public enum DestinyMembershipType
     {
         Xbox = 1,
         PSN = 2

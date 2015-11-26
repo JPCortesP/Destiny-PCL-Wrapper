@@ -47,12 +47,12 @@ namespace DestinyPCL
                 hc.Dispose();
 
         }
-        public Task<bool> EquipItem(Character target, ItemBase item)
+        public Task<bool> EquipItem(DestinyCharacter target, DestinyItemBase item)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<Player>> getAllPlayersInClan(BungieUser user)
+        public Task<DestinyClan> getAllPlayersInClan(BungieUser user)
         {
             throw new NotImplementedException();
         }
@@ -62,12 +62,12 @@ namespace DestinyPCL
             throw new NotImplementedException();
         }
 
-        public Task<ItemBase> getInventory(BungieUser user)
+        public Task<DestinyItemBase> getInventory(BungieUser user)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Player> getPlayerAsync(BungieUser user)
+        public async Task<DestinyPlayer> getPlayerAsync(BungieUser user)
         {//http://bungie.net/platform/destiny/SearchDestinyPlayer/1/jpcortesp
             var url = String.Format("http://bungie.net/platform/destiny/SearchDestinyPlayer/{0}/{1}", (int)user.type, user.GamerTag);
             var respuesta = await getString(url,user.cookies);
@@ -82,7 +82,7 @@ namespace DestinyPCL
                 respuesta = await getString(url, user.cookies);
                 var _PlayerResult = await Task.Run(() =>
                    Newtonsoft.Json.JsonConvert.DeserializeObject<InternalTypes.PlayerResultRootObject>(respuesta));
-                Player p = new Player(Manifest,_PlayerResult.Response.data, user);
+                DestinyPlayer p = new DestinyPlayer(Manifest,_PlayerResult.Response.data, user);
                 p.GamerTag = response.displayName;
                 p.MembershipId = response.membershipId;
                                 //var res = convertirAPlayer(_PlayerResult, p);
@@ -104,7 +104,7 @@ namespace DestinyPCL
 
         
 
-        public Task<List<Player>> getPlayersAsync(List<BungieUser> users)
+        public Task<List<DestinyPlayer>> getPlayersAsync(List<BungieUser> users)
         {
             throw new NotImplementedException();
         }
@@ -114,7 +114,7 @@ namespace DestinyPCL
             throw new NotImplementedException();
         }
 
-        public Task<bool> TransferItem(Character target, ItemBase item, bool toVault = false)
+        public Task<bool> TransferItem(DestinyCharacter target, DestinyItemBase item, bool toVault = false)
         {
             throw new NotImplementedException();
         }

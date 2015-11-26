@@ -26,7 +26,7 @@ namespace DestinyWeaponExplorer
     public partial class MainWindow : Window
     {
         public DestinyPCL.DestinyService api = new DestinyPCL.DestinyService(new DestinyPCL.Manifest.OnlineManifest(), "6def2424db3a4a8db1cef0a2c3a7807e");
-        public Player player { get; set; }
+        public DestinyPlayer player { get; set; }
         private ObservableCollection<string> GearType = new ObservableCollection<string>() { "All" };
         private ObservableCollection<string> GearTier = new ObservableCollection<string>() { "All" };
         public MainWindow()
@@ -59,7 +59,7 @@ namespace DestinyWeaponExplorer
             else
             {
                 player = await api.getPlayerAsync(new BungieUser()
-                { GamerTag = gamertag, type = isXbox ? MembershipType.Xbox : MembershipType.PSN, cookies = cookies });
+                { GamerTag = gamertag, type = isXbox ? DestinyMembershipType.Xbox : DestinyMembershipType.PSN, cookies = cookies });
             }
             
             if (player == null)
@@ -79,8 +79,8 @@ namespace DestinyWeaponExplorer
 
                 this.DataContext = player;
                 var gear = player.Items
-                    .Where(t => t.GetType() == typeof(ItemGear))
-                    .Cast<ItemGear>()
+                    .Where(t => t.GetType() == typeof(DestinyItemGear))
+                    .Cast<DestinyItemGear>()
                     .OrderByDescending(g => g.primaryStats_value)
                     .ToList();
                 this.lv_items.DataContext = gear;
@@ -104,7 +104,7 @@ namespace DestinyWeaponExplorer
 
         }
 
-        private Player retrievePlayer(string gamertag)
+        private DestinyPlayer retrievePlayer(string gamertag)
         {
             //if (ConfigurationManager.AppSettings[gamertag] != null)
             //{
@@ -116,7 +116,7 @@ namespace DestinyWeaponExplorer
                 return null;
         }
 
-        private void savePlayer(Player player)
+        private void savePlayer(DestinyPlayer player)
         {
             var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             var settings = configFile.AppSettings.Settings;
@@ -176,8 +176,8 @@ namespace DestinyWeaponExplorer
             if (player == null)
                 return;
             var filtered = player.Items
-                                .Where(t => t.GetType() == typeof(ItemGear))
-                                .Cast<ItemGear>()
+                                .Where(t => t.GetType() == typeof(DestinyItemGear))
+                                .Cast<DestinyItemGear>()
                                 .OrderByDescending(g => g.primaryStats_value)
                                 .ToList();
             if (cb_Type.SelectedItem != null)

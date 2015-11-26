@@ -13,13 +13,13 @@ namespace DestinyPCL
     {
         
         string ApiKey { get; set; }
-        Task<Player> getPlayerAsync(BungieUser user);
-        Task<List<Player>> getPlayersAsync(List<BungieUser> users);
-        Task<List<Player>> getAllPlayersInClan(BungieUser user);
-        Task<ItemBase> getInventory(BungieUser user);
+        Task<DestinyPlayer> getPlayerAsync(BungieUser user);
+        Task<List<DestinyPlayer>> getPlayersAsync(List<BungieUser> users);
+        Task<DestinyClan> getAllPlayersInClan(BungieUser user);
+        Task<DestinyItemBase> getInventory(BungieUser user);
         Task<List<Object>> getHistory(BungieUser user);
-        Task<bool> EquipItem(Character target, ItemBase item);
-        Task<bool> TransferItem(Character target, ItemBase item, bool toVault = false);
+        Task<bool> EquipItem(DestinyCharacter target, DestinyItemBase item);
+        Task<bool> TransferItem(DestinyCharacter target, DestinyItemBase item, bool toVault = false);
         DestinyManifest Manifest { get; set; }
         Task<bool> LoadManifest(DestinyManifest instance);
         string ManifestTypeName { get; }

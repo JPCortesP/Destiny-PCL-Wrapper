@@ -13,16 +13,16 @@ namespace DestinyPCL.Objects
     /// Properties Characters and Items (and then Gear) are Lazy, so they will be available only after you access them 
     /// the first time, so you might want to use Async to access them (They are thread-safe for the initialization). 
     /// </summary>
-    public class Player
+    public class DestinyPlayer
     {
                 
-        internal Player(DestinyManifest manifest, InternalTypes.Data data, BungieUser user)
+        internal DestinyPlayer(DestinyManifest manifest, InternalTypes.Data data, BungieUser user)
         {
             this.Manifest = manifest;
             this.data = data;
             this.type = user.type;
-            _characters = new Lazy<List<Character>>(() => fillChars(manifest, data), true);
-            _items = new Lazy<List<ItemBase>>(() => fillItems(manifest, data), true);
+            _characters = new Lazy<List<DestinyCharacter>>(() => fillChars(manifest, data), true);
+            _items = new Lazy<List<DestinyItemBase>>(() => fillItems(manifest, data), true);
             if (data.characters != null)
             {
                 this.Grimoire = data.characters.FirstOrDefault().characterBase.grimoireScore;
@@ -31,34 +31,34 @@ namespace DestinyPCL.Objects
         private DestinyManifest Manifest;
         private InternalTypes.Data data;
         public string GamerTag { get; set; }
-        public MembershipType type { get; set; }
+        public DestinyMembershipType type { get; set; }
         
         public int Grimoire { get; set; }
         //public string MainClan { get; set; }
         //public string MainClanTag { get; set; }
         public string MembershipId { get; set; }
-        public List<ItemBase> Items { get { return this._items.Value; } }
-        public List<Character> Characters { get { return this._characters.Value; } }
-        public List<ItemGear> Gear
+        public List<DestinyItemBase> Items { get { return this._items.Value; } }
+        public List<DestinyCharacter> Characters { get { return this._characters.Value; } }
+        public List<DestinyItemGear> Gear
         {
             get
             {
                 return Items != null ? Items
-                    .OfType<ItemGear>()
+                    .OfType<DestinyItemGear>()
                     .OrderByDescending(b=>b.primaryStats_value)
                     .ToList() : null;
             }
         }
 
-        private Lazy<List<Character>> _characters { get; set; }
-        private Lazy<List<ItemBase>> _items { get; set; }
+        private Lazy<List<DestinyCharacter>> _characters { get; set; }
+        private Lazy<List<DestinyItemBase>> _items { get; set; }
 
-        private static List<Character> fillChars(DestinyManifest manifest, InternalTypes.Data data)
+        private static List<DestinyCharacter> fillChars(DestinyManifest manifest, InternalTypes.Data data)
         {
-            var lista = new List<Character>(3);
+            var lista = new List<DestinyCharacter>(3);
             Parallel.ForEach(data.characters, (item) =>
            {
-               Character ch = new Character();
+               DestinyCharacter ch = new DestinyCharacter();
                ch.BaseLevel = item.characterLevel;
                ch.CharacterId = item.characterBase.characterId;
                ch.Class = ((dynamic)manifest.getData(DestinyPCL.Manifest.ManifestTable.Class, item.characterBase.classHash.ToString())).className;
@@ -75,18 +75,18 @@ namespace DestinyPCL.Objects
            });
             return lista;
         }
-        private static List<ItemBase> fillItems(DestinyManifest manifest, InternalTypes.Data data)
+        private static List<DestinyItemBase> fillItems(DestinyManifest manifest, InternalTypes.Data data)
         {
-            var lista = new List<ItemBase>(data.items.Count);
+            var lista = new List<DestinyItemBase>(data.items.Count);
             Parallel.ForEach(data.items, (item) =>
             {
-                ItemBase b;
+                DestinyItemBase b;
                 if (item.primaryStat != null)
                 {
                     var itemData = manifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryItem, item.itemHash.ToString());
                     var bucketData = manifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryBucket, item.bucketHash.ToString());
                     var stathash = manifest.getData(DestinyPCL.Manifest.ManifestTable.Stat, item.primaryStat.statHash.ToString());
-                    b = new ItemGear(
+                    b = new DestinyItemGear(
                         (long)item.itemHash,
                         item.itemId,
                         (object) itemData,
@@ -109,7 +109,7 @@ namespace DestinyPCL.Objects
                 {
                     var itemData = manifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryItem, item.itemHash.ToString());
                     var bucketData = manifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryBucket, item.bucketHash.ToString());
-                    b = new ItemBase(
+                    b = new DestinyItemBase(
                         (long)item.itemHash,
                         item.itemId,
                         (object)itemData,

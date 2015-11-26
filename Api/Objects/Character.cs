@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DestinyPCL.Objects
 {
-    public class Character
+    public class DestinyCharacter
     {
         public string Class { get; set; }
         public string Race { get; set; }

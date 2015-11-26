@@ -45,14 +45,14 @@ namespace DestinyPCL
             }
 
         }
-        private Player convertirAPlayer(InternalTypes.PlayerResultRootObject playerResult, Player p)
+        private DestinyPlayer convertirAPlayer(InternalTypes.PlayerResultRootObject playerResult, DestinyPlayer p)
         {
                
                var origen = playerResult.Response.data;
                
                foreach (var item in origen.characters)
                {
-                   Character ch = new Character();
+                   DestinyCharacter ch = new DestinyCharacter();
                    ch.BaseLevel = item.characterLevel;
                    ch.CharacterId = item.characterBase.characterId;
                    ch.Class = ((dynamic)Manifest.getData(DestinyPCL.Manifest.ManifestTable.Class, item.characterBase.classHash.ToString())).className;
@@ -66,10 +66,10 @@ namespace DestinyPCL
                }
                Parallel.ForEach(origen.items, (item) => 
                {
-                   ItemBase b;
+                   DestinyItemBase b;
                    if (item.primaryStat != null)
                    {
-                       b = new ItemGear(
+                       b = new DestinyItemGear(
                            (long)item.itemHash,
                            item.itemId,
                            (object)Manifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryItem, item.itemHash.ToString()),
@@ -90,7 +90,7 @@ namespace DestinyPCL
                    }
                    else
                    {
-                       b = new ItemBase(
+                       b = new DestinyItemBase(
                            (long)item.itemHash,
                            item.itemId,
                            (object)Manifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryItem, item.itemHash.ToString()).Result,
