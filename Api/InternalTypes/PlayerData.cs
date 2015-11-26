@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/// <summary>
+/// Not for use. Are Public just because JSON.NET Requires it.
+/// </summary>
 namespace DestinyPCL.InternalTypes
 {
     public class PrimaryStat

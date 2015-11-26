@@ -15,6 +15,7 @@ namespace DestinyPCL.Manifest
         {
             this.ApiKey = apikey;
         }
+        public OfflineManifest() { }
         public string ApiKey { get; set; }
 
         public void Dispose()

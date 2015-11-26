@@ -33,8 +33,8 @@ namespace DestinyPCL.Objects
 
     public class LazyPlayer : Player
     {
-        public LazyPlayer() { }
-        public LazyPlayer(List<InternalTypes.Item> items, DestinyManifest Manifest)
+        internal LazyPlayer() { }
+        internal LazyPlayer(List<InternalTypes.Item> items, DestinyManifest Manifest)
         {
             this._internalItems = items;
             this._internalManifest = Manifest;
