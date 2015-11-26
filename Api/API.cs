@@ -18,6 +18,10 @@ namespace DestinyPCL
             this.Manifest = defaultManifest;
             this.Manifest.ApiKey = _ApiKey;
             this.ApiKey = _ApiKey;
+            if (defaultManifest == null)
+            {
+                throw new NotSupportedException("A MANIFEST, FROM THE PRISON OF MANIFESTS, IS REQUIRED. -Dinklebot");
+            }
             
         }
         public string ApiKey { get; set; }
