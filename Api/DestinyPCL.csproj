@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="API.cs" />
     <Compile Include="Extensiones.cs" />
+    <Compile Include="Helpers\Helpers.cs" />
     <Compile Include="IApi.cs" />
     <Compile Include="Manifest\ManifestTable.cs" />
     <Compile Include="Manifest\OfflineManifest.cs" />

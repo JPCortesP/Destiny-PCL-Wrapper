@@ -24,15 +24,15 @@ namespace DestinyApp
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        DestinyAPI.DestinyAPI api = new DestinyAPI.DestinyAPI();
-        DestinyAPI.Player player;
+        //DestinyAPI.DestinyAPI api = new DestinyAPI.DestinyAPI();
+        //DestinyAPI.Player player;
         bool dataCargada = false;
         public MainPage()
         {
             this.InitializeComponent();
             //status.Text = "Componentes Inicializados";
-            cbb_platform.DataContext = new List<DestinyAPI.MembershipType>() { DestinyAPI.MembershipType.Xbox, DestinyAPI.MembershipType.PSN };
-            cbb_platform.SelectedIndex = 0;
+            //cbb_platform.DataContext = new List<DestinyAPI.MembershipType>() { DestinyAPI.MembershipType.Xbox, DestinyAPI.MembershipType.PSN };
+            //cbb_platform.SelectedIndex = 0;
 
 
         }
@@ -75,78 +75,78 @@ namespace DestinyApp
 
         private async Task Load(object sender, bool auth = false)
         {
-            ((Button)sender).IsEnabled = false;
+            //((Button)sender).IsEnabled = false;
 
-            if (!string.IsNullOrWhiteSpace(txt_gt.Text))
-            {
-                CookieContainer cookies = null;
-                if (auth)
-                {
-                    var lm = new loginModal((DestinyAPI.MembershipType)cbb_platform.SelectedValue);
+            //if (!string.IsNullOrWhiteSpace(txt_gt.Text))
+            //{
+            //    CookieContainer cookies = null;
+            //    if (auth)
+            //    {
+            //        var lm = new loginModal((DestinyAPI.MembershipType)cbb_platform.SelectedValue);
 
-                    var res = await lm.ShowAsync();
-                    if (res == ContentDialogResult.Primary)
-                    {
-                        cookies = lm.cookies;
-                    }
+            //        var res = await lm.ShowAsync();
+            //        if (res == ContentDialogResult.Primary)
+            //        {
+            //            cookies = lm.cookies;
+            //        }
 
-                }
-                dataCargada = await api.LoadManifestData();
+            //    }
+            //    dataCargada = await api.LoadManifestData();
 
-                player = await api.GetPlayer(new DestinyAPI.BungieUser()
-                {
-                    GamerTag = txt_gt.Text,
-                    type = (DestinyAPI.MembershipType)cbb_platform.SelectedValue,
-                    cookies = cookies
-                });
-                if (player != null)
-                {
-                    var itemsType = player.Gear.Select(g => g.itemTypeName).Distinct().ToList();
-                    itemsType.Insert(0, "---- All ----");
-                    cbb_GearType.DataContext = itemsType;
+            //    player = await api.GetPlayer(new DestinyAPI.BungieUser()
+            //    {
+            //        GamerTag = txt_gt.Text,
+            //        type = (DestinyAPI.MembershipType)cbb_platform.SelectedValue,
+            //        cookies = cookies
+            //    });
+            //    if (player != null)
+            //    {
+            //        var itemsType = player.Gear.Select(g => g.itemTypeName).Distinct().ToList();
+            //        itemsType.Insert(0, "---- All ----");
+            //        cbb_GearType.DataContext = itemsType;
 
-                    sp_filter.Visibility = Visibility.Visible;
-                    cbb_GearType.SelectedIndex = 0;
-                }
-                else
-                {
-                    ContentDialog errorLoading = new ContentDialog()
-                    {
-                        Title = "Error Loading Player with GT: " + txt_gt.Text,
-                        Content = "No player with GT: " + txt_gt.Text + " found on Bungie. Please " +
-                        "check the values (GT and Platform) and try again.\nRemember that Gamertag" +
-                        " is case sensitive.",
-                        PrimaryButtonText = "Ok"
-                    };
-                    await errorLoading.ShowAsync();
-                }
+            //        sp_filter.Visibility = Visibility.Visible;
+            //        cbb_GearType.SelectedIndex = 0;
+            //    }
+            //    else
+            //    {
+            //        ContentDialog errorLoading = new ContentDialog()
+            //        {
+            //            Title = "Error Loading Player with GT: " + txt_gt.Text,
+            //            Content = "No player with GT: " + txt_gt.Text + " found on Bungie. Please " +
+            //            "check the values (GT and Platform) and try again.\nRemember that Gamertag" +
+            //            " is case sensitive.",
+            //            PrimaryButtonText = "Ok"
+            //        };
+            //        await errorLoading.ShowAsync();
+            //    }
 
-            }
-            ((Button)sender).IsEnabled = true;
+            //}
+            //((Button)sender).IsEnabled = true;
         }
 
         private void cbb_GearType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (cbb_GearType.SelectedValue != null)
-            {
-                if (player != null)
-                {
-                    if (cbb_GearType.SelectedValue.ToString() == "---- All ----")
-                    {
-                        var grupos = player.Gear
-                            //.GroupBy(g => g.itemTypeName)
-                            .ToList();
-                        this.lv_gear.DataContext = grupos;
-                    }
-                    else
-                    {
-                        var gear = player.Gear.Where(g => g.itemTypeName == cbb_GearType.SelectedValue.ToString())
-                            //.GroupBy(g=>g.itemTypeName)
-                            .ToList();
-                        this.lv_gear.DataContext = gear;
-                    }
-                }
-            }
+            //if (cbb_GearType.SelectedValue != null)
+            //{
+            //    if (player != null)
+            //    {
+            //        if (cbb_GearType.SelectedValue.ToString() == "---- All ----")
+            //        {
+            //            var grupos = player.Gear
+            //                //.GroupBy(g => g.itemTypeName)
+            //                .ToList();
+            //            this.lv_gear.DataContext = grupos;
+            //        }
+            //        else
+            //        {
+            //            var gear = player.Gear.Where(g => g.itemTypeName == cbb_GearType.SelectedValue.ToString())
+            //                //.GroupBy(g=>g.itemTypeName)
+            //                .ToList();
+            //            this.lv_gear.DataContext = gear;
+            //        }
+            //    }
+            //}
 
         }
 

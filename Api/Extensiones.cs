@@ -45,75 +45,7 @@ namespace DestinyPCL
             }
 
         }
-        private DestinyPlayer convertirAPlayer(InternalTypes.PlayerResultRootObject playerResult, DestinyPlayer p)
-        {
-               
-               var origen = playerResult.Response.data;
-               
-               foreach (var item in origen.characters)
-               {
-                   DestinyCharacter ch = new DestinyCharacter();
-                   ch.BaseLevel = item.characterLevel;
-                   ch.CharacterId = item.characterBase.characterId;
-                   ch.Class = ((dynamic)Manifest.getData(DestinyPCL.Manifest.ManifestTable.Class, item.characterBase.classHash.ToString())).className;
-                   ch.EmblemBackgroundPath = item.backgroundPath;
-                   ch.EmblemPath = item.emblemPath;
-                   ch.Gender = ((dynamic)Manifest.getData(DestinyPCL.Manifest.ManifestTable.Gender, item.characterBase.genderHash.ToString())).genderName;
-                   ch.LightLevel = item.characterBase.powerLevel;
-                   ch.Race = ((dynamic)Manifest.getData(DestinyPCL.Manifest.ManifestTable.Race, item.characterBase.raceHash.ToString())).raceName;
-
-                   p.Characters.Add(ch);
-               }
-               Parallel.ForEach(origen.items, (item) => 
-               {
-                   DestinyItemBase b;
-                   if (item.primaryStat != null)
-                   {
-                       b = new DestinyItemGear(
-                           (long)item.itemHash,
-                           item.itemId,
-                           (object)Manifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryItem, item.itemHash.ToString()),
-                           item.quantity,
-                           (object) Manifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryBucket, item.bucketHash.ToString()),
-                           item.isGridComplete,
-                           item.transferStatus,
-                           item.state,
-                           item.characterIndex,
-                           item.bucketHash,
-                           item.damageType,
-                           (long)item.damageTypeHash,
-                           item.primaryStat.maximumValue,
-                           (long)item.primaryStat.statHash,
-                           item.primaryStat.value,
-                           (object)Manifest.getData(DestinyPCL.Manifest.ManifestTable.Stat, item.primaryStat.statHash.ToString())
-                           );
-                   }
-                   else
-                   {
-                       b = new DestinyItemBase(
-                           (long)item.itemHash,
-                           item.itemId,
-                           (object)Manifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryItem, item.itemHash.ToString()).Result,
-                           item.quantity,
-                           (object)Manifest.getData(DestinyPCL.Manifest.ManifestTable.InventoryBucket, item.bucketHash.ToString()),
-                           item.isGridComplete,
-                           item.transferStatus,
-                           item.state,
-                           item.characterIndex,
-                           item.bucketHash
-                           );
-                       
-                   }
-                   
-                       p.Items.Add(b);
-                   
-                   
-               });
-               
-               
-               return p;
-           
-        }
+        
 
         
     }
