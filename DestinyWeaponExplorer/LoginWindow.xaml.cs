@@ -36,7 +36,7 @@ namespace DestinyWeaponExplorer
             cookies = GetUriCookieContainer(url);
             var temp = cookies.GetCookies(url);
             var raro = cookies.GetCookieHeader(url);
-            if (temp.Count > 3)
+            if (DestinyPCL.AuthHelpers.CheckForRequiredCookies(cookies))
             {
                 this.Resultado = true;
                 this.Close();

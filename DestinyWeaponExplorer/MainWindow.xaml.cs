@@ -76,28 +76,30 @@ namespace DestinyWeaponExplorer
                 GearTier.Add("All");
                 cb_Rarity.SelectedIndex = 0;
                 cb_Type.SelectedIndex = 0;
-
-                this.DataContext = player;
-                await Task.Run(() =>
+                
+                
+                var gear = await Task.Run(() =>
                {
-                   var gear = player.Items
+                    return player.Items
                         .Where(t => t.GetType() == typeof(DestinyItemGear))
                         .Cast<DestinyItemGear>()
                         .OrderByDescending(g => g.primaryStats_value)
                         .ToList();
-                   this.lv_items.DataContext = gear;
-
-                   var ListaTipos = gear.Select(g => g.itemTypeName).Distinct().OrderBy(g => g).ToList();
-                   var ListaRarity = gear.Select(g => g.tierTypeName).Distinct().OrderBy(g => g).ToList();
-                   foreach (var item in ListaTipos)
-                   {
-                       GearType.Add(item);
-                   }
-                   foreach (var item in ListaRarity)
-                   {
-                       GearTier.Add(item);
-                   }
+                   
                });
+                this.DataContext = player;
+                this.lv_items.DataContext = gear;
+
+                var ListaTipos = gear.Select(g => g.itemTypeName).Distinct().OrderBy(g => g).ToList();
+                var ListaRarity = gear.Select(g => g.tierTypeName).Distinct().OrderBy(g => g).ToList();
+                foreach (var item in ListaTipos)
+                {
+                    GearType.Add(item);
+                }
+                foreach (var item in ListaRarity)
+                {
+                    GearTier.Add(item);
+                }
                 return true;
 
 

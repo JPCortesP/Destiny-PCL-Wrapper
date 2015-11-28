@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DestinyWeaponExplorer"
         mc:Ignorable="d"
-        Title="Player Explorer" Height="350" Width="525">
+        Title="Player Explorer" Height="456.729" Width="530.512">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -22,7 +22,7 @@
             <RowDefinition Height="1*" MinHeight="100"></RowDefinition>
             <RowDefinition Height="6*"></RowDefinition>
         </Grid.RowDefinitions>
-       
+
         <StackPanel Grid.Column="0">
             <StackPanel Orientation="Horizontal">
                 <Label>Gamertag / Platform</Label>
@@ -38,9 +38,9 @@
             <Button Click="Button_Click">Load/Refresh</Button>
         </StackPanel>
         <GroupBox Grid.Column="1" Header="Filters and Sort" Margin="5">
-                <StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                    <Label>Gear Type: </Label>
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label>Gear Type:</Label>
                     <ComboBox Name="cb_Type" SelectionChanged="cb_Type_SelectionChanged"></ComboBox>
                 </StackPanel>
                 <StackPanel>
@@ -51,10 +51,10 @@
 
                 </StackPanel>
             </StackPanel>
-            
-            
+
+
         </GroupBox>
-        
+
         <!--<Grid Grid.Row="1" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
@@ -116,9 +116,9 @@
                 <ColumnDefinition Width="2*" MaxWidth="250" MinWidth="100" />
             </Grid.ColumnDefinitions>
             <ListView x:Name="lv_items" ItemsSource="{Binding}"  ItemTemplate="{StaticResource dt_ItemsView}">
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel Width="{Binding (FrameworkElement.ActualWidth), 
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Width="{Binding (FrameworkElement.ActualWidth), 
             RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"
             ItemWidth="{Binding (ListView.View).ItemWidth, 
             RelativeSource={RelativeSource AncestorType=ListView}}"
@@ -126,14 +126,14 @@
             ItemHeight="{Binding (ListView.View).ItemHeight, 
             RelativeSource={RelativeSource AncestorType=ListView}}" />
 
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-     
-     
-        </ListView>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+
+
+            </ListView>
             <StackPanel Margin="5"  Grid.Column="1">
-                  <StackPanel DataContext="{Binding ElementName=lv_items, Path=SelectedItem}">
-                <Image Source="{Binding Icon}" Width="{Binding (FrameworkElement.ActualWidth),
+                <StackPanel DataContext="{Binding ElementName=lv_items, Path=SelectedItem}">
+                    <Image Source="{Binding Icon}" Width="{Binding (FrameworkElement.ActualWidth),
                     RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}  }" />
                     <TextBlock Text="{Binding itemName}" Style="{StaticResource txt_itemName}" />
                     <StackPanel Orientation="Horizontal" Style="{StaticResource StatsVisibility}">
@@ -150,9 +150,9 @@
 
                 </StackPanel>
             </StackPanel>
-          
+
         </Grid>
-        
+
 
     </Grid>
 </Window>

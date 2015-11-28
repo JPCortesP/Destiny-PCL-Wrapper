@@ -17,22 +17,6 @@ namespace DestinyPCL
             if (cookies != null)
             {
                 hc = new HttpClient(new HttpClientHandler() { CookieContainer = cookies });
-                var galletas = cookies.GetCookies(new Uri("https://bungie.net"));
-                foreach (Cookie item in galletas)
-                {
-                    if (item.Name == "bungled")
-                    {
-                        hc.DefaultRequestHeaders.Add("X-csrf", item.Value);
-                    }
-                }
-                galletas = cookies.GetCookies(new Uri("https://www.bungie.net"));
-                foreach (Cookie item in galletas)
-                {
-                    if (item.Name == "bungled")
-                    {
-                        hc.DefaultRequestHeaders.Add("X-csrf", item.Value);
-                    }
-                }
             }
             else
             {
