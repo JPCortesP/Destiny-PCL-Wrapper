@@ -73,7 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API.cs" />
-    <Compile Include="Extensiones.cs" />
+    <Compile Include="InternalImplementation\Extensiones.cs" />
     <Compile Include="Helpers\Helpers.cs" />
     <Compile Include="IApi.cs" />
     <Compile Include="InternalTypes\ClanPlayers.cs" />
@@ -91,9 +91,7 @@
     <Compile Include="Objects\Stat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="InternalImplementation\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Manifest\db\1 Readme.txt" />
   </ItemGroup>

@@ -29,6 +29,7 @@ namespace DestinyPCL.Objects
                 if(data.characters.Count > 0)
                     if(data.characters.First().characterBase != null)
                         this.Grimoire = data.characters.FirstOrDefault().characterBase.grimoireScore;
+                this.CharCount = data.characters.Count;
             }
         }
         private DestinyManifest Manifest;
@@ -37,7 +38,8 @@ namespace DestinyPCL.Objects
         public DestinyMembershipType type { get; set; }
         public BungieUser BungieUser { get { return new BungieUser(this?.GamerTag, this.type) { membershipId = this?.MembershipId, cookies = this?.cookies }; } }
         internal CookieContainer cookies { get; set; }
-        public int Grimoire { get; set; }
+        public int Grimoire { get; private set; }
+        public int CharCount { get; private set; }
         //public string MainClan { get; set; }
         //public string MainClanTag { get; set; }
         public string MembershipId { get; set; }
