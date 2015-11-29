@@ -56,9 +56,22 @@ namespace DestinyPCL
             throw new NotImplementedException();
         }
 
-        public Task<DestinyClan> getAllPlayersInClan(BungieUser user)
+        
+        public async Task<DestinyClan> GetPlayerClan(DestinyPlayer player)
         {
-            throw new NotImplementedException();
+            
+            //First: https://bungie.net/Platform/User/GetBungieAccount/{membId}/{MembType}/
+            //with the GroupdID: https://bungie.net/Platform/Group/{GroupID}/MembersV3?currentPage=1&itemsPerPage=50
+            var url = String.Format("https://bungie.net/Platform/User/GetBungieAccount/{0}/{1}", player.MembershipId, (int)player.type);
+            var getbungieaccount = await getString(url, player.cookies);
+            dynamic bungieaccount = JObject.Parse(getbungieaccount);
+            var groupId = (int)((dynamic)((dynamic)bungieaccount).Response).clans[0].groupId;
+            var ClanInfo = ((dynamic)((dynamic)bungieaccount).Response).relatedGroups[groupId.ToString()];
+            url = string.Format("https://bungie.net/Platform/Group/{0}/MembersV3?currentPage=1&itemsPerPage=50", groupId);
+            var players_string = await getString(url, player.cookies);
+            var playersInfo = Newtonsoft.Json.JsonConvert.DeserializeObject<InternalTypes.ClanPlayersResults_RootObject>(players_string);
+            return new DestinyClan(groupId, (object)ClanInfo, playersInfo.Response.results);
+
         }
 
         public Task<List<object>> getHistory(BungieUser user)
@@ -89,6 +102,7 @@ namespace DestinyPCL
                 DestinyPlayer p = new DestinyPlayer(Manifest,_PlayerResult.Response.data, user);
                 p.GamerTag = response.displayName;
                 p.MembershipId = response.membershipId;
+                p.cookies = user.cookies;
                                 //var res = convertirAPlayer(_PlayerResult, p);
                 if (p != null)
                 {
@@ -106,11 +120,18 @@ namespace DestinyPCL
             }
         }
 
-        
-
         public Task<List<DestinyPlayer>> getPlayersAsync(List<BungieUser> users)
         {
             throw new NotImplementedException();
+        }
+        public IEnumerable<DestinyPlayer> getPlayersLoop (List<BungieUser> users)
+        {
+            var userscopy = users.Distinct(new bungieuserComparador()).ToList();
+            foreach (var user in userscopy)
+            {
+                user.cookies = null;
+                yield return this.getPlayerAsync(user).Result;
+            }
         }
 
         public Task<bool> LoadManifest(DestinyManifest instance)
@@ -124,5 +145,19 @@ namespace DestinyPCL
         }
 
         
+    }
+
+    internal class bungieuserComparador : EqualityComparer<BungieUser>
+    {
+        public override bool Equals(BungieUser x, BungieUser y)
+        {
+            return x?.GamerTag.ToLower() == y?.GamerTag.ToLower() &&
+                x?.type == y?.type;
+        }
+
+        public override int GetHashCode(BungieUser obj)
+        {
+            return 1;
+        }
     }
 }

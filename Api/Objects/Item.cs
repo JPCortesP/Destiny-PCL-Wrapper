@@ -39,6 +39,11 @@ namespace DestinyPCL.Objects
         public string itemName { get { return (string)dbData.itemName; } }
         public string itemDescription { get { return (string)dbData.itemDescription; } }
         public string itemTypeName { get { return dbData.itemTypeName; } }
+        /// <summary>
+        /// Base Raw Object, as the name says it. What the name doesn't says is that, this 
+        /// property will ALWAYS be null, unless a debugger is attached. You'll thank me later.
+        /// </summary>
+        public dynamic BaseRawObject { get; set; }
         public override string ToString()
         {
             return itemName;

@@ -76,6 +76,7 @@
     <Compile Include="Extensiones.cs" />
     <Compile Include="Helpers\Helpers.cs" />
     <Compile Include="IApi.cs" />
+    <Compile Include="InternalTypes\ClanPlayers.cs" />
     <Compile Include="Manifest\ManifestTable.cs" />
     <Compile Include="Manifest\OfflineManifest.cs" />
     <Compile Include="Manifest\OnlineManifest.cs" />

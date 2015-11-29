@@ -220,7 +220,7 @@ namespace DestinyPCL.InternalTypes
         public List<Character> characters { get; set; }
     }
 
-    public class Response
+    public partial class Response
     {
         public Data data { get; set; }
     }

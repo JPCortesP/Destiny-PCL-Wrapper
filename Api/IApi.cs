@@ -15,7 +15,9 @@ namespace DestinyPCL
         string ApiKey { get; set; }
         Task<DestinyPlayer> getPlayerAsync(BungieUser user);
         Task<List<DestinyPlayer>> getPlayersAsync(List<BungieUser> users);
-        Task<DestinyClan> getAllPlayersInClan(BungieUser user);
+        IEnumerable<DestinyPlayer> getPlayersLoop(List<BungieUser> users);
+        
+        Task<DestinyClan> GetPlayerClan(DestinyPlayer player);
         Task<DestinyItemBase> getInventory(BungieUser user);
         Task<List<Object>> getHistory(BungieUser user);
         Task<bool> EquipItem(DestinyCharacter target, DestinyItemBase item);

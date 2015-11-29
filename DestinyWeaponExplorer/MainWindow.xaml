@@ -145,7 +145,7 @@
                     <TextBlock Text="{Binding tierTypeName}" />
                     <TextBlock Text="{Binding itemDescription}" Style="{StaticResource txt_itemDescription}" />
                     <ScrollViewer MaxHeight="200">
-                        <TextBox Text="{Binding dbData}" TextWrapping="Wrap" />
+                        <TextBox Text="{Binding BaseRawObject}" TextWrapping="Wrap" />
                     </ScrollViewer>
 
                 </StackPanel>

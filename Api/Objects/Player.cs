@@ -3,6 +3,7 @@ using DestinyPCL.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -34,7 +35,8 @@ namespace DestinyPCL.Objects
         private InternalTypes.Data data;
         public string GamerTag { get; set; }
         public DestinyMembershipType type { get; set; }
-        
+        public BungieUser BungieUser { get { return new BungieUser(this?.GamerTag, this.type) { membershipId = this?.MembershipId, cookies = this?.cookies }; } }
+        internal CookieContainer cookies { get; set; }
         public int Grimoire { get; set; }
         //public string MainClan { get; set; }
         //public string MainClanTag { get; set; }
@@ -125,7 +127,7 @@ namespace DestinyPCL.Objects
                         );
 
                 }
-
+                b.BaseRawObject = item as dynamic;
                 lista.Add(b);
 
 
