@@ -38,6 +38,7 @@
     <EmbeddedResource Include="Manifest\db\Activity.json" />
     <EmbeddedResource Include="Manifest\db\ActivityBundle.json" />
     <EmbeddedResource Include="Manifest\db\ActivityType.json" />
+    <None Include="DestinyPCL.nuspec" />
     <None Include="Manifest\db\Bond.json" />
     <EmbeddedResource Include="Manifest\db\Class.json" />
     <None Include="Manifest\db\DamageType.json" />
