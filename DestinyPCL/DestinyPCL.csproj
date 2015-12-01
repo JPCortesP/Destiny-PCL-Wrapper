@@ -34,17 +34,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>key.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="Manifest\db\Activity.json" />
     <EmbeddedResource Include="Manifest\db\ActivityBundle.json" />
     <EmbeddedResource Include="Manifest\db\ActivityType.json" />
     <None Include="DestinyPCL.nuspec" />
-    <None Include="key.pfx" />
     <None Include="Manifest\db\Bond.json" />
     <EmbeddedResource Include="Manifest\db\Class.json" />
     <None Include="Manifest\db\DamageType.json" />
