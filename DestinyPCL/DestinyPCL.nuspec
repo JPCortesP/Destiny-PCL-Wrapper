@@ -14,5 +14,8 @@
     <releaseNotes>Initial Release. EXPERIMENTAL</releaseNotes>
     <copyright>Copyright 2015</copyright>
     <tags>Destiny PCL Bungie</tags>
+    <dependencies>
+        <dependency id="Newtonsoft.Json" version="7.0.1" />
+  </dependencies>
   </metadata>
 </package>
