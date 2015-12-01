@@ -23,7 +23,7 @@ namespace DestinyPCL
         Task<bool> EquipItem(DestinyCharacter target, DestinyItemBase item);
         Task<bool> TransferItem(DestinyCharacter target, DestinyItemBase item, bool toVault = false);
         DestinyManifest Manifest { get; set; }
-        Task<bool> LoadManifest(DestinyManifest instance);
+        Task<bool> LoadManifest();
         string ManifestTypeName { get; }
         
 
@@ -34,6 +34,7 @@ namespace DestinyPCL
         string ApiKey { get; set; }
         dynamic getData(Manifest.ManifestTable table, string hash);
         Task<dynamic> getDataAsync(Manifest.ManifestTable table, string hash);
+        Task<bool> Preload();
     }
     
 }

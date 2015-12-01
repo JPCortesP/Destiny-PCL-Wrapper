@@ -1,0 +1,42 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:JPDestiny">
+
+    <Style TargetType="TextBlock" x:Key="dt_characters_base_text">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="5" />
+    </Style>
+    <Style TargetType="TextBlock" BasedOn="{StaticResource dt_characters_base_text}" x:Key="dt_characters_className">
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="FontWeight" Value="ExtraBold" />
+    </Style>
+    <Style TargetType="TextBlock" BasedOn="{StaticResource dt_characters_base_text}" x:Key="dt_characters_lightlevel">
+        <Setter Property="Foreground" Value="Gold" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+
+    <DataTemplate x:Key="DT_Characters_Main_Listview">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+            <Border BorderBrush="AliceBlue" BorderThickness="1">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Image Source="{Binding EmblemPath}" MaxHeight="75" MaxWidth="75" />
+                    <TextBlock Text="{Binding Class}" Style="{StaticResource dt_characters_className}" />
+                    <TextBlock>&#160;</TextBlock>
+                    <TextBlock Text="{Binding Race}" Style="{StaticResource dt_characters_base_text}" />
+                    <TextBlock>&#160;</TextBlock>
+                    <TextBlock Text="{Binding Gender}" Style="{StaticResource dt_characters_base_text}"  />
+                    <TextBlock>&#160;</TextBlock>
+                    <TextBlock Text="{Binding LightLevel}" Style="{StaticResource dt_characters_lightlevel}" />
+                    <TextBlock>&#160;</TextBlock>
+                    <TextBlock Text="{Binding BaseLevel}" Style="{StaticResource dt_characters_base_text}"  />
+                </StackPanel>
+            </Border>
+            
+        </StackPanel>
+
+
+    </DataTemplate>
+
+</ResourceDictionary>

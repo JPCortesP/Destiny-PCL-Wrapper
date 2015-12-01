@@ -193,7 +193,10 @@ namespace DestinyPCL.Manifest
 
         }
 
-        
+        public Task<bool> Preload()
+        {
+            return Task.Run(() => true);
+        }
     }
 
 

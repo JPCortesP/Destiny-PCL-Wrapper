@@ -56,12 +56,14 @@ namespace DestinyPCL.Manifest
             var assembly = typeof(OfflineManifest).GetTypeInfo().Assembly;
             string[] archivos = assembly.GetManifestResourceNames();
             var stream = assembly.GetManifestResourceStream(file);
-            var sr = new StreamReader(stream);
-            var resultado = sr.ReadToEnd();
-            dynamic objeto = JObject.Parse(resultado);
-            var algo = objeto;
-            dynamic respuesta = objeto[hash];
-            return respuesta;
+            using (var sr = new StreamReader(stream))
+            {
+                var resultado = sr.ReadToEnd();
+                dynamic objeto = JObject.Parse(resultado);
+                return (dynamic)objeto[hash];
+            }
+            //var sr = new StreamReader(stream);
+           
             
         }
 
@@ -103,6 +105,11 @@ namespace DestinyPCL.Manifest
             var algo = objeto;
             dynamic respuesta = objeto[hash];
             return respuesta;
+        }
+
+        public Task<bool> Preload()
+        {
+            return Task.Run(() => true);
         }
     }
 }

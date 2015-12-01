@@ -13,6 +13,11 @@ namespace DestinyPCL
 {
     public partial class DestinyService : IDestnyService
     {
+        /// <summary>
+        /// Returns a new instance. Requires you to provide a Manifest (can use one of the two provided in Manifest Namespace) and a API Key. 
+        /// </summary>
+        /// <param name="defaultManifest"></param>
+        /// <param name="_ApiKey"></param>
         public DestinyService( DestinyManifest defaultManifest, string _ApiKey)
         {
             this.Manifest = defaultManifest;
@@ -45,10 +50,8 @@ namespace DestinyPCL
         public void Dispose()
         {
             this.ApiKey = "";
-            if(Manifest != null)
-                this.Manifest.Dispose();
-            if (hc != null)
-                hc.Dispose();
+            Manifest?.Dispose();
+            hc?.Dispose();
 
         }
         public Task<bool> EquipItem(DestinyCharacter target, DestinyItemBase item)
@@ -120,9 +123,14 @@ namespace DestinyPCL
             }
         }
 
-        public Task<List<DestinyPlayer>> getPlayersAsync(List<BungieUser> users)
+        public async Task<List<DestinyPlayer>> getPlayersAsync(List<BungieUser> users)
         {
-            throw new NotImplementedException();
+            List<DestinyPlayer> pls = new List<DestinyPlayer>();
+            foreach (var user in users)
+            {
+                pls.Add(await getPlayerAsync(user));
+            }
+            return pls;
         }
         public IEnumerable<DestinyPlayer> getPlayersLoop (List<BungieUser> users)
         {
@@ -134,9 +142,14 @@ namespace DestinyPCL
             }
         }
 
-        public Task<bool> LoadManifest(DestinyManifest instance)
+        /// <summary>
+        /// IF your manifest requires some pre-load work, this method will call it. 
+        /// Default Manifests included doesn't requires this. 
+        /// </summary>
+        /// <returns>Bool, acording to your Manifest Implementation</returns>
+        public async Task<bool> LoadManifest()
         {
-            throw new NotImplementedException();
+            return await Task.Run(() => Manifest?.Preload());
         }
 
         public Task<bool> TransferItem(DestinyCharacter target, DestinyItemBase item, bool toVault = false)

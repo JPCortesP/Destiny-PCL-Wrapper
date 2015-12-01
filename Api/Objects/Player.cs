@@ -73,6 +73,7 @@ namespace DestinyPCL.Objects
                ch.Gender = ((dynamic)manifest.getData(DestinyPCL.Manifest.ManifestTable.Gender, item.characterBase.genderHash.ToString())).genderName;
                ch.LightLevel = item.characterBase.powerLevel;
                ch.Race = ((dynamic)manifest.getData(DestinyPCL.Manifest.ManifestTable.Race, item.characterBase.raceHash.ToString())).raceName;
+               
                //lock (lista)
                {
                    lista.Add(ch);
