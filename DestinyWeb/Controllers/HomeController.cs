@@ -10,7 +10,8 @@ namespace DestinyWeb.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+
+            return RedirectToAction("Player", new { controller = "Destiny", id = "JPCortesP", type = 1 });
         }
 
         public ActionResult About()
