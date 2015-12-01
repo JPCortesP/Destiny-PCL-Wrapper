@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("A PCL client for Destiny API (Bungie Game)")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("JPCortesP")]
-[assembly: AssemblyProduct("Api")]
+[assembly: AssemblyProduct("DestinyPCL")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
