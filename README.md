@@ -29,7 +29,7 @@ public static bool CheckForRequiredCookies(CookieContainer cookies);
 ```
 then use that Cookie Container inside a new (or existent) BungieUser object and call the APIs.
 
-There's some examples in the Repo. Check them out. 
+There's some examples in the Repo or in the Wiki. Check them out. 
 
 ### Get an Api KEY
 from https://www.bungie.net/en/Clan/Post/39966/85087279/0/0 instructions, go to https://www.bungie.net/en/User/API. 
