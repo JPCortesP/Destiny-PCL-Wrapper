@@ -35,4 +35,4 @@ There's some examples in the Repo or in the Wiki. Check them out.
 from https://www.bungie.net/en/Clan/Post/39966/85087279/0/0 instructions, go to https://www.bungie.net/en/User/API. 
 
 ## How to get it
-- Daily Builds, on Nugget. Add https://ci.appveyor.com/nuget/destinypcl-client-pwf5n0g84w76 as a source.
+- Daily Builds, on Nugget. Add https://ci.appveyor.com/nuget/destinypcl-client-pwf5n0g84w76 as a source. This nugget package feed will be updated everytime a new commit is done on master. I'll try to avoid to push to master any non-working version.
