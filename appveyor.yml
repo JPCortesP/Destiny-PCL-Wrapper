@@ -9,4 +9,3 @@ build:
   include_nuget_references: true
   parallel: true
   verbosity: quiet
-  project: DestinyPCL\DestinyPCL.csproj
