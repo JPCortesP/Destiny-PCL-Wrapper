@@ -76,7 +76,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DestinyPCL\DestinyPCL.csproj">
+    <ProjectReference Include="..\..\DestinyPCL\DestinyPCL.csproj">
       <Project>{731c27ff-e7b0-4b1a-a6ad-354f652b38c8}</Project>
       <Name>DestinyPCL</Name>
     </ProjectReference>
