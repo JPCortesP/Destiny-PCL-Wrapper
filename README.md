@@ -3,7 +3,8 @@ Testing Project for a Destiny PCL API Wrapper in C#
 
 Still in development, breaking changes are expected. 
 
-[![Build status](https://ci.appveyor.com/api/projects/status/sah3i0l5ce1ynd18/branch/master?svg=true)](https://ci.appveyor.com/project/JPCortesP/destinypcl-client/branch/master)
+[![Build status](https://ci.appveyor.com/api/projects/status/xvshwxf7fmjg8n53/branch/master?svg=true)](https://ci.appveyor.com/project/JPCortesP/destiny-pcl-wrapper/branch/master)
+
 ## Usage
 
 ```csharp
@@ -14,6 +15,16 @@ foreach (var character in Player.Characters)
     Console.WriteLine("{0} - {1}", character.Class, character.LightLevel);
 }
 ```
+### Destiny Manifest
+Destiny API uses an obscure way to get item, activity, gear, stats, (long etc) definitions. This Repo contains:
+- OnlineManifest, to query directly the API. SUPER SLOW. 
+- OfflineManifest, deprecated, as uses raw JSON files obtained from https://github.com/nmlorg/destiny-db expected to be directly embeded in the Library. It is currently
+not being used, nor the json files are embeded, but it stays in the repo just for the lolz
+- Win32Manifest in a different project (currently trying to AppVeyor to build the nugget package) that runs only on Win32 (WPF, Console, ...) that directly downloads the manifest' SQLite database and queries.
+Offcourse, it depends on System.Data.Sqlite nuget package. 
+- An Interface, so you can build your own and just provide it to the Client. The client will fill the APIKey in case you need it. You're responsible to call Preload();
+
+More information is being writen as we speak, and should be available in the Wiki soon. 
 ### Authenticated Request.
 For any Auth Request, you must capture yourself the Cookies. For it, there's some help in DestinyPCL.AuthHelpers:
 ```csharp

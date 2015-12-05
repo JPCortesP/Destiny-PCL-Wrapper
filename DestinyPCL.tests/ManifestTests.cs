@@ -3,24 +3,25 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DestinyPCL;
 using DestinyPCL.Manifest;
 using Microsoft.CSharp;
-
+using DestinyPCL.Win32Manifest;
 
 namespace API.tests
 {
     [TestClass]
-    public class OfflineManifestTests
+    public class Win32ManifestTests
     {
         private static string key = "6def2424db3a4a8db1cef0a2c3a7807e";
-        private DestinyManifest Getmanifest { get { return new OfflineManifest(key); } }
+        private DestinyManifest Getmanifest { get { return new Win32Manifest(key); } }
         [TestMethod]
         public void OfflineManifest_ReturnsItemData()
         {
             using (var manifest = Getmanifest)
             {
-                dynamic respuesta = manifest.getData(ManifestTable.InventoryItem, "1256644900");
+                dynamic respuesta = manifest.getData(ManifestTable.InventoryItem, "1703777169");
                 Assert.IsNotNull(respuesta);
                  //.data.inventoryItem.itemName;
-                dynamic itemName = respuesta.itemName;
+                string itemName = respuesta.itemName;
+                Assert.AreEqual(itemName, "1000-Yard Stare");
                 Assert.IsNotNull(itemName);
             }
         }
@@ -87,13 +88,13 @@ namespace API.tests
         {
             using (var manifest = Getmanifest)
             {
-                dynamic respuesta = manifest.getData(ManifestTable.Stat, "2996146975");
+                dynamic respuesta = manifest.getData(ManifestTable.Stat, "368428387");
                 Assert.IsNotNull(respuesta);
                 //.data.inventoryItem.itemName;
                 dynamic itemName = respuesta.statName;
                 Assert.IsNotNull(itemName);
                 string name = (string)respuesta.statName;
-                Assert.IsTrue(name == "Agility");
+                Assert.IsTrue(name == "Attack");
            } 
         }
 

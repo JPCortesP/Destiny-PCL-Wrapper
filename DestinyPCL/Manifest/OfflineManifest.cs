@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace DestinyPCL.Manifest
 {
+    [Obsolete("This class is Obsolete. Please use either Online Manifest, or just implement your own.",true)]
     public partial class OfflineManifest : DestinyManifest
     {
         public OfflineManifest(string apikey)
