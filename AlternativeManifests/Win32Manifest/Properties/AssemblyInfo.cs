@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Win32Manifest")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Win32 Manifest implementation for DestinyPCL-Wrapper")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("JPCortesP")]
 [assembly: AssemblyProduct("Win32Manifest")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
