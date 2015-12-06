@@ -11,7 +11,17 @@ namespace API.tests
     public class Win32ManifestTests
     {
         private static string key = "6def2424db3a4a8db1cef0a2c3a7807e";
-        private DestinyManifest Getmanifest { get { return new Win32Manifest(key); } }
+        private DestinyManifest Getmanifest
+        {
+            get
+            {
+                lock (key)
+                {
+                    return new Win32Manifest(key);
+                }
+                
+            }
+        }
         [TestMethod]
         public void OfflineManifest_ReturnsItemData()
         {
