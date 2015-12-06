@@ -4,6 +4,7 @@ nuget:
   project_feed: true
 
 before_build:
+- ps: nuget update -self.
 - ps: nuget restore
 build:
   publish_nuget: true
