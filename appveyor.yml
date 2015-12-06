@@ -1,5 +1,5 @@
 
-version: 1.0.0.{build}-dev
+version: 1.0.0.pre{build}-dev
 os: Visual Studio 2015
 
 
