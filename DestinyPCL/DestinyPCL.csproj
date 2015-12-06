@@ -46,10 +46,11 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API.cs" />
+    <Compile Include="DestinyPCLService.cs" />
+    <Compile Include="Manifest\IDestinyManifest.cs" />
+    <Compile Include="IDestinyService.cs" />
     <Compile Include="InternalImplementation\Extensiones.cs" />
     <Compile Include="Helpers\Helpers.cs" />
-    <Compile Include="IApi.cs" />
     <Compile Include="InternalTypes\ClanPlayers.cs" />
     <Compile Include="Manifest\ManifestLanguage.cs" />
     <Compile Include="Manifest\ManifestTable.cs" />

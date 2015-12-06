@@ -1,10 +1,8 @@
-﻿
-using DestinyPCL.Objects;
+﻿using DestinyPCL.Objects;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +16,7 @@ namespace DestinyPCL
         /// </summary>
         /// <param name="defaultManifest"></param>
         /// <param name="_ApiKey"></param>
-        public DestinyService( DestinyManifest defaultManifest, string _ApiKey)
+        public DestinyService(DestinyManifest defaultManifest, string _ApiKey)
         {
             if (defaultManifest == null)
             {
@@ -27,8 +25,8 @@ namespace DestinyPCL
             this.Manifest = defaultManifest;
             this.Manifest.ApiKey = _ApiKey;
             this.ApiKey = _ApiKey;
-            
-            
+
+
         }
         public string ApiKey { get; set; }
         public DestinyManifest Manifest { get; set; }
@@ -44,7 +42,7 @@ namespace DestinyPCL
                 }
                 else
                     return "NO Manifest in use";
-                
+
             }
         }
 
@@ -60,10 +58,10 @@ namespace DestinyPCL
             throw new NotImplementedException();
         }
 
-        
+
         public async Task<DestinyClan> GetPlayerClan(DestinyPlayer player)
         {
-            
+
             //First: https://bungie.net/Platform/User/GetBungieAccount/{membId}/{MembType}/
             //with the GroupdID: https://bungie.net/Platform/Group/{GroupID}/MembersV3?currentPage=1&itemsPerPage=50
             var url = String.Format("https://bungie.net/Platform/User/GetBungieAccount/{0}/{1}", player.MembershipId, (int)player.type);
@@ -91,23 +89,23 @@ namespace DestinyPCL
         public async Task<DestinyPlayer> getPlayerAsync(BungieUser user)
         {//http://bungie.net/platform/destiny/SearchDestinyPlayer/1/jpcortesp
             var url = String.Format("http://bungie.net/platform/destiny/SearchDestinyPlayer/{0}/{1}", (int)user.type, user.GamerTag);
-            var respuesta = await getString(url,user.cookies);
+            var respuesta = await getString(url, user.cookies);
             dynamic objRespuesta = JObject.Parse(respuesta);
             var algoParaEspacio = objRespuesta;
             dynamic listaRespuesta = ((Newtonsoft.Json.Linq.JContainer)((((dynamic)((dynamic)objRespuesta).Response)))).HasValues;
             if (listaRespuesta)
             {
                 dynamic response = ((dynamic)((dynamic)objRespuesta).Response)[0];
-                
+
                 url = String.Format("http://www.bungie.net/platform/destiny/{0}/Account/{1}/Items/", (int)user.type, response.membershipId);
                 respuesta = await getString(url, user.cookies);
                 var _PlayerResult = await Task.Run(() =>
                    Newtonsoft.Json.JsonConvert.DeserializeObject<InternalTypes.PlayerResultRootObject>(respuesta));
-                DestinyPlayer p = new DestinyPlayer(Manifest,_PlayerResult.Response.data, user);
+                DestinyPlayer p = new DestinyPlayer(Manifest, _PlayerResult.Response.data, user);
                 p.GamerTag = response.displayName;
                 p.MembershipId = response.membershipId;
                 p.cookies = user.cookies;
-                                //var res = convertirAPlayer(_PlayerResult, p);
+                //var res = convertirAPlayer(_PlayerResult, p);
                 if (p != null)
                 {
                     return p;
@@ -133,7 +131,7 @@ namespace DestinyPCL
             }
             return pls;
         }
-        public IEnumerable<DestinyPlayer> getPlayersLoop (List<BungieUser> users)
+        public IEnumerable<DestinyPlayer> getPlayersLoop(List<BungieUser> users)
         {
             var userscopy = users.Distinct(new bungieuserComparador()).ToList();
             foreach (var user in userscopy)
@@ -158,7 +156,7 @@ namespace DestinyPCL
             throw new NotImplementedException();
         }
 
-        
+
     }
 
     internal class bungieuserComparador : EqualityComparer<BungieUser>
