@@ -1,4 +1,4 @@
-version: 1.0.0.Daily-{build}
+version: 1.0.0.{build}-dev
 os: Visual Studio 2015
 
 nuget:  
@@ -14,3 +14,9 @@ build:
   verbosity: quiet
 
 test: off
+
+deploy:
+  provider: NuGet
+  api_key: 7bb332b4-fcfa-451c-b170-1e9ab6fd7237
+  skip_symbols: true
+  artifact: /.*\.nupkg/

@@ -41,40 +41,7 @@
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Manifest\db\Activity.json" />
-    <EmbeddedResource Include="Manifest\db\ActivityBundle.json" />
-    <EmbeddedResource Include="Manifest\db\ActivityType.json" />
     <None Include="DestinyPCL.nuspec" />
-    <None Include="Manifest\db\Bond.json" />
-    <EmbeddedResource Include="Manifest\db\Class.json" />
-    <None Include="Manifest\db\DamageType.json" />
-    <None Include="Manifest\db\Destination.json" />
-    <None Include="Manifest\db\DirectorBook.json" />
-    <None Include="Manifest\db\EnemyRace.json" />
-    <None Include="Manifest\db\Faction.json" />
-    <EmbeddedResource Include="Manifest\db\Gender.json" />
-    <None Include="Manifest\db\Grimoire.json" />
-    <None Include="Manifest\db\GrimoireCard.json" />
-    <None Include="Manifest\db\HistoricalStats.json" />
-    <EmbeddedResource Include="Manifest\db\InventoryBucket.json" />
-    <EmbeddedResource Include="Manifest\db\InventoryItem.json" />
-    <None Include="Manifest\db\ItemCategory.json" />
-    <None Include="Manifest\db\Location.json" />
-    <None Include="Manifest\db\Objective.json" />
-    <None Include="Manifest\db\Place.json" />
-    <None Include="Manifest\db\Progression.json" />
-    <EmbeddedResource Include="Manifest\db\Race.json" />
-    <None Include="Manifest\db\RewardSource.json" />
-    <None Include="Manifest\db\SandboxPerk.json" />
-    <None Include="Manifest\db\ScriptedSkull.json" />
-    <None Include="Manifest\db\SpecialEvent.json" />
-    <EmbeddedResource Include="Manifest\db\Stat.json" />
-    <None Include="Manifest\db\StatGroup.json" />
-    <None Include="Manifest\db\TalentGrid.json" />
-    <None Include="Manifest\db\TriumphSet.json" />
-    <None Include="Manifest\db\UnlockFlag.json" />
-    <None Include="Manifest\db\Vendor.json" />
-    <None Include="Manifest\db\VendorCategory.json" />
     <None Include="project.json" />
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
@@ -100,9 +67,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <EmbeddedResource Include="Manifest\db\1 Readme.txt" />
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
