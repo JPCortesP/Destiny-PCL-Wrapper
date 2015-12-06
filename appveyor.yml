@@ -1,5 +1,6 @@
-version: 1.0.0.buildEffort-{build}
-os: Visual Studio 2015
+version: 1.0.0.Daily-{build}
+os: Visual Studio 2015
+
 nuget:  
   project_feed: true
 
