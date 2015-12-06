@@ -34,7 +34,11 @@ namespace DestinyPCL.Objects
         public bool isGridComplete { get; set; }
         public int transferStatus { get; set; }
         public int state { get; set; }
+        /// <summary>
+        /// -1 for Vault, 0,1,2 for any character
+        /// </summary>
         public int characterIndex { get; set; }
+        public string characterIndexName { get; set; }
         public string bucketHash { get; set; }
         public string itemName { get { return (string)dbData.itemName; } }
         public string itemDescription { get { return (string)dbData.itemDescription; } }

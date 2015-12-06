@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DestinyPCLService.cs" />
+    <Compile Include="DestinyService.ItemManager.cs" />
     <Compile Include="Manifest\IDestinyManifest.cs" />
     <Compile Include="IDestinyService.cs" />
     <Compile Include="InternalImplementation\Extensiones.cs" />

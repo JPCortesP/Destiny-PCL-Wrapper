@@ -16,10 +16,11 @@ namespace DestinyPCL
         IEnumerable<DestinyPlayer> getPlayersLoop(List<BungieUser> users);
 
         Task<DestinyClan> GetPlayerClan(DestinyPlayer player);
+        [Obsolete("Please call getPlayer and use Player.gear")]
         Task<DestinyItemBase> getInventory(BungieUser user);
         Task<List<Object>> getHistory(BungieUser user);
-        Task<bool> EquipItem(DestinyCharacter target, DestinyItemBase item);
-        Task<bool> TransferItem(DestinyCharacter target, DestinyItemBase item, bool toVault = false);
+        Task<bool> EquipItem(BungieUser AuthUser, DestinyCharacter target, DestinyItemBase item);
+        Task<bool> TransferItem(BungieUser AuthUser, DestinyCharacter target, DestinyItemBase item, int quantity = 1, bool toVault = false);
         DestinyManifest Manifest { get; set; }
         Task<bool> LoadManifest();
         string ManifestTypeName { get; }

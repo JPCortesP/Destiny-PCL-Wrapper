@@ -53,15 +53,11 @@ namespace DestinyPCL
             hc?.Dispose();
 
         }
-        public Task<bool> EquipItem(DestinyCharacter target, DestinyItemBase item)
-        {
-            throw new NotImplementedException();
-        }
+        
 
 
         public async Task<DestinyClan> GetPlayerClan(DestinyPlayer player)
         {
-
             //First: https://bungie.net/Platform/User/GetBungieAccount/{membId}/{MembType}/
             //with the GroupdID: https://bungie.net/Platform/Group/{GroupID}/MembersV3?currentPage=1&itemsPerPage=50
             var url = String.Format("https://bungie.net/Platform/User/GetBungieAccount/{0}/{1}", player.MembershipId, (int)player.type);
@@ -88,7 +84,7 @@ namespace DestinyPCL
 
         public async Task<DestinyPlayer> getPlayerAsync(BungieUser user)
         {//http://bungie.net/platform/destiny/SearchDestinyPlayer/1/jpcortesp
-            var url = String.Format("http://bungie.net/platform/destiny/SearchDestinyPlayer/{0}/{1}", (int)user.type, user.GamerTag);
+            var url = String.Format("http://bungie.net/platform/destiny/SearchDestinyPlayer/{0}/{1}?definitions=false", (int)user.type, user.GamerTag);
             var respuesta = await getString(url, user.cookies);
             dynamic objRespuesta = JObject.Parse(respuesta);
             var algoParaEspacio = objRespuesta;
@@ -151,10 +147,7 @@ namespace DestinyPCL
             return await Task.Run(() => Manifest?.Preload());
         }
 
-        public Task<bool> TransferItem(DestinyCharacter target, DestinyItemBase item, bool toVault = false)
-        {
-            throw new NotImplementedException();
-        }
+        
 
 
     }

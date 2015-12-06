@@ -131,6 +131,8 @@ namespace DestinyPCL.Objects
 
                 }
                 b.BaseRawObject = item as dynamic;
+                b.characterIndexName = b.characterIndex == -1 ? "Vault" 
+                : manifest.getData(DestinyPCL.Manifest.ManifestTable.Class, data.characters[b.characterIndex].characterBase.classHash.ToString()).className;
                 lista.Add(b);
 
 
