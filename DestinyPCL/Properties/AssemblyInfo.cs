@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("DestinyPCL")]
-[assembly: AssemblyDescription("A PCL client for Destiny API (Bungie Game)")]
+[assembly: AssemblyDescription("A PCL API Wrapper for the Destiny's API. This library might help you implement your own Wrapper or just use this as most of the boilerplate code is already there. Please get your own API KEY")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("JPCortesP")]
 [assembly: AssemblyProduct("DestinyPCL")]
