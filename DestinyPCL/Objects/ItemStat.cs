@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DestinyPCL.Objects
 {
-    public class StatBase
+    public class ItemStatBase
     {
         public string statName { get; set; }
         public string statHash { get; set; }

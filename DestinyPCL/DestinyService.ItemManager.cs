@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DestinyPCL
 {
-    public partial class DestinyService : IDestnyService
+    public partial class DestinyService : IDestinyService
     {
         public Task<bool> EquipItem(BungieUser AuthUser, DestinyCharacter target, DestinyItemBase item)
         {

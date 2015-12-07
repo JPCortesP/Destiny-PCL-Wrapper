@@ -10,27 +10,30 @@ namespace ConsoleTests
 {
     class Program
     {
+        [STAThread]
         static void Main(string[] args)
         {
-            var api = new DestinyPCL.DestinyService(new Win32Manifest(), "6def2424db3a4a8db1cef0a2c3a7807e");
-            var player = api.getPlayerAsync(new BungieUser() { GamerTag = "jpcortesp", type = DestinyMembershipType.Xbox }).Result;
-
-            foreach (var item in player.Gear)
+            var loginWindo = new DestinyWeaponExplorer.LoginWindow();
+            loginWindo.ShowDialog();
+            var user = new BungieUser() { GamerTag = "jpcortesp", type = DestinyMembershipType.Xbox };
+            if (loginWindo.Resultado)
             {
-                Console.WriteLine("({0} / {1}) - {2} - {3}", item.state, item.transferStatus, item.itemTypeName, item.itemName);
+                user.cookies = loginWindo.cookies;
             }
+            var api = new DestinyPCL.DestinyService(new Win32Manifest(), "6def2424db3a4a8db1cef0a2c3a7807e");
+            var player = api.getPlayerAsync(user).Result;
+
             foreach (var item in player.Characters)
             {
-                Console.WriteLine("{0} - {1} ({2})", item.Class, item.LightLevel, item.BaseLevel);
-                Console.WriteLine(item.Race + " " + item.Gender);
+                Console.WriteLine("{0} - {1} {2}", item.CharacterId,item.Class, player.MembershipId);
             }
 
-
+            Console.ReadLine();
 
             //var player = new Player(new object(), new object());
             //Console.Write(player.Items.Count);
 
-            Console.ReadLine();
+            
             
 
         }

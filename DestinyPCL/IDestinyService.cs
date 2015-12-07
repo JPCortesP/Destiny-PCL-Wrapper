@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DestinyPCL
 {
-    public interface IDestnyService : IDisposable
+    public interface IDestinyService : IDisposable
     {
 
         string ApiKey { get; set; }
@@ -17,8 +17,11 @@ namespace DestinyPCL
 
         Task<DestinyClan> GetPlayerClan(DestinyPlayer player);
         [Obsolete("Please call getPlayer and use Player.gear")]
-        Task<DestinyItemBase> getInventory(BungieUser user);
-        Task<List<Object>> getHistory(BungieUser user);
+        
+        Task<List<object>> getHistoricalActivities(BungieUser user, DestinyCharacter character);
+        Task<List<object>> getHistoricalActivities(BungieUser user, DestinyPlayer player);
+        Task<List<Object>> getAgregatedStats(BungieUser user, DestinyCharacter character);
+        Task<List<Object>> getAgregatedStats(BungieUser user, DestinyPlayer player);
         Task<bool> EquipItem(BungieUser AuthUser, DestinyCharacter target, DestinyItemBase item);
         Task<bool> TransferItem(BungieUser AuthUser, DestinyCharacter target, DestinyItemBase item, int quantity = 1, bool toVault = false);
         DestinyManifest Manifest { get; set; }

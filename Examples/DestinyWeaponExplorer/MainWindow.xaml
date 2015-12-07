@@ -145,7 +145,25 @@
                     <TextBlock Text="{Binding tierTypeName}" />
                     <TextBlock Text="{Binding itemDescription}" Style="{StaticResource txt_itemDescription}" />
                     <ScrollViewer MaxHeight="200">
-                        <TextBox Text="{Binding BaseRawObject}" TextWrapping="Wrap" />
+                        <StackPanel>
+                            <TextBlock>characterIndex</TextBlock>
+                            <TextBlock Text="{Binding characterIndex}" TextWrapping="Wrap" />
+
+                            <TextBlock>quantity</TextBlock>
+                            <TextBlock Text="{Binding quantity}" TextWrapping="Wrap" />
+
+                            <TextBlock>transferStatus</TextBlock>
+                            <TextBlock Text="{Binding transferStatus}" TextWrapping="Wrap" />
+
+                            <TextBlock>state</TextBlock>
+                            <TextBlock Text="{Binding state}" TextWrapping="Wrap" />
+
+                            <TextBlock>bucketData</TextBlock>
+                            <TextBlock Text="{Binding bucketData}" TextWrapping="Wrap" />
+                            
+                            
+                        </StackPanel>
+                        
                     </ScrollViewer>
 
                 </StackPanel>

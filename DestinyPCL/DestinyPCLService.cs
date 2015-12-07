@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DestinyPCL
 {
-    public partial class DestinyService : IDestnyService
+    public partial class DestinyService : IDestinyService
     {
         /// <summary>
         /// Returns a new instance. Requires you to provide a Manifest (can use one of the two provided in Manifest Namespace) and a API Key. 
@@ -72,16 +72,7 @@ namespace DestinyPCL
 
         }
 
-        public Task<List<object>> getHistory(BungieUser user)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<DestinyItemBase> getInventory(BungieUser user)
-        {
-            throw new NotImplementedException();
-        }
-
+       
         public async Task<DestinyPlayer> getPlayerAsync(BungieUser user)
         {//http://bungie.net/platform/destiny/SearchDestinyPlayer/1/jpcortesp
             var url = String.Format("http://bungie.net/platform/destiny/SearchDestinyPlayer/{0}/{1}?definitions=false", (int)user.type, user.GamerTag);
