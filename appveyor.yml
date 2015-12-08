@@ -1,5 +1,8 @@
 
 version: 0.0.1.{build}a-dev
+branches:
+  only:
+  - master
 os: Visual Studio 2015
 skip_non_tags: true
 
