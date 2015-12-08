@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>DestinyPCL.Win32Manifest</id>
+    <id>DestinyPCL.Win32Manifest.Alpha</id>
     <version>$version$</version>
     <title>$title$</title>
     <authors>$author$</authors>
