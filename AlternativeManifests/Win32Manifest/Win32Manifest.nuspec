@@ -16,7 +16,7 @@
     <tags>Destiny Bungie</tags>
     <dependencies>
       <dependency id="Newtonsoft.Json" version="7.0.1" />
-      <dependency id="DestinyPCL" version="1.0.1" />
+      <dependency id="DestinyPCL.Alpha" version="1.0.1" />
       <dependency id="System.Data.SQLite" version="1.0.98.1" />
     </dependencies>
   </metadata>
