@@ -23,9 +23,9 @@ namespace ConsoleTests
             var api = new DestinyPCL.DestinyService(new Win32Manifest(), "6def2424db3a4a8db1cef0a2c3a7807e");
             var player = api.getPlayerAsync(user).Result;
 
-            foreach (var item in player.Characters)
+            foreach (var item in player.Gear)
             {
-                Console.WriteLine("{0} - {1} {2}", item.CharacterId,item.Class, player.MembershipId);
+                Console.WriteLine("{0} - {1} {2}", item.itemName,item.itemTypeName, item.primaryStats_value);
             }
 
             Console.ReadLine();

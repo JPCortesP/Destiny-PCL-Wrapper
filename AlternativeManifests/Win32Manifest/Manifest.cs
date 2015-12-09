@@ -69,13 +69,15 @@ namespace DestinyPCL.Win32Manifest
                                 json = rdr.GetString(1);
                                 break;
                             }
+                           
 
                         }
                     }
                 }
 
             }
-
+            if (string.IsNullOrWhiteSpace(json))
+                return null;
             dynamic dinamico = JObject.Parse(json);
             return dinamico;
         }

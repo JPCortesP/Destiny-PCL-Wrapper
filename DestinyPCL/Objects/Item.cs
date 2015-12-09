@@ -40,9 +40,9 @@ namespace DestinyPCL.Objects
         public int characterIndex { get; set; }
         public string characterIndexName { get; set; }
         public string bucketHash { get; set; }
-        public string itemName { get { return (string)dbData.itemName; } }
+        public string itemName { get { return dbData!=null?(string)dbData?.itemName : "Unknown"; } }
         public string itemDescription { get { return (string)dbData.itemDescription; } }
-        public string itemTypeName { get { return dbData.itemTypeName; } }
+        public string itemTypeName { get { return dbData!=null? dbData?.itemTypeName: "Unknown"; } }
         /// <summary>
         /// Base Raw Object, as the name says it. 
         /// </summary>
