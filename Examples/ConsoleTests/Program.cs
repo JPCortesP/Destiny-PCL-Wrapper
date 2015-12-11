@@ -23,9 +23,17 @@ namespace ConsoleTests
             var api = new DestinyPCL.DestinyService(new Win32Manifest(), "6def2424db3a4a8db1cef0a2c3a7807e");
             var player = api.getPlayerAsync(user).Result;
 
-            foreach (var item in player.Gear)
+            var ItemTypes = player.Gear.Select(g => g.itemTypeName).Distinct();
+            foreach (var type in ItemTypes)
             {
-                Console.WriteLine("{0} - {1} {2}", item.itemName,item.itemTypeName, item.primaryStats_value);
+                Console.WriteLine("Top {0}s", type);
+                Console.WriteLine("=====================");
+                foreach (var item in player.Gear.Where(g=>g.itemTypeName == type).OrderByDescending(h=>h.primaryStats_value).Take(2))
+                {
+                    Console.WriteLine("{0} - {1}", item.itemName, item.primaryStats_value);
+                }
+                Console.WriteLine("{0} more {1}", player.Gear.Where(g=>g.itemTypeName == type).Count() -2, type);
+                Console.WriteLine("");
             }
 
             Console.ReadLine();
