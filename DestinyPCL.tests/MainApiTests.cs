@@ -12,7 +12,7 @@ namespace API.tests
     public class MainApiTests
     {
         private static string key = "6def2424db3a4a8db1cef0a2c3a7807e";
-        private DestinyPCL.IDestnyService api = new DestinyPCL.DestinyService(new OnlineManifest(), key);
+        private DestinyPCL.IDestinyService api = new DestinyPCL.DestinyService(new OnlineManifest(), key);
         [TestMethod]
         public void MainApi_ManifestNameWorks()
         {

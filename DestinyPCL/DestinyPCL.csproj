@@ -42,19 +42,25 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="DestinyPCL.nuspec" />
+    <None Include="JsonDump\Activities.json" />
+    <None Include="JsonDump\AggregatedStats.json" />
     <None Include="project.json" />
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API.cs" />
+    <Compile Include="DestinyPCLService.cs" />
+    <Compile Include="DestinyService.HistoricalFunctions.cs" />
+    <Compile Include="DestinyService.ItemManager.cs" />
+    <Compile Include="Manifest\IDestinyManifest.cs" />
+    <Compile Include="IDestinyService.cs" />
     <Compile Include="InternalImplementation\Extensiones.cs" />
     <Compile Include="Helpers\Helpers.cs" />
-    <Compile Include="IApi.cs" />
     <Compile Include="InternalTypes\ClanPlayers.cs" />
     <Compile Include="Manifest\ManifestLanguage.cs" />
     <Compile Include="Manifest\ManifestTable.cs" />
     <Compile Include="Manifest\OfflineManifest.cs" />
     <Compile Include="Manifest\OnlineManifest.cs" />
+    <Compile Include="Objects\AggregatedStat.cs" />
     <Compile Include="Objects\Character.cs" />
     <Compile Include="Objects\DestinyClan.cs" />
     <Compile Include="Objects\Item.cs" />
@@ -63,7 +69,7 @@
     <Compile Include="InternalTypes\PlayerSearchResult.cs" />
     <Compile Include="Objects\BungieUser.cs" />
     <Compile Include="Objects\Player.cs" />
-    <Compile Include="Objects\Stat.cs" />
+    <Compile Include="Objects\ItemStat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

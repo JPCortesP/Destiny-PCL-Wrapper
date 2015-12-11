@@ -34,11 +34,15 @@ namespace DestinyPCL.Objects
         public bool isGridComplete { get; set; }
         public int transferStatus { get; set; }
         public int state { get; set; }
+        /// <summary>
+        /// -1 for Vault, 0,1,2 for any character
+        /// </summary>
         public int characterIndex { get; set; }
+        public string characterIndexName { get; set; }
         public string bucketHash { get; set; }
-        public string itemName { get { return (string)dbData.itemName; } }
+        public string itemName { get { return dbData!=null?(string)dbData?.itemName : "Unknown"; } }
         public string itemDescription { get { return (string)dbData.itemDescription; } }
-        public string itemTypeName { get { return dbData.itemTypeName; } }
+        public string itemTypeName { get { return dbData!=null? dbData?.itemTypeName: "Unknown"; } }
         /// <summary>
         /// Base Raw Object, as the name says it. 
         /// </summary>
@@ -82,7 +86,7 @@ namespace DestinyPCL.Objects
         public bool Stats_Present { get { return primaryStats_statHash != null; } }
         public string primaryStats_Name { get { return primaryStats_statHash != null ? statData.statName : null; } }
         public string tierTypeName { get { return dbData.tierTypeName; } }
-        public List<StatBase> BaseStats { get; set; }
+        public List<ItemStatBase> BaseStats { get; set; }
 
 
     }

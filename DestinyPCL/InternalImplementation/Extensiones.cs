@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DestinyPCL
 {
-    public partial class DestinyService : IDestnyService
+    public partial class DestinyService : IDestinyService
     {
         private async Task<string> getString(string url, CookieContainer cookies = null)
         {

@@ -26,7 +26,7 @@ namespace DestinyWeaponExplorer
     /// </summary>
     public partial class MainWindow : Window
     {
-        public DestinyPCL.DestinyService api = new DestinyPCL.DestinyService(new DestinyPCL.Manifest.OnlineManifest(), "6def2424db3a4a8db1cef0a2c3a7807e");
+        public DestinyPCL.DestinyService api = new DestinyPCL.DestinyService(new DestinyPCL.Win32Manifest.Win32Manifest(), "6def2424db3a4a8db1cef0a2c3a7807e");
         public DestinyPlayer player { get; set; }
         private ObservableCollection<string> GearType = new ObservableCollection<string>() { "All" };
         private ObservableCollection<string> GearTier = new ObservableCollection<string>() { "All" };
