@@ -46,5 +46,61 @@ There's some examples in the Repo or in the Wiki. Check them out.
 from https://www.bungie.net/en/Clan/Post/39966/85087279/0/0 instructions, go to https://www.bungie.net/en/User/API. 
 
 ## How to get it
-- Currently, is avaibale in nuget as "DestinyPCL" and with the default Win32 implementation of the manifest as "DestinyPCL.Win32Manifest". 
+- Currently, is available in nuget as "DestinyPCL" and with the default Win32 implementation of the manifest as "DestinyPCL.Win32Manifest". 
 This nugget package feed will be updated everytime a new commit is done on master. I'll try to avoid to push to master any non-working version.
+
+## Examples
+An usage example is below. This snippet runs and then shows in screen by character the best gear (by attack or deffense) 
+that can be equipped on every character.
+
+```csharp
+using DestinyPCL.Objects;
+using DestinyPCL.Win32Manifest;
+using System;
+using System.Linq;
+
+namespace ConsoleTests
+{
+    class Program
+    {
+        
+        [STAThread]
+        static void Main(string[] args)
+        {
+            var LoginWindow = new DestinyWeaponExplorer.LoginWindow();
+            LoginWindow.ShowDialog();
+            var user = new BungieUser() { GamerTag = "jpcortesp", type = DestinyMembershipType.Xbox };
+            if (LoginWindow.Resultado)
+            {
+                user.cookies = LoginWindow.cookies;
+            }
+            var api = new DestinyPCL.DestinyService(new Win32Manifest(), "6def2424db3a4a8db1cef0a2c3a7807e");
+            var player = api.getPlayerAsync(user).Result;
+            player.BestGearbyBucket(player.Characters.First());
+            var ItemTypes = player.Gear.Select(g => g.itemTypeName).Distinct();
+            //ALL THE GEAR ORDERED AND SHOWING THE BEST OF ANY TYPE.
+            //=================================================================
+            foreach (var type in ItemTypes)
+            {
+                Console.WriteLine("Top {0}s", type);
+                Console.WriteLine("=====================");
+                foreach (var item in player.Gear.Where(g => g.itemTypeName == type).OrderByDescending(h => h.primaryStats_value).Take(2))
+                {
+                    Console.WriteLine("{0} - {1} - {2}", item.itemName, item.primaryStats_value, item.dbData?.classType);
+
+                }
+                Console.WriteLine("{0} more {1}", player.Gear.Where(g => g.itemTypeName == type).Count() - 2, type);
+                Console.WriteLine("");
+            }
+			Console.ReadLine();
+            
+
+            
+            
+
+        }
+    }
+   
+}
+
+```

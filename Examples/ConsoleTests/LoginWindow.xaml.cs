@@ -17,7 +17,7 @@ using System.Windows.Shapes;
 namespace DestinyWeaponExplorer
 {
     /// <summary>
-    /// Interaction logic for LoginWindo.xaml
+    /// Interaction logic for LoginWindow.xaml
     /// </summary>
     public partial class LoginWindow : Window
     {

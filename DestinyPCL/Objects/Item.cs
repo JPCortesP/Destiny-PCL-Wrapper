@@ -43,6 +43,7 @@ namespace DestinyPCL.Objects
         public string itemName { get { return dbData!=null?(string)dbData?.itemName : "Unknown"; } }
         public string itemDescription { get { return (string)dbData.itemDescription; } }
         public string itemTypeName { get { return dbData!=null? dbData?.itemTypeName: "Unknown"; } }
+        public string bucketName { get { return this.bucketData?.bucketName?.Value; } }
         /// <summary>
         /// Base Raw Object, as the name says it. 
         /// </summary>
@@ -87,6 +88,50 @@ namespace DestinyPCL.Objects
         public string primaryStats_Name { get { return primaryStats_statHash != null ? statData.statName : null; } }
         public string tierTypeName { get { return dbData.tierTypeName; } }
         public List<ItemStatBase> BaseStats { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="charClass">0 Titan, 2 Warlock, 1 Hunter. </param>
+        /// <returns></returns>
+        public bool canBeEquippedOn(int charClass)
+        {
+            if (charClass != 1 && charClass != 2 && charClass != 0)
+            {
+                return false;
+            }
+            switch (this.itemTypeName)
+            {
+                case "Sniper Rifle":case "Fusion Rifle":case "Sword":case "Auto Rifle":case "Pulse Rifle":case "Vehicle":case "Sidearm":
+                case "Rocket Launcher":case "Ghost Shell":
+                case "Hand Cannon":
+                case "Scout Rifle":
+                case "Shotgun":
+                case "Machine Gun":
+                    return true;
+
+
+                case "Hunter Artifact": case "Hunter Cloak":
+                    return charClass == 1;
+                case "Warlock Bond": case "Warlock Artifact":
+                    return charClass == 2;
+                case "Titan Artifact":case "Titan Mark":
+                    return charClass == 0;
+
+                
+                case "Helmet":
+                case "Leg Armor":
+                case "Gauntlets":
+                case "Chest Armor":
+                    return charClass == (int)dbData.classType?.Value;
+
+
+                case "Unknown":
+                default:
+                    return false;
+            }
+
+        }
 
 
     }
