@@ -20,7 +20,7 @@ namespace DestinyPCL.Win32Manifest
     {
         public string ApiKey { get; set; }
         public ManifestLanguage CurrentLanguage { get; set; }
-        string FilePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\manifest.data";
+        public string FilePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\manifest.data";
         string CompressedFilePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\manifest.data.zip";
         string FileFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         object lockObject = new object();

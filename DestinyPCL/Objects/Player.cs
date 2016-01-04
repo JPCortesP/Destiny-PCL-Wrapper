@@ -16,6 +16,19 @@ namespace DestinyPCL.Objects
     /// </summary>
     public class DestinyPlayer
     {
+        private List<string> buckets = new List<string>()
+        {
+            "Primary Weapons",
+            "Special Weapons",
+            "Heavy Weapons",
+            "Ghost",
+            "Helmet",
+            "Gauntlets",
+            "Chest Armor",
+            "Leg Armor",
+            "Class Armor",
+            "Artifacts"
+        };
                 
         internal DestinyPlayer(DestinyManifest manifest, InternalTypes.Data data, BungieUser user)
         {
@@ -54,6 +67,24 @@ namespace DestinyPCL.Objects
                     .OrderByDescending(b=>b.primaryStats_value)
                     .ToList() : null;
             }
+        }
+
+        /// <summary>
+        /// Returns the gear grouped by Bucket, and ordered from higher to lower attack/Defense Status. Might be the
+        /// first step to build a better gear indicator. 
+        /// </summary>
+        /// <param name="character">the Character. Actually only the Character Class is required inside that param.</param>
+        /// <returns></returns>
+        public dynamic BestGearbyBucket(DestinyCharacter character)
+        {
+            var grouped = (from ex in this.Gear
+                          where this.buckets.Contains(ex.bucketName)
+                          select ex)
+                          .OrderByDescending(g=>g.primaryStats_value)
+                          .Where(g=>g.canBeEquippedOn(character.ClassIdInt))
+                          .GroupBy(g=>g.bucketName)
+                          ;
+            return grouped;
         }
 
         private Lazy<List<DestinyCharacter>> _characters { get; set; }

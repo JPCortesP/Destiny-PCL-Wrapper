@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DestinyWeaponExplorer"
         mc:Ignorable="d"
-        Title="LoginWindo" Height="800" Width="812.311">
+        Title="LoginWindow" Height="800" Width="812.311">
     <Grid>
         <WebBrowser HorizontalAlignment="Left" Height="761" Width="795" VerticalAlignment="Top" Name="browser"
                     />

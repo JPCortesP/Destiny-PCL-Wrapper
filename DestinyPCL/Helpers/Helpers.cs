@@ -10,7 +10,7 @@ namespace DestinyPCL
     /// <summary>
     /// Helpers for URLs and CookieNames. Can't promise they are updated everytime.
     /// </summary>
-    public static class AuthHelpers
+    public static partial class AuthHelpers
     {
         public static readonly string XboxLoginUrl = "https://www.bungie.net/en/User/SignIn/Xuid?bru=%252f";
         public static readonly string PSNLoginUrl = "https://www.bungie.net/en/User/SignIn/Psnid?bru=%252f";

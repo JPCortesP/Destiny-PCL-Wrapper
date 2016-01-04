@@ -19,6 +19,24 @@ namespace DestinyPCL.Objects
         private string _EmblemPath;
         public string EmblemHash { get; set; }
         public string CharacterId { get; set; }
+
+        public int ClassIdInt
+        {
+            get
+            {
+                switch (Class)
+                {
+                    case "Titan":
+                        return 0;
+                    case "Hunter":
+                        return 1;
+                    case "Warlock":
+                        return 2;
+                    default:
+                        return -1;
+                }
+            }
+        }
         
 
     }
